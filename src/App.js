@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
+import { ThemeContext } from './components/Context/ThemeContext/ThemeContext';
+import ThemeButton from './components/ThemeButton/ThemeButton';
+import Header from "./components/Header/Header"
+import Footer from './components/Footer/Footer';
+
+import Homepage from './pages/Homepage/Homepage';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
+
 import './App.css';
 
 function App() {
+
+  const {theme} = useContext(ThemeContext)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className={`page-content-container ${theme}`}>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
+      <Footer />
+      <ThemeButton />
     </div>
   );
 }
