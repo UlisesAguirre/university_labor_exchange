@@ -1,0 +1,15 @@
+.basic-card-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+    color: var(--dark-mode);
+    margin: 2em;
+    padding: 2em;
+    border: 1px solid var(--secondary-color);
+    border-radius: 1em;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+    background-color: var(--secondary-color);
+    text-decoration: none;
+}
