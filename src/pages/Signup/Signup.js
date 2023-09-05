@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Card from '../../components/Shared/Card/Card'
+import CardButton from '../../components/Shared/CardButton/CardButton'
 import { faBuilding, faUser } from '@fortawesome/free-solid-svg-icons'
 import FormRegister from '../../components/Form/FormRegister/FormRegister'
 
@@ -13,8 +13,8 @@ const Signup = () => {
     <div className='signup-container'>
       {typeForm === "" ? (
         <>
-          <Card icon={faUser} name="Soy alumno" setTypeForm={setTypeForm} />
-          <Card icon={faBuilding} name="Soy empresa" setTypeForm={setTypeForm} />
+          <CardButton icon={faUser} name="Soy alumno" setTypeForm={setTypeForm} />
+          <CardButton icon={faBuilding} name="Soy empresa" setTypeForm={setTypeForm} />
         </>
       ) : typeForm === "Soy alumno" ? 
       <FormRegister typeForm={typeForm} setTypeForm={setTypeForm} /> : 

@@ -1,9 +1,9 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import "./card.css"
+import "./cardButton.css"
 
-const Card = ({ icon, name, setTypeForm}) => {
+const CardButton = ({ icon, name, setTypeForm}) => {
 
     const typeFormHandler = () => {
         setTypeForm(name)
@@ -19,4 +19,4 @@ const Card = ({ icon, name, setTypeForm}) => {
     )
 }
 
-export default Card
+export default CardButton
