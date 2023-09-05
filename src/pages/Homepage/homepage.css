@@ -1,0 +1,8 @@
+.home-description{
+    text-align: center;
+}
+
+.home-users-section{
+    display: flex;
+    justify-content: space-evenly;
+}
