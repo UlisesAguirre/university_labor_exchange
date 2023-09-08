@@ -1,0 +1,33 @@
+.basicInput-container {
+    padding: 0;
+    position: relative;
+}
+
+.basicInput-container label {
+  font-size: 1.3em;
+}
+
+.inputComponent {
+  font-size: 1em;
+}
+
+.container-span {
+    position: absolute;
+    background-color: rgba(57, 72, 103, .6);
+    border-radius: 10px;
+    width: 88%;
+    top: 100%;
+    z-index: 1;
+    padding: .2em;
+
+  }
+  
+  .span-input {
+    display: inline-block;
+    color: var(--light-mode);
+    font-size: .95em;
+  }
+
+  .input-icon {
+    color: var(--secondary-color);
+  }
