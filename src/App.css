@@ -4,6 +4,11 @@
 
   --light-mode: #F1F6F9;
   --dark-mode: #212A3E;
+  
+  /* Estilos drop shadow y box shadow */
+
+  --box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  --drop-shadow: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
 }
 
 /* Estilos dark y light mode*/
@@ -17,7 +22,8 @@
   background-color: rgba(33, 42, 62, .6) ;
   /* background-color: var(--dark-mode); */
   color: var(--light-mode);
-}
+} 
+
 
 /* Estilos boton */
 

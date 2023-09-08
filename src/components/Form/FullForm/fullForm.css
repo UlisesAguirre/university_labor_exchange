@@ -1,0 +1,43 @@
+.fullForm-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    border-radius: 1em;
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow);
+}
+
+.title-form {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    filter: var(--drop-shadow);
+}
+.fullForm-box {
+    display: flex;
+    justify-content: center;
+}
+
+.fullForm-box div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: .5em;
+}
+
+.fullForm-box input {
+    margin: .5em 0;
+    padding: .5em;
+    border-radius: 0.5em;
+    border: none;
+    box-shadow: var(--box-shadow);
+}   
+
+.fullForm-box label {
+    filter: var(--drop-shadow);
+}
+
+.fullForm-container button {
+    margin-top: 2em;
+}
