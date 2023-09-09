@@ -1,0 +1,41 @@
+.formLogin-container {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    border-radius: 1em;
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow);
+}
+
+.title-formLogin {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    filter: var(--drop-shadow);
+}
+.formLogin-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formLogin-box div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: .5em;
+}
+
+.formLogin-box input {
+    margin: .5em 0;
+    padding: .5em;
+    border-radius: 0.5em;
+    border: none;
+    box-shadow: var(--box-shadow);
+}   
+
+.formLogin-box label {
+    filter: var(--drop-shadow);
+}

@@ -1,8 +1,11 @@
-import React from 'react'
+import "./login.css"
+import FormLogin from "../../components/Form/FormLogin/FormLogin"
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <div className="login-container">
+      <FormLogin/>
+    </div>
   )
 }
 
