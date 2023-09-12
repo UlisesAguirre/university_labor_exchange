@@ -1,4 +1,10 @@
 .footer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 10vh;
+    color: var(--primary-color);
     background-color: var(--secondary-color);
+    text-align: center;
+    font-size: 1.2em;
 }
