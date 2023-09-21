@@ -1,0 +1,28 @@
+.userMenu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2em 0;
+    padding-left: 1em;
+    background-color: var(--secondary-color);
+    width: 15%;
+    border-radius: 1em;
+}
+
+.userMenu-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.userMenu-container a {
+    text-decoration: none;
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.userMenu-container a:hover {
+    transform: scale(1.01);
+    transform-origin: center;
+    transition: .1s;
+    color: #000;
+}

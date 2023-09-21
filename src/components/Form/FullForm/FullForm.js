@@ -217,7 +217,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         errorMessage={
                             <>
                                 {passwordErrors.uppercase && (
-                                    <div { /*AGREGAR LOGICA GREEN Y RED ALERT */}>Debe incluir una mayúscula.</div>
+                                    <div>Debe incluir una mayúscula.</div>
                                 )}
                                 {passwordErrors.lowercase && (
                                     <div>Debe incluir una minúscula.</div>

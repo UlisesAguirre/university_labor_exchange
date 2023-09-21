@@ -9,11 +9,10 @@ const Header = () => {
   return (
     <div className="header-container">
       <div className='logo-container'>
-      <Link to="/">
-        <img src={iconHeader} alt="" className='img-header' />
-      </Link>
-      <h1>Bolsa de trabajo</h1>
-
+        <Link to="/" className='header-logo'>
+          <img src={iconHeader} alt="" className='img-header' />
+          <h1>Bolsa de trabajo</h1>
+        </Link>
       </div>
       <AuthSection />
     </div>
