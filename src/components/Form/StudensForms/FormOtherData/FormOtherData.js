@@ -1,5 +1,9 @@
 import useFrom from "../../../../custom/useForm";
 
+// TODO: 
+// Agregar estilos
+// agregar validaciones al campo de cv
+
 const inicialForm = {
   secondaryDegree: '',
   curriculumVitae: '',
@@ -38,14 +42,13 @@ const FormOtherData = () => {
   } = useFrom ({ inicialForm, validateForm });
 
 
-
   return (
     <div className='formLogin-container'>
       <p className='title-formLogin'> Otros </p>
       <form className='formLogin-box' onChange={submitHandler}>
 
         <label> Título secundario </label>
-        <input type='text' name="secondaryDegree" value={form.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
+        <input type='text' name="secondaryDegree" placeholder="Bachiller en Ciencias Naturales" value={form.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
         {errors.secondaryDegree && <div>{errors?.secondaryDegree}</div>}
 
 
@@ -54,7 +57,7 @@ const FormOtherData = () => {
 
 
         <label>Observaciones</label>
-        <textarea name='observations' value={form.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
+        <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={form.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
         {errors.observations && <div>{errors?.observations}</div>}
 
       </form>

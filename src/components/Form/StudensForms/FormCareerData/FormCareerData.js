@@ -1,6 +1,7 @@
 import useForm from "../../../../custom/useForm";
  
 // TODO: 
+// Agregar estilos
 // titulo universitario ver si lo ponemos o no.
 // mappear selects 
 // agregar loading y response 
@@ -58,7 +59,7 @@ const FormCareerData = () => {
         {errors.career && <div>{errors?.career}</div>}
 
         <label>Cantidad materias aprobadas</label>
-        <input type="number" name="approvedSubjects" onChange={changeHandler} onBlur={blurHandler} value={form.approvedSubjects} />
+        <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={form.approvedSubjects} />
         {errors.approvedSubjects && <div>{errors?.approvedSubjects}</div>}
 
         <label>Plan especialidad</label>
@@ -83,15 +84,15 @@ const FormCareerData = () => {
         {errors.turn && <div>{errors?.turn}</div>}
 
         <label>Promedio sin aplazos</label>
-        <input name='average' type="number" min="0" max="10" step="0.01" onChange={changeHandler} onBlur={blurHandler} value={form.average} />
+        <input name='average' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={form.average} />
         {errors.average && <div>{errors?.average}</div>}
 
         <label>Promedio con aplazos</label>
-        <input name='averageWithFails' type="number" min="0" max="10" step="0.01" onChange={changeHandler} onBlur={blurHandler} value={form.averageWithFails} />
+        <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={form.averageWithFails} />
         {errors.averageWithFails && <div>{errors?.averageWithFails}</div>}
 
         <label>Titulo Universitario</label>
-        <input name='CareerTitle' type="text" onChange={changeHandler} onBlur={blurHandler} value={form.CareerTitle} />
+        <input name='CareerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={form.CareerTitle} />
         {errors.CareerTitle && <div>{errors?.CareerTitle}</div>}
 
       </form>
