@@ -5,7 +5,7 @@ import "./footer.css"
 const Footer = () => {
   return (
     <div className='footer-container'>
-        Este es el footer
+        Derechos reservados &copy; PPS
     </div>
   )
 }

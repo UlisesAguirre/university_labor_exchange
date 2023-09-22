@@ -1,0 +1,5 @@
+.menuCard-container {
+    width: 80%;
+    background-color: var(--secondary-color);
+    border-radius: 1em;
+}
