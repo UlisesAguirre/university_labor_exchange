@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './fullForm.css';
 import { useNavigate } from 'react-router-dom';
 import BasicInput from '../../Shared/BasicInput/BasicInput';
+import BasicButton from '../../Shared/BasicButton/BasicButton';
 
 const FullForm = ({ title, nameButton, typeForm }) => {
 
@@ -242,9 +243,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                     />
                 </div>
             </form>
-            <button className="button" onClick={submitHandler}>
-                {nameButton}
-            </button>
+            <BasicButton buttonName={nameButton} buttonHandler={submitHandler}/>
         </div>
     );
 };
