@@ -15,21 +15,24 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  let regex = {
-    secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/, //solo caracteres en español +  0 hasta 60
-    observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
-  };
-
-  if (!regex.secondaryDegree.test(data.secondaryDegree)) {
-    error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
-  }
-
-  if (!regex.observations.test(data.observations)) {
-    error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+  if(regex[name]){
+    if(!regex[name].test(data[name])){
+      if(name === 'secondaryDegree'){
+        error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
+      }
+      if(name === 'observations'){
+        error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+      }
+    }
   }
 
   return error;
 }
+
+const regex = {
+  secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/, //solo caracteres en español +  0 hasta 60
+  observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
+};
 
 const FormOtherData = ({ stepForwardHandler, stepBackHandler }) => {
 

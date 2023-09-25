@@ -1,6 +1,6 @@
 import useFrom from "../../../../custom/useForm";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
- 
+
 // TODO: 
 // Agregar estilos
 // titulo universitario ver si lo ponemos o no.
@@ -35,7 +35,7 @@ const validateData = (data, name) => {
   return error;
 }
 
-const FormCareerData = ({stepForwardHandler, stepBackHandler}) => {
+const FormCareerData = ({ stepForwardHandler, stepBackHandler }) => {
 
   const {
     data,
@@ -48,8 +48,11 @@ const FormCareerData = ({stepForwardHandler, stepBackHandler}) => {
 
   return (
     <div >
+      
       <p> Datos Universitarios </p>
-
+     
+      <div>
+       
         <label>Carrera</label>
         <select name="career" onChange={changeHandler} onBlur={blurHandler} value={data.career}>
           <option value={"Ing. civil"}>Ing. civil</option>
@@ -93,9 +96,14 @@ const FormCareerData = ({stepForwardHandler, stepBackHandler}) => {
         <label>Titulo Universitario</label>
         <input name='CareerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={data.CareerTitle} />
         {errors.CareerTitle && <div>{errors?.CareerTitle}</div>}
+      
+      </div>
 
+      <div>
         <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
         <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+      </div>
+
     </div>
   )
 }
