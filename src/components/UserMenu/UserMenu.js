@@ -10,7 +10,7 @@ const UserMenu = () => {
   return (
     <div className='userMenu-container'>
       <div className='userMenu-options'>
-        <Link>Perfil</Link>
+        <Link to="/profile">Perfil</Link>
         <Link>Editar perfil</Link>
         {userType === "Student" ?
           <Link>
@@ -20,7 +20,7 @@ const UserMenu = () => {
         }
       </div>
       <div>
-        <Link>Cerrar sesión</Link>
+        <Link to="/">Cerrar sesión</Link>
       </div>
 
     </div>
