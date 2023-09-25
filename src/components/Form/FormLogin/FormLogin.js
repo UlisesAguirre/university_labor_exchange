@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
 import BasicInput from '../../Shared/BasicInput/BasicInput'
 import { useNavigate } from 'react-router-dom';
@@ -7,17 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const FormLogin = () => {
 
   const navigate = useNavigate();
-
-  const [passwordErrors, setPasswordErrors] = useState({
-    uppercase: false,
-    lowercase: false,
-    number: false,
-  });
-
-  const regex = {
-    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-  };
 
   const [validInput, setValidInput] = useState({
     email: null,
@@ -30,31 +20,19 @@ const FormLogin = () => {
   });
 
   const handlerChangeInput = (e) => {
-    if (e.target.name === 'password') {
-      setInput({ ...input, [e.target.name]: e.target.value });
-      const passwordValue = e.target.value;
-      const isValid = regex.password.test(passwordValue);
-      setValidInput({ ...validInput, [e.target.name]: isValid });
-
-      // Actualizar los mensajes de error específicos
-      setPasswordErrors({
-        uppercase: !/[A-Z]/.test(passwordValue),
-        lowercase: !/[a-z]/.test(passwordValue),
-        number: !/\d/.test(passwordValue),
-      });
-
-    } else {
+    if (e.target.name === "email") {
       setInput({ ...input, [e.target.name]: e.target.value.toLowerCase() });
+    } else {
+      setInput({ ...input, [e.target.name]: e.target.value });
     }
   };
 
   const handlerBlurInput = (e) => {
 
     const eventTarget = e.target.name;
-
     setValidInput({
       ...validInput,
-      [eventTarget]: regex[eventTarget].test(input[eventTarget])
+      [eventTarget]: input[eventTarget] ? true : false,
     });
 
   }
@@ -72,7 +50,7 @@ const FormLogin = () => {
         password: '',
       });
 
-      navigate('/');
+      navigate('/profile');
     }
   }
 
@@ -88,9 +66,9 @@ const FormLogin = () => {
           event={handlerChangeInput}
           onBlur={handlerBlurInput}
           validInput={validInput}
-          errorMessage={
-            "Email invalido: respete el formato (example@gmail.com)"
-          } />
+          errorMessage={"Este campo es requerido"}
+          position="right"
+        />
         <BasicInput
           inputName={"Contraseña:"}
           name={"password"}
@@ -99,19 +77,8 @@ const FormLogin = () => {
           event={handlerChangeInput}
           onBlur={handlerBlurInput}
           validInput={validInput}
-          errorMessage={
-            <>
-              {passwordErrors.uppercase && (
-                <div>Debe incluir una mayúscula.</div>
-              )}
-              {passwordErrors.lowercase && (
-                <div>Debe incluir una minúscula.</div>
-              )}
-              {passwordErrors.number && (
-                <div>Debe contener un número.</div>
-              )}
-            </>
-          }
+          errorMessage={<><p><FontAwesomeIcon icon={faTriangleExclamation} /> Este campo es requerido</p></>}
+          position="left"
         />
       </form>
       <button className="button" onClick={submitHandler}>

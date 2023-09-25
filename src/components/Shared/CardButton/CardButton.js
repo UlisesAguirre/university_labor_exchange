@@ -10,8 +10,8 @@ const CardButton = ({ icon, name, setTypeForm}) => {
     }
 
     return (
-        <div className='card-container'>
-            <button className='card-box' onClick={typeFormHandler}>
+        <div className={name === "Soy alumno" ? 'card-container-student' : 'card-container-company'}>
+            <button className={name === "Soy alumno" ? 'card-box-student':'card-box-company'} onClick={typeFormHandler}>
                 <div className='card-icon'><FontAwesomeIcon icon={icon} /></div>
                 <h2>{name}</h2>
             </button>
