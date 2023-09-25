@@ -1,16 +1,17 @@
 import useFrom from "../../../../custom/useForm";
+import BasicButton from "../../../Shared/BasicButton/BasicButton";
 
 // TODO: 
 // Agregar estilos
 // agregar validaciones al campo de cv
 
-const inicialForm = {
+const inicialData = {
   secondaryDegree: '',
   curriculumVitae: '',
   observations: '',
 };
 
-const validateForm = (form, name) => {
+const validateData = (data, name) => {
 
   let error = '';
 
@@ -19,48 +20,50 @@ const validateForm = (form, name) => {
     observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
   };
 
-  if(!regex.secondaryDegree.test(form.secondaryDegree)){
+  if (!regex.secondaryDegree.test(data.secondaryDegree)) {
     error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
   }
 
-  if(!regex.observations.test(form.observations)){
+  if (!regex.observations.test(data.observations)) {
     error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
   }
 
   return error;
 }
 
-const FormOtherData = () => {
+const FormOtherData = ({ stepForwardHandler, stepBackHandler }) => {
+
   const {
-    form,
+    data,
     errors,
-    loading,
-    response,
     changeHandler,
     blurHandler,
-    submitHandler,
-  } = useFrom ({ inicialForm, validateForm });
+    moveForwardHandler,
+    moveBackHandler
+  } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
 
 
   return (
-    <div className='formLogin-container'>
-      <p className='title-formLogin'> Otros </p>
-      <form className='formLogin-box' onChange={submitHandler}>
+    <div>
+      <p > Otros </p>
+      <div>
 
         <label> Título secundario </label>
-        <input type='text' name="secondaryDegree" placeholder="Bachiller en Ciencias Naturales" value={form.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
+        <input type='text' name="secondaryDegree" placeholder="Bachiller en Ciencias Naturales" value={data.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
         {errors.secondaryDegree && <div>{errors?.secondaryDegree}</div>}
 
 
         <label>curriculum Vitae </label>
-        <input type= 'file' name="curriculumVitae" value={form.curriculumVitae} onChange={changeHandler}/>
+        <input type='file' name="curriculumVitae" value={data.curriculumVitae} onChange={changeHandler} />
 
 
         <label>Observaciones</label>
-        <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={form.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
+        <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={data.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
         {errors.observations && <div>{errors?.observations}</div>}
 
-      </form>
+      </div>
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
     </div>
   )
 

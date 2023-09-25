@@ -1,42 +1,63 @@
-import { useState } from "react"
+import {useState } from "react"
 
-//validateFrom es la funcion que hace las validaciones
+const useFrom = (props) => {
 
-const useFrom = ({ inicialForm, validateForm }) => {
+    const [data, setData] = useState(props.inicialData); //valores iniciales del form
+    const [errors, setErrors] = useState(props.inicialData);
 
-    const[form, setForm] = useState(inicialForm);//valores iniciales del form
-    const[errors, setErrors] = useState(inicialForm); //el objeto vacio representa que no hay errores
-    const[loading, setLoading] = useState(false); //estado de envio del form
-    const[response, setResponse] = useState(null); //respuesta obtenida al enviar el form
 
     const changeHandler = (e) => {
-        const {value, name} = e.target;
-        setForm({...form, [name]: value.toLowerCase() })
+        const { value, name } = e.target;
+        setData({ ...data, [name]: value.toLowerCase() })
     };
 
     const blurHandler = (e) => {
         changeHandler(e);
-        const {name} = e.target
+        const { name } = e.target
         setErrors({
             ...errors,
-            [name]: validateForm(form,name),
+            [name]: props.validateData(data, name),
         })
     };
 
 
-    const submitHandler = (e) => {
+    const moveForwardHandler = (e) => {
         e.preventDefault();
-        //...
-    };
+
+        let isValid = true;
+
+        Object.keys(data).forEach((name) => {
+            const error = props.validateData(data, name)
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: error,
+            }))
+
+            if(error){
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            alert('Hay errores');
+        } else {
+            props.stepForwardHandler(data);
+        }
+
+    }
+
+    const moveBackHandler = (e) => {
+        e.preventDefault()
+        props.stepBackHandler()
+    }
 
     return {
-        form,
+        data,
         errors,
-        loading,
-        response,
         changeHandler,
         blurHandler,
-        submitHandler,
+        moveForwardHandler,
+        moveBackHandler,
     }
 }
 
