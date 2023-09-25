@@ -17,6 +17,7 @@ const FormLogin = () => {
   const [input, setInput] = useState({
     email: '',
     password: '',
+    userType:''
   });
 
   const handlerChangeInput = (e) => {
@@ -37,6 +38,48 @@ const FormLogin = () => {
 
   }
 
+  const login = () => {
+    const url = 'https://localhost:7049/api/authentication/authenticate';
+  
+    // Configurar la solicitud Fetch
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input),
+    };
+  
+    // solicitud Fetch a Authenticate
+    fetch(url, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud');
+        }
+        return response.text();
+      })
+      .then(data => {
+        //Esta variable tiene el token, ver de guardar en localstorage
+        const jwtToken = data;
+  
+        console.log('Token JWT:', jwtToken);
+  
+        // Redirigimos 
+        alert('Inicio de sesión exitoso');
+        setInput({
+          email: '',
+          password: '',
+        });
+  
+        navigate('/profile');
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+        // Manejar errores aca
+        alert('Error al iniciar sesión');
+      });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     const validationInputs = Object.values(validInput).some((valid) => !valid);
@@ -44,13 +87,9 @@ const FormLogin = () => {
     if (validationInputs) {
       alert('Complete correctamente todos los campos');
     } else {
-      alert('Inicio de sesion exitoso');
-      setInput({
-        email: '',
-        password: '',
-      });
-
-      navigate('/profile');
+      login();
+      console.log(input)
+      
     }
   }
 

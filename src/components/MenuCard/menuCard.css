@@ -2,4 +2,5 @@
     width: 80%;
     background-color: var(--secondary-color);
     border-radius: 1em;
+    box-shadow: var(--box-shadow);
 }

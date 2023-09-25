@@ -5,6 +5,7 @@
     margin: 1em;
     padding: 1em;
     border-radius: 1em;
+    box-shadow: var(--box-shadow);
 }
 
 .profile-name-card img {
@@ -23,9 +24,10 @@
     margin: 1em;
     width: 30%;
     border-radius: 1em;
+    box-shadow: var(--box-shadow);
 }
 
 .profile-data-box h2 {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid;
     margin: 0;
 }
