@@ -5,7 +5,7 @@ import "./menuCard.css"
 const MenuCard = ({children}) => {
   return (
     <div className='menuCard-container'>
-        {children}
+      {children}
     </div>
   )
 }

@@ -4,6 +4,10 @@ import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
 import BasicInput from '../../Shared/BasicInput/BasicInput'
 import { useNavigate } from 'react-router-dom';
+import BasicButton from '../../Shared/BasicButton/BasicButton';
+
+
+// FIXME: sacar validaciones del password 
 
 const FormLogin = () => {
 
@@ -120,9 +124,7 @@ const FormLogin = () => {
           position="left"
         />
       </form>
-      <button className="button" onClick={submitHandler}>
-        Iniciar sesión
-      </button>
+      <BasicButton buttonName={"Iniciar sesión"} buttonHandler={submitHandler}/>
     </div>
   )
 }
