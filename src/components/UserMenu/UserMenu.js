@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import "./userMenu.css"
 import { Link } from 'react-router-dom'
+import TokenContext from '../Context/TokenContext/TokenContext';
+import UserContext from '../Context/UserContext/UserContext';
 
 const UserMenu = () => {
 
-  const [userType, setUserType] = useState("Student")
+  const [userType, setUserType] = useState("Student");
+
+  const {deleteToken} = useContext(TokenContext);
+  const {logout} = useContext(UserContext);
+
+  const logoutSession = () => {
+    logout();
+    deleteToken();
+  };
 
   return (
     <div className='userMenu-container'>
       <div className='userMenu-options'>
-        <Link>Perfil</Link>
+        <Link to="/profile">Perfil</Link>
         <Link>Editar perfil</Link>
         {userType === "Student" ?
           <Link>
@@ -20,7 +30,7 @@ const UserMenu = () => {
         }
       </div>
       <div>
-        <Link>Cerrar sesión</Link>
+        <Link to="/" onClick={logoutSession}>Cerrar sesión</Link>
       </div>
 
     </div>
