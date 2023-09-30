@@ -13,7 +13,7 @@ import UserPage from './pages/UserPage/UserPage';
 
 function App() {
 
-  const {theme} = useContext(ThemeContext)
+  const {theme} = useContext(ThemeContext);
 
   return (
     <div className="App">

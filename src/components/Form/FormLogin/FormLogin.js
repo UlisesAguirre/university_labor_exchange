@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
 import BasicInput from '../../Shared/BasicInput/BasicInput'
 import { useNavigate } from 'react-router-dom';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
+import TokenContext from '../../Context/TokenContext/TokenContext';
+import UserContext from '../../Context/UserContext/UserContext';
 
 
 // FIXME: sacar validaciones del password 
@@ -12,6 +14,10 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 const FormLogin = () => {
 
   const navigate = useNavigate();
+
+  const {updateToken} = useContext(TokenContext);
+
+  const {login} = useContext(UserContext);
 
   const [validInput, setValidInput] = useState({
     email: null,
@@ -42,7 +48,7 @@ const FormLogin = () => {
 
   }
 
-  const login = () => {
+  const submit = () => {
     const url = 'https://localhost:7049/api/authentication/authenticate';
   
     // Configurar la solicitud Fetch
@@ -65,8 +71,9 @@ const FormLogin = () => {
       .then(data => {
         //Esta variable tiene el token, ver de guardar en localstorage
         const jwtToken = data;
-  
-        console.log('Token JWT:', jwtToken);
+
+        updateToken(jwtToken);
+        login();
   
         // Redirigimos 
         alert('Inicio de sesión exitoso');
@@ -91,8 +98,7 @@ const FormLogin = () => {
     if (validationInputs) {
       alert('Complete correctamente todos los campos');
     } else {
-      login();
-      console.log(input)
+      submit();
       
     }
   }
