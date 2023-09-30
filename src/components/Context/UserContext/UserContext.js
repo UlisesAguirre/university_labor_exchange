@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import iconUser from "../../assets/img/user.png"
+import jwt_decode from 'jwt-decode';
 
 const UserContext = createContext();
 
@@ -13,10 +13,18 @@ const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (email, role, name, lastname) => {
-    const fullName = `${name} ${lastname}`;
-    const userData = { email, role, name: fullName, icon: iconUser };
+  const login = () => {
+    const storedToken = localStorage.getItem('token');
+    const decodedToken = jwt_decode(storedToken);
+
+    const userData = {
+      email: decodedToken.email,
+      username: decodedToken.username,
+      userType: decodedToken.role
+    }
+
     setUser(userData);
+
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
