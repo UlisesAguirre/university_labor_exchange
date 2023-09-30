@@ -1,5 +1,6 @@
 import useFrom from "../../../../custom/useForm"
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
+import './FormPersonalData.css'
 
 //TODO: agregar validaciones, estilos y ver de llamar a la api para los datos de direccion. 
 

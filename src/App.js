@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { useContext } from 'react';
 import { ThemeContext } from './components/Context/ThemeContext/ThemeContext';
+import ThemeButton from './components/ThemeButton/ThemeButton';
 import Header from "./components/Header/Header"
 import Footer from './components/Footer/Footer';
 
@@ -13,7 +14,7 @@ import UserPage from './pages/UserPage/UserPage';
 
 function App() {
 
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext)
 
   return (
     <div className="App">
@@ -23,10 +24,11 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/*" element={<UserPage /> } />
+          <Route path='/userpage' element={<UserPage /> } />
         </Routes>
       </div>
       <Footer />
+      <ThemeButton />
     </div>
   );
 }

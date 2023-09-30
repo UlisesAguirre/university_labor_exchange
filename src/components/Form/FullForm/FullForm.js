@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import './fullForm.css';
 import { useNavigate } from 'react-router-dom';
 import BasicInput from '../../Shared/BasicInput/BasicInput';
@@ -9,6 +7,12 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 const FullForm = ({ title, nameButton, typeForm }) => {
 
     const navigate = useNavigate();
+
+    const [passwordErrors, setPasswordErrors] = useState({
+        uppercase: false,
+        lowercase: false,
+        number: false,
+    });
 
     const regex = {
         name: /^[a-zA-Z]{3,}$/,
@@ -19,15 +23,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
         email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
     };
-
-    const [passwordErrors, setPasswordErrors] = useState({
-        uppercase: false,
-        lowercase: false,
-        number: false,
-        minLength: false
-    });
-
-    const [validPassword, setValidPassword] = useState(false)
 
     const [input, setInput] = useState({
         email: '',
@@ -62,47 +57,17 @@ const FullForm = ({ title, nameButton, typeForm }) => {
     });
 
     const handlerBlurInput = (e) => {
-
         const eventTarget = e.target.name;
-
-        const updatedValidInput = {
+        setValidInput({
             ...validInput,
             [eventTarget]:
                 eventTarget !== 'confirmPassword'
                     ? regex[eventTarget].test(input[eventTarget])
                     : input.confirmPassword === input.password,
-        };
-
-        // Configura todos los demás campos en null para mostrar solo un ErrorMessage
-        for (const key in updatedValidInput) {
-            if (key !== eventTarget) {
-                if (updatedValidInput[key] === false) {
-                    updatedValidInput[key] = null;
-                }
-            }
-        }
-
-        setValidInput(updatedValidInput);
-
-        //Set para el manejo del mensaje de password
-        setValidPassword(true);
-
+        });
     };
 
     const handlerChangeInput = (e) => {
-
-        //Set para el manejo del mensaje de password
-        setValidPassword(false);
-
-        //La misma logica que el Blur, ya que que el handler se bugueaba con el password
-        for (const key in validInput) {
-            if (key !== e.target.name) {
-                if (validInput[key] === false) {
-                    validInput[key] = null;
-                }
-            }
-        }
-
         if (e.target.name === 'password' || e.target.name === 'confirmPassword') {
             setInput({ ...input, [e.target.name]: e.target.value });
 
@@ -117,7 +82,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                     uppercase: !/[A-Z]/.test(passwordValue),
                     lowercase: !/[a-z]/.test(passwordValue),
                     number: !/\d/.test(passwordValue),
-                    minLength: passwordValue.length < 8,
                 });
             }
         } else {
@@ -131,8 +95,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
         const validationInputs = Object.values(validInput).some((valid) => !valid);
 
         if (validationInputs) {
-            console.log(validInput)
-            console.log(input)
             alert('Complete correctamente todos los campos');
         } else {
             alert('Usuario registrado');
@@ -176,7 +138,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                                 errorMessage={
                                     "El nombre debe contener solo letras y un minimo de 3 caracteres"
                                 }
-                                position="right"
                             />
                             <BasicInput
                                 inputName={"Apellido:"}
@@ -189,7 +150,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                                 errorMessage={
                                     "El apellido debe contener solo letras y un minimo de 3 caracteres"
                                 }
-                                position="right"
                             />
                             <BasicInput
                                 inputName={"Legajo:"}
@@ -202,7 +162,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                                 errorMessage={
                                     "El legajo debe estar compuesto por 5 numeros"
                                 }
-                                position="right"
                             />
 
                         </>
@@ -219,7 +178,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                                 errorMessage={
                                     "El cuit debe contener guiones"
                                 }
-                                position="right"
                             />
                             <BasicInput
                                 inputName={"Razon social:"}
@@ -232,7 +190,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                                 errorMessage={
                                     "La razon social debe contener solo letras y un minimo de 3 caracteres"
                                 }
-                                position="right"
                             />
                         </>
                     )}
@@ -247,9 +204,8 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         onBlur={handlerBlurInput}
                         validInput={validInput}
                         errorMessage={
-                            "Email invalido"
+                            "Email invalido: respete el formato (example@gmail.com)"
                         }
-                        position="left"
                     />
                     <BasicInput
                         inputName={"Contraseña:"}
@@ -261,52 +217,17 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         validInput={validInput}
                         errorMessage={
                             <>
-                                { validPassword !== false ?
-                                    <div className='bad-input'>
-                                        <p> <FontAwesomeIcon icon={faTriangleExclamation} /> Contraseña invalida</p>
-                                    </div>
-                                    : <>
-                                        <div className={passwordErrors.uppercase ? "bad-input" : "correct-input"}>
-                                            <p>
-                                                {passwordErrors.uppercase ?
-                                                    <FontAwesomeIcon icon={faTriangleExclamation} />
-                                                    : <FontAwesomeIcon icon={faCheck} />
-                                                }
-                                                Debe incluir una mayúscula.
-                                            </p>
-                                        </div>
-                                        <div className={passwordErrors.lowercase ? "bad-input" : "correct-input"}>
-                                            <p>
-                                                {passwordErrors.lowercase ?
-                                                    <FontAwesomeIcon icon={faTriangleExclamation} />
-                                                    : <FontAwesomeIcon icon={faCheck} />
-                                                }
-                                                Debe incluir una minúscula.
-                                            </p>
-                                        </div>
-                                        <div className={passwordErrors.number ? "bad-input" : "correct-input"}>
-                                            <p>
-                                                {passwordErrors.number ?
-                                                    <FontAwesomeIcon icon={faTriangleExclamation} />
-                                                    : <FontAwesomeIcon icon={faCheck} />
-                                                }
-                                                Debe contener un número.
-                                            </p>
-                                        </div>
-                                        <div className={passwordErrors.minLength ? "bad-input" : "correct-input"}>
-                                            <p>
-                                                {passwordErrors.minLength ?
-                                                    <FontAwesomeIcon icon={faTriangleExclamation} />
-                                                    : <FontAwesomeIcon icon={faCheck} />
-                                                }
-                                                Minimo 8 caracteres.
-                                            </p>
-                                        </div>
-                                    </>}
-
+                                {passwordErrors.uppercase && (
+                                    <div>Debe incluir una mayúscula.</div>
+                                )}
+                                {passwordErrors.lowercase && (
+                                    <div>Debe incluir una minúscula.</div>
+                                )}
+                                {passwordErrors.number && (
+                                    <div>Debe contener un número.</div>
+                                )}
                             </>
                         }
-                        position="left"
                     />
                     <BasicInput
                         inputName={"Confirmar contraseña:"}
@@ -319,7 +240,6 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         errorMessage={
                             "Las contraseñas no coiciden."
                         }
-                        position="left"
                     />
                 </div>
             </form>

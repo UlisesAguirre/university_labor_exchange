@@ -1,38 +1,11 @@
 .themeButton-container {
-    display: flex;
-    align-items: center;
-    width: 11%;
+    position: fixed;
+    bottom: 2em;
+    left: 2em;
 }
 
 .themeButton-container button {
-    border: 2px double var(--secondary-color);
-    border-radius: 1em;
+    border-radius: 50%;
     height: 3em;
     width: 3em;
-    box-shadow: var(--box-shadow);
-}
-
-.themeButton-container button:hover {
-    border: 2px double var(--primary-color);
-    cursor: pointer;
-    transform: scale(1.05);
-    transform-origin: center;
-    transition: .3s;
-}
-
-.themeButton-container p {
-    margin-left: .5em;
-    opacity: 0;
-    font-size: .9em;
-    transform: scale(1);
-    transform-origin: center;
-    transition: .2s;
-    filter: var(--drop-shadow);
-}
-
-.themeButton-container button:hover + p {
-    opacity: 1;
-    transform: scale(1.05);
-    transform-origin: center;
-    transition: .2s;
 }

@@ -7,7 +7,6 @@
     background-color: var(--secondary-color);
     width: 15%;
     border-radius: 1em;
-    box-shadow: var(--box-shadow);
 }
 
 .userMenu-options {

@@ -41,20 +41,3 @@
 .fullForm-container button {
     margin-top: 2em;
 }
-
-/* Colores para la logica del handler del password */
-
-.correct-input {
-    display: flex;
-    color: rgb(10, 245, 10);
-    padding: 0;
-}
-
-.bad-input {
-    display: flex;
-}
-
-.correct-input p, .bad-input p {
-    padding: 0;
-    margin: 0;
-}

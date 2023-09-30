@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {  faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import "./basicInput.css";
 
@@ -13,14 +13,7 @@ const BasicInput = ({
   onBlur,
   validInput,
   errorMessage,
-  position
 }) => {
-
-  const errorStyle = {
-    position: "absolute",
-    [position]: "100%",
-  };
-
   return (
     <div className="basicInput-container">
       <label>{inputName}</label>
@@ -33,10 +26,9 @@ const BasicInput = ({
         className="inputComponent"
       ></input>
       {validInput[name] === false ? (
-        <div className="container-span" style={errorStyle}>
+        <div className="container-span">
           <span className="span-input">
-            {name !== "password" ? <FontAwesomeIcon icon={faTriangleExclamation} className="input-icon" /> : null}
-            {errorMessage}
+            <FontAwesomeIcon icon={faTriangleExclamation}  className="input-icon"/>  {errorMessage}
           </span>
         </div>
       ) : null}

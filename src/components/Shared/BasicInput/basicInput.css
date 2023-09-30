@@ -1,6 +1,6 @@
 .basicInput-container {
-  padding: 0;
-  position: relative;
+    padding: 0;
+    position: relative;
 }
 
 .basicInput-container label {
@@ -12,21 +12,22 @@
 }
 
 .container-span {
-  position: absolute;
-  background-color: rgba(57, 72, 103, .6);
-  border-radius: 10px;
-  width: 45%;
-  z-index: 1;
-  padding: .2em;
-}
+    position: absolute;
+    background-color: rgba(57, 72, 103, .6);
+    border-radius: 10px;
+    width: 88%;
+    top: 100%;
+    z-index: 1;
+    padding: .2em;
 
-.span-input {
-  display: inline-block;
-  color: #fff;
-  font-size: .85em;
-  width: 100%;
-}
+  }
+  
+  .span-input {
+    display: inline-block;
+    color: var(--light-mode);
+    font-size: .95em;
+  }
 
-.input-icon {
-  color: #fff;
-}
+  .input-icon {
+    color: var(--secondary-color);
+  }

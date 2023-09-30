@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ThemeContext } from "../Context/ThemeContext/ThemeContext";
 import "./themeButton.css";
 
@@ -13,12 +11,11 @@ const ThemeButton = () => {
         className={theme === "light" ? "dark" : "light"}
       >
         {theme === "light" ? (
-          <FontAwesomeIcon icon={faMoon} />
-          ) : (
-          <FontAwesomeIcon icon={faSun} />
+          <p>oscuro</p>
+        ) : (
+          <p>claro</p>
         )}
       </button>
-      <p>{theme === "light" ? "Modo oscuro" : "Modo claro"}</p>
     </div>
   );
 };
