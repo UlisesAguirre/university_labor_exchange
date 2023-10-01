@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
 import TokenContext from '../../Context/TokenContext/TokenContext';
 import UserContext from '../../Context/UserContext/UserContext';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 
 // FIXME: sacar validaciones del password 
@@ -18,6 +19,8 @@ const FormLogin = () => {
   const {updateToken} = useContext(TokenContext);
 
   const {login} = useContext(UserContext);
+
+  const [ loading, setLoading] = useState(false);
 
   const [validInput, setValidInput] = useState({
     email: null,
@@ -60,6 +63,8 @@ const FormLogin = () => {
       body: JSON.stringify(input),
     };
   
+    setLoading(true);
+
     // solicitud Fetch a Authenticate
     fetch(url, requestOptions)
       .then(response => {
@@ -76,6 +81,7 @@ const FormLogin = () => {
         login();
   
         // Redirigimos 
+        setLoading(false);
         alert('Inicio de sesión exitoso');
         setInput({
           email: '',
@@ -87,6 +93,7 @@ const FormLogin = () => {
       .catch(error => {
         console.error('Error al realizar la solicitud:', error);
         // Manejar errores aca
+        setLoading(false);
         alert('Error al iniciar sesión');
       });
   };
@@ -99,12 +106,12 @@ const FormLogin = () => {
       alert('Complete correctamente todos los campos');
     } else {
       submit();
-      
     }
   }
 
   return (
     <div className='formLogin-container'>
+      {loading && <Spinner />}
       <p className='title-formLogin'>Iniciar sesión</p>
       <form className='formLogin-box'>
         <BasicInput

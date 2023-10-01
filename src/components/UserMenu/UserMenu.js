@@ -7,10 +7,10 @@ import UserContext from '../Context/UserContext/UserContext';
 
 const UserMenu = () => {
 
-  const [userType, setUserType] = useState("Student");
+  const { user } = useContext(UserContext);
 
-  const {deleteToken} = useContext(TokenContext);
-  const {logout} = useContext(UserContext);
+  const { deleteToken } = useContext(TokenContext);
+  const { logout } = useContext(UserContext);
 
   const logoutSession = () => {
     logout();
@@ -20,14 +20,18 @@ const UserMenu = () => {
   return (
     <div className='userMenu-container'>
       <div className='userMenu-options'>
-        <Link to="/profile">Perfil</Link>
-        <Link>Editar perfil</Link>
-        {userType === "Student" ?
-          <Link>
-          </Link> :
-          <Link>
-          </Link>
-        }
+        {user.userType !== "admin" ?
+          <>
+            <Link to="/profile">Perfil</Link>
+            <Link to="/profile/editprofile">Editar perfil</Link>
+          </> :
+          <>
+            <Link to="">Administrar usuarios</Link>
+            <Link to="">Administrar ofertas</Link>
+          </>}
+        {user.userType === "student" && <Link>Ofertas laborales</Link>}
+        {user.userType === "company" && <Link>Ofertas realizadas</Link>}
+        {user.userType === "admin" && <Link></Link>}
       </div>
       <div>
         <Link to="/" onClick={logoutSession}>Cerrar sesión</Link>
