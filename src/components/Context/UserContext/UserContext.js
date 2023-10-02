@@ -18,6 +18,7 @@ const UserProvider = ({ children }) => {
     const decodedToken = jwt_decode(storedToken);
 
     const userData = {
+      id: decodedToken.sub,
       email: decodedToken.email,
       username: decodedToken.username,
       userType: decodedToken.role

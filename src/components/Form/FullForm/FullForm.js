@@ -5,15 +5,19 @@ import './fullForm.css';
 import { useNavigate } from 'react-router-dom';
 import BasicInput from '../../Shared/BasicInput/BasicInput';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
+import usePostRequest from '../../../custom/usePostRequest';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 const FullForm = ({ title, nameButton, typeForm }) => {
 
     const navigate = useNavigate();
 
+    const { postData, isLoading, error } = usePostRequest();
+
     const regex = {
         name: /^[a-zA-Z]{3,}$/,
         lastName: /^[a-zA-Z]{3,}$/,
-        socialReason: /^[a-zA-Z]{3,}$/,
+        socialReason: /^[a-zA-Z\s]{3,}$/,
         legajo: /^\d{5}$/,
         cuit: /^\d{2}-\d{8}-\d$/,
         email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -125,41 +129,56 @@ const FullForm = ({ title, nameButton, typeForm }) => {
         }
     };
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const validationInputs = Object.values(validInput).some((valid) => !valid);
 
         if (validationInputs) {
-            console.log(validInput)
-            console.log(input)
             alert('Complete correctamente todos los campos');
         } else {
-            alert('Usuario registrado');
-            console.log();
-            // Agregar lógica para enviar input
-            setInput({
-                email: '',
-                password: '',
-                confirmPassword: '',
-                ...(typeForm === 'Soy alumno'
-                    ? {
-                        name: '',
-                        lastName: '',
-                        legajo: '',
-                    }
-                    : {
-                        cuit: '',
-                        socialReason: '',
-                    }),
-            });
 
-            navigate('/login');
+            const { confirmPassword, ...data } = input;
+            const dataUser = { ...data };
+
+            const url = (typeForm === 'Soy alumno') ?
+                "https://localhost:7049/api/Register/RegisterStudent" :
+                "https://localhost:7049/api/Register/RegisterCompany";
+
+
+            const response = await postData(url, dataUser);
+
+            if (response) {
+                alert('Usuario registrado correctamente');
+                // Agregar lógica para enviar input
+                setInput({
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                    ...(typeForm === 'Soy alumno'
+                        ? {
+                            name: '',
+                            lastName: '',
+                            legajo: '',
+                        }
+                        : {
+                            cuit: '',
+                            socialReason: '',
+                        }),
+                });
+
+                navigate('/login');
+
+            } else {
+                alert("Error al crear el usuario.");
+            }
+
         }
     };
 
     return (
         <div className="fullForm-container">
+            {isLoading && <Spinner />}
             <p className="title-form">{title}</p>
             <form action="" className="fullForm-box">
                 <div>
@@ -261,7 +280,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         validInput={validInput}
                         errorMessage={
                             <>
-                                { validPassword !== false ?
+                                {validPassword !== false ?
                                     <div className='bad-input'>
                                         <p> <FontAwesomeIcon icon={faTriangleExclamation} /> Contraseña invalida</p>
                                     </div>
@@ -323,7 +342,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                     />
                 </div>
             </form>
-            <BasicButton buttonName={nameButton} buttonHandler={submitHandler}/>
+            <BasicButton buttonName={nameButton} buttonHandler={submitHandler} />
         </div>
     );
 };
