@@ -4,12 +4,17 @@
 
 .profile-name-card {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin: 1em;
     padding: 1em;
     border-radius: 1em;
     box-shadow: var(--box-shadow);
+}
+
+.profile-name-card div {
+    display: flex;
+    align-items: center;
 }
 
 .profile-title-card {
@@ -63,6 +68,21 @@
     padding: 1em;
     border-radius: 1em;
     box-shadow: var(--box-shadow);
+}
+
+.profile-company-card {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    margin: 1em;
+    padding: 1em 2em;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.profile-company-card h2 {
+    border-bottom: 1px solid;
+    padding-bottom: .3em;
 }
 
 .profile-message-card a {
