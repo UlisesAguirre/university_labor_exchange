@@ -1,0 +1,70 @@
+.userCard-container {
+    height: 65%;
+}
+
+.profile-name-card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.profile-title-card {
+    font-weight: bold;
+    text-align: center;
+    padding: 1em;   
+    margin: 1em;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.profile-title-card p {
+    font-size: 2em;
+    padding: 0;
+    margin: 0;
+    filter: var(--drop-shadow);
+}
+
+.profile-name-card img {
+    width: 3em;
+    height: 3em;
+    padding-right: 1em;
+}
+
+.profile-data-card {
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile-data-box {
+    padding: 2em;
+    margin: 1em;
+    width: 30%;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.profile-data-box h2 {
+    border-bottom: 1px solid;
+    margin: 0;
+}
+
+.profile-message-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.profile-message-card a {
+    text-decoration: none;
+}

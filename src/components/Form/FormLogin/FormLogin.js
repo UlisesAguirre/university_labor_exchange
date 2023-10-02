@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
 import BasicInput from '../../Shared/BasicInput/BasicInput'
 import { useNavigate } from 'react-router-dom';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
+import TokenContext from '../../Context/TokenContext/TokenContext';
+import UserContext from '../../Context/UserContext/UserContext';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 
 // FIXME: sacar validaciones del password 
@@ -11,16 +16,11 @@ const FormLogin = () => {
 
   const navigate = useNavigate();
 
-  const [passwordErrors, setPasswordErrors] = useState({
-    uppercase: false,
-    lowercase: false,
-    number: false,
-  });
+  const {updateToken} = useContext(TokenContext);
 
-  const regex = {
-    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-  };
+  const {login} = useContext(UserContext);
+
+  const [ loading, setLoading] = useState(false);
 
   const [validInput, setValidInput] = useState({
     email: null,
@@ -30,37 +30,73 @@ const FormLogin = () => {
   const [input, setInput] = useState({
     email: '',
     password: '',
+    userType:''
   });
 
   const handlerChangeInput = (e) => {
-    if (e.target.name === 'password') {
-      setInput({ ...input, [e.target.name]: e.target.value });
-      const passwordValue = e.target.value;
-      const isValid = regex.password.test(passwordValue);
-      setValidInput({ ...validInput, [e.target.name]: isValid });
-
-      // Actualizar los mensajes de error específicos
-      setPasswordErrors({
-        uppercase: !/[A-Z]/.test(passwordValue),
-        lowercase: !/[a-z]/.test(passwordValue),
-        number: !/\d/.test(passwordValue),
-      });
-
-    } else {
+    if (e.target.name === "email") {
       setInput({ ...input, [e.target.name]: e.target.value.toLowerCase() });
+    } else {
+      setInput({ ...input, [e.target.name]: e.target.value });
     }
   };
 
   const handlerBlurInput = (e) => {
 
     const eventTarget = e.target.name;
-
     setValidInput({
       ...validInput,
-      [eventTarget]: regex[eventTarget].test(input[eventTarget])
+      [eventTarget]: input[eventTarget] ? true : false,
     });
 
   }
+
+  const submit = () => {
+    const url = 'https://localhost:7049/api/authentication/authenticate';
+  
+    // Configurar la solicitud Fetch
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input),
+    };
+  
+    setLoading(true);
+
+    // solicitud Fetch a Authenticate
+    fetch(url, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud');
+        }
+        return response.text();
+      })
+      .then(data => {
+        //Esta variable tiene el token, ver de guardar en localstorage
+        const jwtToken = data;
+
+        updateToken(jwtToken);
+        login();
+  
+        // Redirigimos 
+        setLoading(false);
+        alert('Inicio de sesión exitoso');
+        setInput({
+          email: '',
+          password: '',
+        });
+  
+        navigate('/profile');
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+        // Manejar errores aca
+        setLoading(false);
+        alert('Error al iniciar sesión');
+      });
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -69,18 +105,13 @@ const FormLogin = () => {
     if (validationInputs) {
       alert('Complete correctamente todos los campos');
     } else {
-      alert('Inicio de sesion exitoso');
-      setInput({
-        email: '',
-        password: '',
-      });
-
-      navigate('/');
+      submit();
     }
   }
 
   return (
     <div className='formLogin-container'>
+      {loading && <Spinner />}
       <p className='title-formLogin'>Iniciar sesión</p>
       <form className='formLogin-box'>
         <BasicInput
@@ -91,9 +122,9 @@ const FormLogin = () => {
           event={handlerChangeInput}
           onBlur={handlerBlurInput}
           validInput={validInput}
-          errorMessage={
-            "Email invalido: respete el formato (example@gmail.com)"
-          } />
+          errorMessage={"Este campo es requerido"}
+          position="right"
+        />
         <BasicInput
           inputName={"Contraseña:"}
           name={"password"}
@@ -102,19 +133,8 @@ const FormLogin = () => {
           event={handlerChangeInput}
           onBlur={handlerBlurInput}
           validInput={validInput}
-          errorMessage={
-            <>
-              {passwordErrors.uppercase && (
-                <div>Debe incluir una mayúscula.</div>
-              )}
-              {passwordErrors.lowercase && (
-                <div>Debe incluir una minúscula.</div>
-              )}
-              {passwordErrors.number && (
-                <div>Debe contener un número.</div>
-              )}
-            </>
-          }
+          errorMessage={<><p><FontAwesomeIcon icon={faTriangleExclamation} /> Este campo es requerido</p></>}
+          position="left"
         />
       </form>
       <BasicButton buttonName={"Iniciar sesión"} buttonHandler={submitHandler}/>

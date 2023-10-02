@@ -1,4 +1,4 @@
-.card-container {
+.card-container-student, .card-container-company {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,16 @@
     height: 100%;
 }
 
-.card-box {
+.card-container-company:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+    transition: .4s;
+}
+.card-container-student:hover {
+    background-color: rgba(0, 128, 0, 0.3);
+    transition: .4s;
+}
+
+.card-box-student, .card-box-company {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +33,7 @@
     text-decoration: none;
 }
 
-.card-box:hover {
+.card-box-student:hover, .card-box-company:hover {
     color: var(--secondary-color);
     background-color: var(--primary-color);
     border: 1px solid var(--secondary-color);
@@ -34,13 +43,23 @@
     cursor: pointer;
 }
 
+.card-box-company:hover {
+    border:3px solid rgba(209, 95, 95, 0.3);
+}
+
+.card-box-student:hover {
+    border:3px solid rgba(0, 128, 0, 0.3); 
+
+}
+
+
 .card-icon {
     font-size: 7em;
     padding: 0;
     filter: var(--drop-shadow);
 }
 
-.card-box h2 {
+.card-box-student h2, .card-box-company h2 {
     font-size: 2em;
     filter: var(--drop-shadow);
 }
