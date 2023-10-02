@@ -7,12 +7,45 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 
 const StudentForm = () => {
 
-    const [form, setForm] = useState({});
+    const inicialForm = {userName: '',
+    name: '',
+    lastname: '',
+    email: '',
+    legajo: '',
+    docType: '',
+    docNumber: '',
+    birthdate: '',
+    civilStatus: '',
+    cuil: '',
+    sex: '',
+    street: '',
+    streetNumber: '',
+    floor: '',
+    city: '',
+    province: '',
+    country: '',
+    telephone: '',
+    career: '',
+    approvedSubjects: '',
+    studyProgram: '',
+    currentCareerYear: '',
+    turn: '',
+    average: '',
+    averageWithFails: '',
+    CareerTitle: '',
+    secondaryDegree: '',
+    curriculumVitae: '',
+    observations: '',
+    skills: [],
+        
+    }
+   
+    const [form, setForm] = useState(inicialForm);
 
     const [step, setStep] = useState(1);
 
     const stepForwardHandler = (data) => {
-        setForm({...form,... data});
+        setForm({ ...form, ...data });
         setStep(step => step + 1);
     };
 
@@ -25,12 +58,12 @@ const StudentForm = () => {
         <div>
             <form>
 
-                {step === 1 && <FormPersonalData stepForwardHandler={stepForwardHandler} />}
-                {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler}/> }
-                {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler}/>}
+                {step === 1 && <FormPersonalData stepForwardHandler={stepForwardHandler} form={form} setForm={setForm}/>}
+                {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
+                {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} />}
                 {step === 4 && <FormSkillsData stepBackHandler={stepBackHandler} />}
 
-               {console.log(form)}
+                {console.log(form)}
 
             </form>
 
