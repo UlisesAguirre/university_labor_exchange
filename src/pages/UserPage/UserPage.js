@@ -21,6 +21,7 @@ const UserPage = () => {
         <Routes>
           <Route path='/' element={<UserCard />} />
           {user.userType === "student" && <Route path='/editprofile' element={<StudentForm />} /> }
+          {user.userType === "company" && <Route path='/editprofile' element={<CompanyForm />} /> }
         </Routes>
       </MenuCard>
 

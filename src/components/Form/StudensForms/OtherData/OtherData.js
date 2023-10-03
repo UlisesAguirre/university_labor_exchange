@@ -5,12 +5,6 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 // Agregar estilos
 // agregar validaciones al campo de cv
 
-const inicialData = {
-  secondaryDegree: '',
-  curriculumVitae: '',
-  observations: '',
-};
-
 const validateData = (data, name) => {
 
   let error = '';
@@ -30,11 +24,17 @@ const validateData = (data, name) => {
 }
 
 const regex = {
-  secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/, //solo caracteres en español +  0 hasta 60
+  secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/,
   observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
 };
 
-const FormOtherData = ({ stepForwardHandler, stepBackHandler }) => {
+const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
+
+  const inicialData = {
+    secondaryDegree: form.secondaryDegree,
+    curriculumVitae: form.curriculumVitae,
+    observations: form.observations,
+  };
 
   const {
     data,
@@ -51,9 +51,9 @@ const FormOtherData = ({ stepForwardHandler, stepBackHandler }) => {
       <p > Otros </p>
       <div>
 
-        <label> Título secundario </label>
+        {/* <label> Título secundario </label>
         <input type='text' name="secondaryDegree" placeholder="Bachiller en Ciencias Naturales" value={data.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.secondaryDegree && <div>{errors?.secondaryDegree}</div>}
+        {errors.secondaryDegree && <div>{errors?.secondaryDegree}</div>} */}
 
 
         <label>curriculum Vitae </label>

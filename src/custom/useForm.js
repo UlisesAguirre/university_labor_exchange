@@ -1,14 +1,13 @@
-import {useState } from "react"
+import { useState } from "react"
 
 const useFrom = (props) => {
 
     const [data, setData] = useState(props.inicialData); //valores iniciales del form
-    const [errors, setErrors] = useState(props.inicialData);
-
+    const [errors, setErrors] = useState({});
 
     const changeHandler = (e) => {
         const { value, name } = e.target;
-        setData({ ...data, [name]: value.toLowerCase() })
+        setData({ ...data, [name]: value})
     };
 
     const blurHandler = (e) => {

@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import useFrom from "../../../../custom/useForm";
+import useGetRequest from "../../../../custom/useGetRequest";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
+import Spinner from "../../../Shared/Spinner/Spinner";
 
 // TODO: 
 // Agregar estilos
@@ -9,33 +12,58 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 
 // FIXME: validación cantidad max de materias aprobadas 
 
-const inicialData = {
-  career: '',
-  approvedSubjects: '',
-  studyProgram: '',
-  currentCareerYear: '',
-  turn: '',
-  average: '',
-  averageWithFails: '',
-  CareerTitle: '',
-}
 
 const validateData = (data, name) => {
 
   let error = '';
 
-  if (!data[name].trim()) {
-    error = "Este campo es obligatorio";
-  } else if (((name === 'average') || (name === 'averageWithFails')) && ((data[name] > 10) || (data[name] < 0))) {
-    error = "El promedio debe ser superior a 0 y igual o inferior a 10";
-  } else if ((name === 'approvedSubjects') && (data[name] > 60 || data[name] < 0)) {
-    error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
+  if (regex[name]) {
+    if (regex[name].test(data[name])) {
+      if ((name === 'average') || (name === 'averageWithFails')) {
+        error = "El promedio debe ser superior a 0 e igual o inferior a 10 ";
+      }
+      if (name === 'approvedSubjects') {
+        error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
+      }
+      if (name === 'careerTitle') {
+        error = 'El título de la carrera solo acepta caracteres del alfabeto español y un máximo de 50 caracteres';
+      }
+    }
   }
 
   return error;
 }
 
-const FormCareerData = ({ stepForwardHandler, stepBackHandler }) => {
+const regex = {
+  approvedSubjects: /^([1-9]|[1-5][0-9]|60)$/,
+  average: /^(?:[1-9]|10)(?:\.00)?$/,
+  averageWithFails: /^(?:[1-9]|10)(?:\.00)?$/,
+  careerTitle: /^[a-zA-Z]{3,50}$/,
+}
+
+const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
+
+  const { getData, loading, error }= useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
+
+  const [list, setlist] = useState([]);
+
+  useEffect(() => {
+    if(getData){
+      setlist(getData);
+      console.log(getData)
+    }
+  },[getData])
+
+  const inicialData = {
+    career: form.career,
+    approvedSubjects: form.approvedSubjects,
+    studyProgram: form.studyProgram,
+    currentCareerYear: form.currentCareerYear,
+    turn: form.turn,
+    average: form.average,
+    averageWithFails: form.averageWithFails,
+    careerTitle: form.careerTitle,
+  }
 
   const {
     data,
@@ -48,13 +76,18 @@ const FormCareerData = ({ stepForwardHandler, stepBackHandler }) => {
 
   return (
     <div >
-      
+      {(loading) && <Spinner />}
+      {error && <span>error.message</span>}
+
       <p> Datos Universitarios </p>
-     
+
       <div>
-       
+
         <label>Carrera</label>
         <select name="career" onChange={changeHandler} onBlur={blurHandler} value={data.career}>
+          {list.map((c) =>
+            <option key={c.idCarrer} value={c.idCarrer}>{c.name}</option>
+          )}
           <option value={"Ing. civil"}>Ing. civil</option>
           <option value={"Tecnicatura en programación"}> Tecnicatura en programación </option>
         </select>
@@ -96,7 +129,7 @@ const FormCareerData = ({ stepForwardHandler, stepBackHandler }) => {
         <label>Titulo Universitario</label>
         <input name='CareerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={data.CareerTitle} />
         {errors.CareerTitle && <div>{errors?.CareerTitle}</div>}
-      
+
       </div>
 
       <div>
