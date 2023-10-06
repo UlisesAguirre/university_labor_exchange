@@ -4,6 +4,8 @@ import MenuCard from '../../components/MenuCard/MenuCard';
 import { Route, Routes } from 'react-router-dom';
 import UserCard from '../../components/UserCard/UserCard';
 import StudentForm from '../../components/Form/StudensForms/StudentForm'
+import CompanyForm from '../../components/Form/CompaniesForms/CompanyForm'
+// import CompaniesForms from '../../components/Form/CompaniesForms/CompaniesForms'
 
 import './userPage.css';
 import UserContext from '../../components/Context/UserContext/UserContext';
@@ -19,6 +21,7 @@ const UserPage = () => {
         <Routes>
           <Route path='/' element={<UserCard />} />
           {user.userType === "student" && <Route path='/editprofile' element={<StudentForm />} /> }
+          {user.userType === "company" && <Route path='/editprofile' element={<CompanyForm />} /> }
         </Routes>
       </MenuCard>
 
