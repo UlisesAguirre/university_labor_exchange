@@ -1,5 +1,10 @@
+import {useState } from "react";
 import useFrom from "../../../../custom/useForm";
+import useGetRequest from "../../../../custom/useGetRequest";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../../../Shared/Spinner/Spinner";
 
 
 const validateData = (data, name) => {
@@ -12,13 +17,32 @@ const validateData = (data, name) => {
 
 const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
+  const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetAllSkills');
+  const [newSkills, setNewSkills] = useState(form.studentsSkills);
+
+  const skills = getData;
+
   const inicialData = {
-    skills: [
-      {
-        skillId: '',
-        skillLevel: '',
-      }
-    ]
+    idSkill: '',
+    skillLevel: '',
+  }
+
+  const addSkill = (e) => {
+    e.preventDefault();
+    if (data.idSkill !== '' && data.skillLevel !== '') {
+      data.idSkill = parseInt(data.idSkill);
+      setNewSkills([...newSkills, data]);
+    }
+  }
+
+  function obtenerSkillNamePorId(idSkill) {
+    const skill = skills.find((item) => item.idSkill === idSkill);
+    return skill ? skill.skillName : null;
+  }
+
+  const moveForwardHandler = (e) => {
+    e.preventDefault();
+    stepForwardHandler(newSkills);
   }
 
   const {
@@ -27,34 +51,34 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
     changeHandler,
     blurHandler,
     moveBackHandler,
-    moveForwardHandler
-  } = useFrom({ inicialData, validateData, stepBackHandler, stepForwardHandler })
+  } = useFrom({ inicialData, validateData, stepBackHandler })
 
   return (
     <div>
-
+      {(loading) && <Spinner />}
       <p>Skills form</p>
-      {console.log(data)}
-
       <div>
 
-        <label>Skills</label>
-        <select name="skill" onChange={changeHandler} onBlur={blurHandler} value={data.skills.skillId}>
-          <option value={'1'}>AutoCad</option>
-          <option value={'2'}>Net</option>
+        <label>Habilidades</label>
+        <select name="idSkill" onChange={changeHandler} onBlur={blurHandler} value={data.idSkill}>
+          <option value={''} >Skills</option>
+          {skills.map((s) => <option key={s.idSkill} value={s.idSkill}>{s.skillName}</option>)}
         </select>
-        {errors.skill && <div>{errors?.skill}</div>}
+        {errors.idSkill && <div>{errors?.idSkill}</div>}
 
-        <label>Level</label>
-        <select name="level" onChange={changeHandler} onBlur={blurHandler} value={data.skills.skillLevel}>
+        <label>Nivel de habilidad</label>
+        <select name="skillLevel" onChange={changeHandler} onBlur={blurHandler} value={data.skillLevel}>
+          <option value='' >Nivel</option>
           <option value={"bajo"}>Bajo</option>
           <option value={"intermedio"}>Intermedio</option>
           <option value={"alto"}>Alto</option>
         </select>
-        {errors.level && <div>{errors?.level}</div>}
+        {errors.skillLevel && <div>{errors?.skillLevel}</div>}
+
+        <BasicButton buttonName={'Agregar Habilidad'} buttonHandler={addSkill} />
 
 
-        {/* <table>
+        <table>
           <caption>Habilidades</caption>
           <thead>
             <tr>
@@ -63,15 +87,15 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
             </tr>
           </thead>
           <tbody>
-          {data.skills.map((skillId, skillLevel, skillName) =>
-            <tr key={skillId}>
-              <th>{skillName}</th>
-              <th>{skillLevel}</th>
-            </tr>
-          )}
+            {newSkills.map((ns, index) => (
+              <tr key={index}>
+                <td>{obtenerSkillNamePorId(ns.idSkill)}</td>
+                <td>{ns.skillLevel}</td>
+                <td><button> <FontAwesomeIcon icon={faTrash} /> </button></td>
+              </tr>
+            ))}
           </tbody>
-        </table> */}
-  
+        </table >
 
       </div>
 

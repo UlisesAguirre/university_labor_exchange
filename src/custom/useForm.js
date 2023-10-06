@@ -7,7 +7,10 @@ const useFrom = (props) => {
 
     const changeHandler = (e) => {
         const { value, name } = e.target;
-        setData({ ...data, [name]: value})
+        if(name === 'idCarrer'){
+            setData({...data, [name]: parseInt(value)});
+        }
+        setData({ ...data, [name]: value })
     };
 
     const blurHandler = (e) => {
@@ -32,21 +35,31 @@ const useFrom = (props) => {
                 [name]: error,
             }))
 
-            if(error){
+            if (error) {
                 isValid = false;
             }
         });
 
         if (!isValid) {
+
             alert('Hay errores');
+
         } else {
+
+            // Object.entries(data).forEach(([name, value]) => {
+            //     if (name === 'idCarrer' || name === 'floor' || name === 'addressNumber' || name === 'approvedSubjects' || name === 'currentCareerYear') {
+            //         setData({ ...data, [name]: parseInt(value) })
+            //         console.log(name)
+            //         console.log(typeof(value))
+            //     }
+            // })
+            
             props.stepForwardHandler(data);
         }
 
     }
 
     const moveBackHandler = (e) => {
-        e.preventDefault()
         props.stepBackHandler()
     }
 

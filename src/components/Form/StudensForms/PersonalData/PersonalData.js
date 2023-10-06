@@ -7,8 +7,8 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (!data[name].trim()) {
-    if (validInputs[name].require) {
+  if (validInputs[name].require) {
+    if(data[name] === undefined || !data[name].trim())  {
       error = "Este campo es obligatorio";
     }
   } else {
@@ -20,22 +20,22 @@ const validateData = (data, name) => {
         if (name === 'name' || name === 'lastname') {
           error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud mínima de 3 y máxima de 50 caracteres.";
         }
-        if (name === 'street' || name === 'city' || name === 'province' || name === 'country') {
+        if (name === 'address' || name === 'city' || name === 'province' || name === 'country') {
           error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud máxima de 50 caracteres.";
         }
-        if (name === 'docNumber') {
+        if (name === 'documentNumber') {
           error = "El número de documento debe ingresarse sin puntos y tener una longitud de 6 o 7 números";
         }
         if (name === 'cuil') {
           error = 'El cuit debe contener guiones';
         }
-        if (name === 'streetNumber') {
+        if (name === 'addressNumber') {
           error = "El número de calle solo puede contener números y la palabra bis";
         }
         if (name === 'floor') {
           error = "El piso solo puede contener una letra o número del 1 al 20";
         }
-        if (name === 'telephone') {
+        if (name === 'telephoneNumber') {
           error = "El número de telefono puede contener opcionalmente el caracter + al comienzo y debe tener un máximo 10 dígitos";
         }
         if (name === 'email') {
@@ -54,26 +54,28 @@ const validInputs = {
   lastname: { regex: /^[a-zA-Z]{3,50}$/, require: true },
   email: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true },
   legajo: { require: true },
-  docType: { require: true },
-  docNumber: { regex: /^[1-9]\d{6,7}$/, require: true },
-  birthdate: { require: true },
+  documentType: { require: true },
+  documentNumber: { regex: /^[1-9]\d{6,7}$/, require: true },
+  birthDate: { require: true },
   civilStatus: { require: true },
   cuil: { regex: /^(20|23|24|27)-\d{8}-\d$/, require: true, },
   sex: { require: true },
-  street: { regex: /^[a-zA-Z]{1,50}$/, require: false, },
-  streetNumber: { regex: /^[1-9]\d*\s*(?:bis)?$/, require: false },
-  floor: { regex: /^[A-Z0-9]{1,20}$/, require: false },
+  address: { regex: /^[a-zA-Z]{0,50}$/, require: false, },
+  addressNumber: { regex: /^[1-9]\d*\s*(?:bis)?$/, require: false }, //FIXME: 
+  floor: { regex: /^[A-Z0-9]{0,20}$/, require: false }, //FIXME: 
   city: {
-    // regex: /^[a-zA-Z]{,50}$/,
+    regex: /^[a-zA-Z]{0,50}$/,
     require: false
   },
   province: {
-    // regex: /^[a-zA-Z]{,50}$/,
+    regex: /^[a-zA-Z]{0,50}$/,
     require: false
   },
-  country: {// regex: /^[a-zA-Z]{,50}$/, 
-    require: false },
-  telephone: { regex: /^\+?[1-9]\d{10}$/, require: false },
+  country: {
+    regex: /^[a-zA-Z]{0,50}$/, 
+    require: false
+  },
+  telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: false },
 
 }
 
@@ -81,24 +83,24 @@ const validInputs = {
 const FormPersonalData = ({ form, stepForwardHandler }) => {
 
   const inicialData = {
-    userName: form.userName,
+    userName: form.username,
     name: form.name,
-    lastname: form.name,
+    lastname: form.lastName,
     email: form.email,
     legajo: form.legajo,
-    docType: form.docType,
-    docNumber: form.docNumber,
-    birthdate: form.birthdate,
+    documentType: form.documentType,
+    documentNumber: form.documentNumber,
+    birthDate: form.birthDate,
     civilStatus: form.civilStatus,
     cuil: form.cuil,
     sex: form.sex,
-    street: form.street,
-    streetNumber: form.streetNumber,
+    address: form.address,
+    addressNumber: form.addressNumber,
     floor: form.floor,
     city: form.city,
     province: form.province,
     country: form.country,
-    telephone: form.telephone,
+    telephoneNumber: form.telephoneNumber,
   }
 
   const {
@@ -163,30 +165,37 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         <div>
           <div className="input-content">
             <label>Tipo y Número de documento </label>
-            <select name='docType' value={data.docType} onChange={changeHandler} onBlur={blurHandler}>
-              <option value="1">DNI</option>
+            <select name='documentType' value={data.documentType} onChange={changeHandler} onBlur={blurHandler}>
+              <option value=''>Tipo de documento</option>
+              <option value='DocumentoUnico'>DNI</option>
+              <option value='LibretaCivica'>Libreta Civica</option>
+              <option value='LibretadeEnrolamiento'>Libreta de Enrolamiento</option>
+              <option value='Pasaporte'>Pasaporte</option>
             </select>
 
 
-            <input type='text' name='docNumber' placeholder="39580415" value={data.docNumber} onChange={changeHandler} onBlur={blurHandler} />
+            <input type='text' name='documentNumber' placeholder="39580415" value={data.documentNumber} onChange={changeHandler} onBlur={blurHandler} />
           </div>
-          {errors.docType && <div>{errors?.docType}</div>}
-          {errors.docNumber && <div>{errors?.docNumber}</div>}
+          {errors.documentType && <div>{errors?.documentType}</div>}
+          {errors.documentNumber && <div>{errors?.documentNumber}</div>}
 
         </div>
 
         <div>
           <div className="input-content">
             <label> Fecha de Nacimiento </label>
-            <input type="date" name="birthdate" value={data.birthdate} onChange={changeHandler} onBlur={blurHandler} />
-            {errors.birthdate && <div>{errors?.birthdate}</div>}
+            <input type="date" name="birthDate" value={data.birthDate} onChange={changeHandler} onBlur={blurHandler} />
+            {errors.birthDate && <div>{errors?.birthDate}</div>}
           </div>
         </div>
         <div>
           <div className="input-content">
             <label>Sexo</label>
             <select name='sex' value={data.sex} onChange={changeHandler} onBlur={blurHandler}>
-              <option value="1">F</option>
+              <option value=''> Sexo </option>
+              <option value='F'>F</option>
+              <option value='M'>M</option>
+              <option value='X'>X</option>
             </select>
           </div>
           {errors.sex && <div>{errors?.sex}</div>}
@@ -195,7 +204,11 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
           <div className="input-content">
             <label> Estado Civil </label>
             <select name='civilStatus' value={data.civilStatus} onChange={changeHandler} onBlur={blurHandler}>
-              <option value="1">Soltero</option>
+              <option value='' >Estado Civil </option>
+              <option value='Soltero'>Soltero</option>
+              <option value='Casado'>Casado</option>
+              <option value='Divorciado'>Divorciado</option>
+              <option value='Viudo'>Viudo</option>
             </select>
           </div>
           {errors.civilStatus && <div>{errors?.civilStatus}</div>}
@@ -204,9 +217,9 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         <div>
           <div className="input-content">
             <label> Telefono </label>
-            <input type="tel" name="telephone" placeholder="341-688829" value={data.telephone} onChange={changeHandler} onBlur={blurHandler} />
+            <input type="text" name="telephoneNumber" placeholder="341000000000" value={data.telephoneNumber} onChange={changeHandler} onBlur={blurHandler} />
           </div>
-          {errors.telephone && <div>{errors?.telephone}</div>}
+          {errors.telephoneNumber && <div>{errors?.telephoneNumber}</div>}
         </div>
       </div>
 
@@ -214,33 +227,36 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         <p>Dirección</p>
 
         <label> Calle </label>
-        <input type="text" name="street" placeholder="Callao" value={data.street} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.street && <div>{errors?.street}</div>}
+        <input type="text" name="address" placeholder="Callao" value={data.address} onChange={changeHandler} onBlur={blurHandler} />
+        {errors.address && <div>{errors?.address}</div>}
 
         <label> Numero de calle </label>
-        <input type="number" name="streetNumber" placeholder="1110" value={data.streetNumber} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.streetNumber && <div>{errors?.streetNumber}</div>}
+        <input type="text" name="addressNumber" placeholder="1110" value={data.addressNumber} onChange={changeHandler} onBlur={blurHandler} />
+        {errors.addressNumber && <div>{errors?.addressNumber}</div>}
 
         <label>Piso </label>
-        <input type="number" name='floor' placeholder="2" value={data.floor} onChange={changeHandler} onBlur={blurHandler} />
+        <input type="text" name='floor' placeholder="2" value={data.floor} onChange={changeHandler} onBlur={blurHandler} />
         {errors.floor && <div>{errors?.floor}</div>}
 
         <label> País </label>
-        <select name='country' value={data.country} onChange={changeHandler} onBlur={blurHandler}>
+        <input type='text' name='country' placeholder='Argentina' value={data.country} onChange={changeHandler} onBlur={blurHandler}/>
+        {/* <select name='country' value={data.country} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Argentina</option>
-        </select>
+        </select> */}
         {errors.country && <div>{errors?.country}</div>}
 
         <label> Provincia </label>
-        <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
+        <input  type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler}/>
+        {/* <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Santa Fe</option>
-        </select>
+        </select> */}
         {errors.province && <div>{errors?.province}</div>}
 
         <label> Localidad </label>
-        <select name='city' value={data.city} onChange={changeHandler} onBlur={blurHandler}>
+        <input  type='text' name='city' placeholder='Rosario' value={data.city} onChange={changeHandler} onBlur={blurHandler}/>
+        {/* <select name='city' value={data.city} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Rosario</option>
-        </select>
+        </select> */}
         {errors.city && <div>{errors?.city}</div>}
 
       </div>

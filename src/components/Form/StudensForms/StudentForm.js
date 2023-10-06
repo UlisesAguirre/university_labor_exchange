@@ -9,43 +9,6 @@ import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';
 
-// const inicialForm = {
-//     userName: 'clararazzetto',
-//     name: 'clara',
-//     lastname: 'razzetto',
-//     email: 'clara@gmail.com',
-//     legajo: '50600',
-//     docType: '',
-//     docNumber: '39580415',
-//     birthdate: '',
-//     civilStatus: '',
-//     cuil: '20-39580415-4',
-//     sex: '',
-//     street: '',
-//     streetNumber: '',
-//     floor: '',
-//     city: '',
-//     province: '',
-//     country: '',
-//     telephone: '',
-//     career: '',
-//     approvedSubjects: '',
-//     studyProgram: '',
-//     currentCareerYear: '',
-//     turn: '',
-//     average: '',
-//     averageWithFails: '',
-//     careerTitle: '',
-//     secondaryDegree: '',
-//     curriculumVitae: '',
-//     observations: '',
-//     skills: [
-//         {
-//             skillId: 1,
-//             skillLevel: 'Medio'
-//         }
-//     ],
-// }
 
 const StudentForm = () => {
 
@@ -54,7 +17,7 @@ const StudentForm = () => {
     const url = 'https://localhost:7049/api/Student/GetStudent';
 
     const { data, loading, error } = useGetBySomething(url, user.id);
-    
+
     const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
 
     useEffect(() => {
@@ -64,15 +27,26 @@ const StudentForm = () => {
         }
     }, [data]);
 
+    const deleteFormNulls = () => {
+        Object.entries(form).forEach(([name, value]) => {
+            if (value === null) {
+                setForm({ ...form, [name]: '' })
+            }
+        })
+        return form
+    }
+
     const [form, setForm] = useState('');
 
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(1);
 
     const stepForwardHandler = (data) => {
-        setForm((prevForm) => ({ ...prevForm, ...data }));
+    
         if (step === 4) {
-            submitHandler();
+            setForm((prevform) => ({ ...prevform, ['studentsSkills']: data }));
+            // submitHandler();
         } else {
+            setForm((prevForm) => ({ ...prevForm, ...data }));
             setStep(step => step + 1);
         }
 
@@ -92,7 +66,7 @@ const StudentForm = () => {
     }
 
     const PersonalDataComponent = form ? (
-        <FormPersonalData stepForwardHandler={stepForwardHandler} form={form} setForm={setForm} />
+        <FormPersonalData stepForwardHandler={stepForwardHandler} form={deleteFormNulls()} setForm={setForm} />
     ) : null;
 
 
@@ -102,16 +76,16 @@ const StudentForm = () => {
             {(loading || loadingPutRequest) && <Spinner />}
             <form>
 
-                {step === 1 && PersonalDataComponent }
+                {step === 1 && PersonalDataComponent}
                 {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
                 {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
-                {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler}  form={form} />}
+                {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
 
             </form>
 
-            {/* <div>
+            <div>
                 {step === 4 ? <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} /> : null}
-            </div> */}
+            </div>
 
             {putRequestError && <span>{putRequestError.message}</span>}
             {error && <span>{error.message}</span>}

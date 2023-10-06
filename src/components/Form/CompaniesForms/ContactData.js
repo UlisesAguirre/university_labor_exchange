@@ -5,8 +5,8 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 const validateData = (data, name) => {
   let error = '';
 
-  if (!data[name].trim()) {
-    if (validInputs[name].require) {
+  if (data[name] ===  null || !data[name].trim())  {
+    if (validInputs[name].require)  {
       error = "Este campo es obligatorio";
     }
   } else {
@@ -30,10 +30,10 @@ const validateData = (data, name) => {
 
 
 const validInputs = {
-  recruiterName: { regex: /^[a-zA-Z]{3,50}$/, require: true, },
-  recruiterLastName: { regex: /^[a-zA-Z]{3,50}$/, require: true, },
-  recruiterPosition: { regex: /^[a-zA-Z]{3,50}$/, require: true, },
-  recruiterPhoneNumber: { regex: /^\+?[1-9]\d{10}$/, require: true, },
+  recruiterName: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
+  recruiterLastName: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
+  recruiterPosition: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
+  recruiterPhoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true, },
   recruiterEmail: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true, },
   recruiterRelWithCompany: { require: true, },
 }
@@ -56,7 +56,7 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
     blurHandler,
     moveBackHandler,
     moveForwardHandler
-  } = useFrom({ inicialData, validateData, stepBackHandler, stepForwardHandler })
+  } = useFrom({ inicialData, validateData, stepBackHandler, stepForwardHandler})
 
 
   return (
@@ -87,13 +87,15 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
         <label>Relación del Contacto con la empresa</label>
         <select name='recruiterRelWithCompany' value={data.recruiterRelWithCompany} onChange={changeHandler} onBlur={blurHandler}>
-          <option value={0}>En la empresa</option>
-          {errors.recruiterRelWithCompany && <div>{errors?.recruiterRelWithCompany}</div>}
+          <option value={''}>Relación con la empresa</option>
+          <option value={'EnEmpresa'}>Trabajo en la Empresa que solicita la Búsqueda</option>
+          <option value={'EnConsultora'}>Trabajo para una consultora</option>
         </select>
-    </div>
+        {errors.recruiterRelWithCompany && <div>{errors?.recruiterRelWithCompany}</div>}
+      </div>
 
-    <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler}/>
-    <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler}/>
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
 
     </div >
   )

@@ -5,7 +5,7 @@ import BasicButton from "../../Shared/BasicButton/BasicButton";
 const validateData = (data, name) => {
   let error = '';
 
-  if (!data[name].trim()) {
+  if (data[name] === null || !data[name].trim()) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
@@ -22,7 +22,7 @@ const validateData = (data, name) => {
           error = 'El cuit debe contener guiones';
         }
         if (name === 'telephoneNumber') {
-          error = "El número de telefono puede contener opcionalmente el caracter + al comienzo y debe tener un máximo 10 dígitos";
+          error = "El número de telefono puede contener opcionalmente el caracter + al comienzo y debe tener un mínimo de 9 dígitos";
         }
         if (name === 'postalCode') {
           error = 'El codigo postal solo acepta un número de 4 digítos';
@@ -38,31 +38,30 @@ const validateData = (data, name) => {
 }
 
 const validInputs = {
-  companyName: { regex: /^[a-zA-Z]{3,50}$/, require: true },
-  cuit: { 
+  socialReason: { regex: /^[a-zA-Z\s]{3,50}$/, require: true },
+  cuit: {
     //regex: /^\d{2}-\d{8}-\d$/, 
-  require: true },
-  telephoneNumber: { regex: /^\+?[1-9]\d{10}$/, require: true },
+    require: true
+  },
+  telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true },
   sector: { regex: /^[a-zA-Z]{3,50}$/, require: true },
   legalAddress: { regex: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]{3,50}\s\d+$/, require: true },
   postalCode: { regex: /^\d{4}$/, require: true },
   web: { regex: /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/ },
   location: { regex: /^[a-zA-Z]{3,50}$/, require: true },
-  socialReason: { regex: /^[a-zA-Z\s]{3,50}$/, require: true },
 }
 
 const CompanyData = ({ stepForwardHandler, form }) => {
 
   const inicialData = {
-    companyName: form.companyName,
-    cuit: form.cuit,
-    telephoneNumber: form.telephoneNumber,
+    socialReason: form.socialReason,
+    cuit: form.cuit, 
     sector: form.sector,
+    telephoneNumber: form.telephoneNumber,
     legalAddress: form.legalAddress,
     postalCode: form.postalCode,
     web: form.web,
     location: form.location,
-    socialReason: form.socialReason,
   }
 
   const {
@@ -77,12 +76,11 @@ const CompanyData = ({ stepForwardHandler, form }) => {
   return (
     <div>
       <h2>Datos de la empresa</h2>
-
       <div>
 
-        <label> Nombre de la Empresa * </label>
-        <input type='text' name="companyName" placeholder="Nombre" value={data.companyName} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.companyName && <div>{errors?.companyName}</div>}
+        <label>Razón Social</label>
+        <input type='text' name="socialReason" placeholder="Razón Social" value={data.socialReason} onChange={changeHandler} onBlur={blurHandler} />
+        {errors.socialReason && <div>{errors?.socialReason}</div>}
 
         <label> Cuit </label>
         <input type='text' name="cuit" placeholder="00-000000000-0" value={data.cuit} onChange={changeHandler} onBlur={blurHandler} disabled />
@@ -97,7 +95,7 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         {errors.sector && <div>{errors?.sector}</div>}
 
         <label> Domicilio legal </label>
-        <input type='text' name="legalAddress" placeholder="Sector" value={data.legalAddress} onChange={changeHandler} onBlur={blurHandler} />
+        <input type='text' name="legalAddress" placeholder="Laprida 1200" value={data.legalAddress} onChange={changeHandler} onBlur={blurHandler} />
         {errors.legalAddress && <div>{errors?.legalAddress}</div>}
 
         <label>Codigo Postal</label>
@@ -112,9 +110,6 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         <input type='text' name="location" placeholder="Localidad" value={data.location} onChange={changeHandler} onBlur={blurHandler} />
         {errors.location && <div>{errors?.location}</div>}
 
-        <label>Razón Social</label>
-        <input type='text' name="socialReason" placeholder="Razón Social" value={data.socialReason} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.socialReason && <div>{errors?.socialReason}</div>}
       </div>
 
       <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />

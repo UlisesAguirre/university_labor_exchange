@@ -7,8 +7,6 @@ import Spinner from "../../../Shared/Spinner/Spinner";
 // TODO: 
 // Agregar estilos
 // titulo universitario ver si lo ponemos o no.
-// mappear selects 
-// agregar loading y response 
 
 // FIXME: validación cantidad max de materias aprobadas 
 
@@ -25,8 +23,11 @@ const validateData = (data, name) => {
       if (name === 'approvedSubjects') {
         error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
       }
-      if (name === 'careerTitle') {
-        error = 'El título de la carrera solo acepta caracteres del alfabeto español y un máximo de 50 caracteres';
+      // if (name === 'careerTitle') {
+      //   error = 'El título de la carrera solo acepta caracteres del alfabeto español y un máximo de 50 caracteres';
+      // }
+      if (name === 'studyProgram') {
+        error = 'El Plan solo acepta años entre 1900 y 2200'
       }
     }
   }
@@ -38,31 +39,25 @@ const regex = {
   approvedSubjects: /^([1-9]|[1-5][0-9]|60)$/,
   average: /^(?:[1-9]|10)(?:\.00)?$/,
   averageWithFails: /^(?:[1-9]|10)(?:\.00)?$/,
-  careerTitle: /^[a-zA-Z]{3,50}$/,
+  // careerTitle: /^[a-zA-Z]{3,50}$/,
+  studyProgram: /^(19[9-9][0-9]|20[0-9][0-9]|21[0-9][0-9]|2200)$/,
 }
 
 const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
-  const { getData, loading, error }= useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
+  const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
 
-  const [list, setlist] = useState([]);
-
-  useEffect(() => {
-    if(getData){
-      setlist(getData);
-      console.log(getData)
-    }
-  },[getData])
+  const careers = getData;
 
   const inicialData = {
-    career: form.career,
+    idCarrer: form.idCarrer,
     approvedSubjects: form.approvedSubjects,
-    studyProgram: form.studyProgram,
+    studyProgram: form.studyProgram ,
     currentCareerYear: form.currentCareerYear,
     turn: form.turn,
     average: form.average,
     averageWithFails: form.averageWithFails,
-    careerTitle: form.careerTitle,
+    // careerTitle: form.careerTitle,
   }
 
   const {
@@ -84,37 +79,40 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
       <div>
 
         <label>Carrera</label>
-        <select name="career" onChange={changeHandler} onBlur={blurHandler} value={data.career}>
-          {list.map((c) =>
+        <select name="idCarrer" onChange={changeHandler} onBlur={blurHandler} value={data.idCarrer}>
+          <option value={''}>Careera</option>
+          {careers.map((c) =>
             <option key={c.idCarrer} value={c.idCarrer}>{c.name}</option>
           )}
-          <option value={"Ing. civil"}>Ing. civil</option>
-          <option value={"Tecnicatura en programación"}> Tecnicatura en programación </option>
         </select>
-        {errors.career && <div>{errors?.career}</div>}
+        {errors.idCarrer && <div>{errors?.idCarrer}</div>}
 
         <label>Cantidad materias aprobadas</label>
         <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects} />
         {errors.approvedSubjects && <div>{errors?.approvedSubjects}</div>}
 
         <label>Plan especialidad</label>
-        <select name='studyProgram' onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} >
-          <option value={"2000"}>2000</option>
-          <option value={"2008"}>2008</option>
-        </select>
+        <input name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
         {errors.studyProgram && <div>{errors?.studyProgram}</div>}
 
         <label>Año que cursa</label>
-        <select name='currentCareerYear' onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects}>
+        <select name='currentCareerYear' onChange={changeHandler} onBlur={blurHandler} value={data.currentCareerYear}>
+          <option value={''}>Año que cursa</option>
           <option value={"1"}>1° año</option>
           <option value={"2"}>2° año</option>
+          <option value={"3"}>3° año</option>
+          <option value={"4"}>4° año</option>
+          <option value={"5"}>5° año</option>
+          <option value={"6"}>6° año</option>
         </select>
         {errors.currentCareerYear && <div>{errors?.currentCareerYear}</div>}
 
         <label>Turno que cursa</label>
         <select name='turn' onChange={changeHandler} onBlur={blurHandler} value={data.turn}>
-          <option value={"0"}>mañana</option>
-          <option value={"1"}>tarde</option>
+          <option value=''>Turno que cursa</option>
+          <option value='Mañana'>Mañana</option>
+          <option value='Tarde'>Tarde</option>
+          <option value='Noche'>Noche</option>
         </select>
         {errors.turn && <div>{errors?.turn}</div>}
 
@@ -126,9 +124,9 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
         <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
         {errors.averageWithFails && <div>{errors?.averageWithFails}</div>}
 
-        <label>Titulo Universitario</label>
-        <input name='CareerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={data.CareerTitle} />
-        {errors.CareerTitle && <div>{errors?.CareerTitle}</div>}
+        {/* <label>Titulo Universitario</label>
+        <input name='careerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={data.careerTitle} />
+        {errors.careerTitle && <div>{errors?.careerTitle}</div>} */}
 
       </div>
 
