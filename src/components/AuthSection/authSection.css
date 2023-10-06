@@ -5,3 +5,11 @@
     padding: 1em;
     width: 20%;
 }
+
+.authSection-logged-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em;
+    width: 20%;
+}
