@@ -3,7 +3,7 @@ import Spinner from "../Shared/Spinner/Spinner"
 
 import "./userCard.css"
 import { ThemeContext } from '../Context/ThemeContext/ThemeContext'
-import useGetBySomething from '../../custom/useGetBySomething';
+import useGetBySomething from '../../custom/UseGetBySomething';
 import UserContext from '../Context/UserContext/UserContext';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ const UserCard = () => {
 
   const url = user.userType === "student" ? 
   'https://localhost:7049/api/Student/GetStudentProfile' :
-  'https://localhost:7049/api/Company/GetCompanyProfile';
+  'https://localhost:7049/api/Company/GetCompanyProfile' ;
 
   const [dataUser, setDataUser] = useState(" ");
 
@@ -27,10 +27,6 @@ const UserCard = () => {
       console.log(data);
     }
   }, [data]);
-
-
-
-
 
 
   return (
