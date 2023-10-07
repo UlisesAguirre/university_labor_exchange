@@ -41,6 +41,7 @@ const validateData = (data, name) => {
 }
 
 const validInputs = {
+  companyName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   socialReason: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   cuit: { require: true },
   telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true },
@@ -56,6 +57,7 @@ const validInputs = {
 const CompanyData = ({ stepForwardHandler, form }) => {
 
   const inicialData = {
+    companyName: form.companyName,
     socialReason: form.socialReason,
     sector: form.sector,
     telephoneNumber: form.telephoneNumber,
@@ -90,6 +92,10 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         <label> Email *</label>
         <input type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
         {errors.email && <div>{errors?.email}</div>}
+
+        <label>Nombre de la empresa *</label>
+        <input type='text' name="companyName" placeholder="La casona" value={data.companyName} onChange={changeHandler} onBlur={blurHandler} />
+        {errors.companyName && <div>{errors?.companyName}</div>}
 
         <label>Razón Social *</label>
         <input type='text' name="socialReason" placeholder="La casona SA" value={data.socialReason} onChange={changeHandler} onBlur={blurHandler} />

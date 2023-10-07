@@ -88,6 +88,7 @@ const UserCard = () => {
           <div className={`profile-company-card ${theme}`}>
             <h2>Datos de la empresa:</h2>
             <ul>
+              <li>{dataUser.companyName}</li>
               <li>{dataUser.socialReason}</li>
               <li>{dataUser.cuit}</li>
               <li>{dataUser.sector}</li>
