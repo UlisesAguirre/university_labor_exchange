@@ -23,18 +23,8 @@ const StudentForm = () => {
     useEffect(() => {
         if (data) {
             setForm(data)
-            console.log(data)
         }
     }, [data]);
-
-    const deleteFormNulls = () => {
-        Object.entries(form).forEach(([name, value]) => {
-            if (value === null) {
-                setForm({ ...form, [name]: '' })
-            }
-        })
-        return form
-    }
 
     const [form, setForm] = useState('');
 
@@ -43,6 +33,7 @@ const StudentForm = () => {
     const stepForwardHandler = (data) => {
     
         if (step === 4) {
+            alert('Datos cargados con exito! Seleccione enviar')
             setForm((prevform) => ({ ...prevform, ['studentsSkills']: data }));
             // submitHandler();
         } else {
@@ -66,7 +57,7 @@ const StudentForm = () => {
     }
 
     const PersonalDataComponent = form ? (
-        <FormPersonalData stepForwardHandler={stepForwardHandler} form={deleteFormNulls()} setForm={setForm} />
+        <FormPersonalData stepForwardHandler={stepForwardHandler} form={form} setForm={setForm} />
     ) : null;
 
 
@@ -84,7 +75,7 @@ const StudentForm = () => {
             </form>
 
             <div>
-                {step === 4 ? <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} /> : null}
+                {step === 4 ? <BasicButton buttonName={'Enviar'} buttonHandler={submitHandler} /> : null}
             </div>
 
             {putRequestError && <span>{putRequestError.message}</span>}

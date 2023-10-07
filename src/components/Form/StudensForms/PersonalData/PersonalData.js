@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import useFrom from "../../../../custom/useForm"
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
 
@@ -7,21 +9,18 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (validInputs[name].require) {
-    if(data[name] === undefined || !data[name].trim())  {
+  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
+    if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
     if (validInputs[name].regex) {
       if (!validInputs[name].regex.test(data[name])) {
-        if (name === 'userName') {
-          error = "El campo solo debe aceptar caracteres alfanuméricos y tener una longitud máxima de 50 caracteres.";
-        }
-        if (name === 'name' || name === 'lastname') {
-          error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud mínima de 3 y máxima de 50 caracteres.";
-        }
-        if (name === 'address' || name === 'city' || name === 'province' || name === 'country') {
+        if (name === 'username' || name === 'name' || name === 'lastName' || name === 'address' || name === 'city' || name === 'province' || name === 'country') {
           error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud máxima de 50 caracteres.";
+        }
+        if (name === 'birthDate') {
+          error = "La fecha debe tener formato dd/mm/yyyy"
         }
         if (name === 'documentNumber') {
           error = "El número de documento debe ingresarse sin puntos y tener una longitud de 6 o 7 números";
@@ -30,13 +29,13 @@ const validateData = (data, name) => {
           error = 'El cuit debe contener guiones';
         }
         if (name === 'addressNumber') {
-          error = "El número de calle solo puede contener números y la palabra bis";
+          error = "El valor de la calle debe estar dentro del rango de 0 a 10,000 y puede incluir opcionalmente la palabra 'bis'";
         }
         if (name === 'floor') {
           error = "El piso solo puede contener una letra o número del 1 al 20";
         }
         if (name === 'telephoneNumber') {
-          error = "El número de telefono puede contener opcionalmente el caracter + al comienzo y debe tener un máximo 10 dígitos";
+          error = "El número de teléfono puede comenzar opcionalmente con el caracter '+' y debe tener un máximo de 9 o 10 dígitos";
         }
         if (name === 'email') {
           error = 'El email debe respectar el formato example@gmail.com';
@@ -49,30 +48,30 @@ const validateData = (data, name) => {
 }
 
 const validInputs = {
-  userName: { regex: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ0-9]{1,50}$/, require: true },
-  name: { regex: /^[a-zA-Z]{3,50}$/, require: true },
-  lastname: { regex: /^[a-zA-Z]{3,50}$/, require: true },
+  username: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true }, //FIXME: 
+  name: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
+  lastName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   email: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true },
   legajo: { require: true },
   documentType: { require: true },
   documentNumber: { regex: /^[1-9]\d{6,7}$/, require: true },
-  birthDate: { require: true },
+  birthDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
   civilStatus: { require: true },
   cuil: { regex: /^(20|23|24|27)-\d{8}-\d$/, require: true, },
   sex: { require: true },
-  address: { regex: /^[a-zA-Z]{0,50}$/, require: false, },
-  addressNumber: { regex: /^[1-9]\d*\s*(?:bis)?$/, require: false }, //FIXME: 
-  floor: { regex: /^[A-Z0-9]{0,20}$/, require: false }, //FIXME: 
+  address: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: false, },
+  addressNumber: { regex: /^(?:[1-9]\d{0,3}|10000)(?: bis)?$/, require: false },
+  floor: { regex: /^(0|1?\d|20)$/, require: false },
   city: {
-    regex: /^[a-zA-Z]{0,50}$/,
+    regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
     require: false
   },
   province: {
-    regex: /^[a-zA-Z]{0,50}$/,
+    regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
     require: false
   },
   country: {
-    regex: /^[a-zA-Z]{0,50}$/, 
+    regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
     require: false
   },
   telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: false },
@@ -83,14 +82,14 @@ const validInputs = {
 const FormPersonalData = ({ form, stepForwardHandler }) => {
 
   const inicialData = {
-    userName: form.username,
+    username: form.username,
     name: form.name,
-    lastname: form.lastName,
+    lastName: form.lastName,
     email: form.email,
     legajo: form.legajo,
     documentType: form.documentType,
     documentNumber: form.documentNumber,
-    birthDate: form.birthDate,
+    birthDate: format(new Date(form.birthDate), 'yyyy-MM-dd'),
     civilStatus: form.civilStatus,
     cuil: form.cuil,
     sex: form.sex,
@@ -116,46 +115,50 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
     <div className="form-container">
       <p>Datos Personales</p>
 
+      <p>Los campos marcados con (*) son obligatorios </p>
+
       <div className="personalData-form">
 
         <div>
           <div className="input-content">
-            <label> Nombre de usuario </label>
-            <input type='text' name='userName' placeholder="MaríaPerez" value={data.userName} onChange={changeHandler} onBlur={blurHandler} />
+            <label> Nombre de usuario * </label>
+            <input type='text' name='username' placeholder="MaríaPerez" value={data.username} onChange={changeHandler} onBlur={blurHandler} />
           </div>
-          {errors.userName && <div>{errors?.userName}</div>}
+          {errors.username && <div>{errors?.username}</div>}
         </div>
         <div>
           <div className="input-content">
-            <label> Email </label>
-            <input type="email" name="email" placeholder="miemail@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
+            <label> Email * </label>
+            <input type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
             {errors.email && <div>{errors?.email}</div>}
           </div>
         </div>
         <div>
           <div className="input-content">
-            <label> Nombres </label>
+            <label> Nombres * </label>
             <input type='text' name='name' placeholder="María" value={data.name} onChange={changeHandler} onBlur={blurHandler} />
           </div>
           {errors.name && <div>{errors?.name}</div>}
         </div>
         <div>
           <div className="input-content">
-            <label> Apellido </label>
-            <input type='text' name='lastname' placeholder="Perez" value={data.lastname} onChange={changeHandler} onBlur={blurHandler} />
+            <label> Apellido * </label>
+            <input type='text' name='lastName' placeholder="Perez" value={data.lastName} onChange={changeHandler} onBlur={blurHandler} />
           </div>
-          {errors.lastname && <div>{errors?.lastname}</div>}
+          {errors.lastName && <div>{errors?.lastName}</div>}
         </div>
         <div>
           <div className="input-content">
             <label> Legajo </label>
-            <input type='text' name='legajo' placeholder="50600" value={data.legajo} onChange={changeHandler} onBlur={blurHandler} disabled />
+
+            <input type='text' name='legajo' defaultValue={data.legajo} onChange={changeHandler} onBlur={blurHandler} readOnly />
+            <span> El legajo no puede modificarse </span>
           </div>
-          {errors.legajo && <div>{errors?.legajo}</div>}
+          {/* {errors.legajo && <div>{errors?.legajo}</div>} */}
         </div>
         <div>
           <div className="input-content">
-            <label> Cuil </label>
+            <label> Cuil * </label>
             <input type='text' name='cuil' placeholder="23-39580415-4" value={data.cuil} onChange={changeHandler} onBlur={blurHandler} />
           </div>
           {errors.cuil && <div>{errors?.cuil}</div>}
@@ -164,7 +167,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
 
         <div>
           <div className="input-content">
-            <label>Tipo y Número de documento </label>
+            <label>Tipo de documento * </label>
             <select name='documentType' value={data.documentType} onChange={changeHandler} onBlur={blurHandler}>
               <option value=''>Tipo de documento</option>
               <option value='DocumentoUnico'>DNI</option>
@@ -172,25 +175,27 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
               <option value='LibretadeEnrolamiento'>Libreta de Enrolamiento</option>
               <option value='Pasaporte'>Pasaporte</option>
             </select>
+            {errors.documentType && <div>{errors?.documentType}</div>}
 
-
+            <label>Número de documento * </label>
             <input type='text' name='documentNumber' placeholder="39580415" value={data.documentNumber} onChange={changeHandler} onBlur={blurHandler} />
+            {errors.documentNumber && <div>{errors?.documentNumber}</div>}
           </div>
-          {errors.documentType && <div>{errors?.documentType}</div>}
-          {errors.documentNumber && <div>{errors?.documentNumber}</div>}
+
+
 
         </div>
 
         <div>
           <div className="input-content">
-            <label> Fecha de Nacimiento </label>
+            <label> Fecha de Nacimiento * </label>
             <input type="date" name="birthDate" value={data.birthDate} onChange={changeHandler} onBlur={blurHandler} />
             {errors.birthDate && <div>{errors?.birthDate}</div>}
           </div>
         </div>
         <div>
           <div className="input-content">
-            <label>Sexo</label>
+            <label>Sexo * </label>
             <select name='sex' value={data.sex} onChange={changeHandler} onBlur={blurHandler}>
               <option value=''> Sexo </option>
               <option value='F'>F</option>
@@ -202,7 +207,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         </div>
         <div>
           <div className="input-content">
-            <label> Estado Civil </label>
+            <label> Estado Civil * </label>
             <select name='civilStatus' value={data.civilStatus} onChange={changeHandler} onBlur={blurHandler}>
               <option value='' >Estado Civil </option>
               <option value='Soltero'>Soltero</option>
@@ -239,21 +244,21 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         {errors.floor && <div>{errors?.floor}</div>}
 
         <label> País </label>
-        <input type='text' name='country' placeholder='Argentina' value={data.country} onChange={changeHandler} onBlur={blurHandler}/>
+        <input type='text' name='country' placeholder='Argentina' value={data.country} onChange={changeHandler} onBlur={blurHandler} />
         {/* <select name='country' value={data.country} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Argentina</option>
         </select> */}
         {errors.country && <div>{errors?.country}</div>}
 
         <label> Provincia </label>
-        <input  type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler}/>
+        <input type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler} />
         {/* <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Santa Fe</option>
         </select> */}
         {errors.province && <div>{errors?.province}</div>}
 
         <label> Localidad </label>
-        <input  type='text' name='city' placeholder='Rosario' value={data.city} onChange={changeHandler} onBlur={blurHandler}/>
+        <input type='text' name='city' placeholder='Rosario' value={data.city} onChange={changeHandler} onBlur={blurHandler} />
         {/* <select name='city' value={data.city} onChange={changeHandler} onBlur={blurHandler}>
           <option value="1">Rosario</option>
         </select> */}

@@ -15,9 +15,9 @@ const FullForm = ({ title, nameButton, typeForm }) => {
     const { postData, isLoading, error } = usePostRequest();
 
     const regex = {
-        name: /^[a-zA-Z]{3,}$/,
-        lastName: /^[a-zA-Z]{3,}$/,
-        socialReason: /^[a-zA-Z\s]{3,}$/,
+        name: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
+        lastName: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
+        socialReason: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
         legajo: /^\d{5}$/,
         cuit: /^\d{2}-\d{8}-\d$/,
         email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,

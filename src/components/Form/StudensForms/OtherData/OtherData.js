@@ -9,13 +9,22 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (regex[name]) {
-    if (!regex[name].test(data[name])) {
-      if (name === 'secondaryDegree') {
-        error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
-      }
-      if (name === 'observations') {
-        error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+  if (data[name] !== null && data[name] !== '') {
+
+    if (regex[name]) {
+      if (!regex[name].test(data[name])) {
+        if (name === 'secondaryDegree') {
+          error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
+        }
+        if (name === 'observations') {
+          error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+        }
+        if (name === 'githubProfileUrl') {
+          error = "La URL de GitHub debe tener un formato valido, como 'https://github.com/usuario/repositorio' o 'github.com/usuario/repositorio'."
+        }
+        if (name === 'linkedInProfileUrl') {
+          error = "La URL de LinkedIn debe tener un formato valido, como 'https://www.linkedin.com/in/nombre-de-usuario' o 'linkedin.com/in/nombre-de-usuario'."
+        }
       }
     }
   }
@@ -26,6 +35,8 @@ const validateData = (data, name) => {
 const regex = {
   secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/,
   observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
+  githubProfileUrl: /^(https:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/,
+  linkedInProfileUrl: /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/
 };
 
 const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
@@ -62,7 +73,7 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
         {errors.githubProfileUrl && <div>{errors?.githubProfileUrl}</div>}
 
         <label> Link de Linkedin </label>
-        <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
+        <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.linkedInProfileUrl} onChange={changeHandler} onBlur={blurHandler} />
         {errors.linkedInProfileUrl && <div>{errors?.linkedInProfileUrl}</div>}
 
         <label>curriculum Vitae </label>

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useFrom from "../../../../custom/useForm";
 import useGetRequest from "../../../../custom/useGetRequest";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
@@ -6,7 +5,6 @@ import Spinner from "../../../Shared/Spinner/Spinner";
 
 // TODO: 
 // Agregar estilos
-// titulo universitario ver si lo ponemos o no.
 
 // FIXME: validación cantidad max de materias aprobadas 
 
@@ -16,17 +14,15 @@ const validateData = (data, name) => {
   let error = '';
 
   if (regex[name]) {
-    if (regex[name].test(data[name])) {
+    if (!regex[name].test(data[name])) {
       if ((name === 'average') || (name === 'averageWithFails')) {
-        error = "El promedio debe ser superior a 0 e igual o inferior a 10 ";
+        error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00";
       }
       if (name === 'approvedSubjects') {
         error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
       }
-      // if (name === 'careerTitle') {
-      //   error = 'El título de la carrera solo acepta caracteres del alfabeto español y un máximo de 50 caracteres';
-      // }
       if (name === 'studyProgram') {
+        console.log(name)
         error = 'El Plan solo acepta años entre 1900 y 2200'
       }
     }
@@ -36,11 +32,10 @@ const validateData = (data, name) => {
 }
 
 const regex = {
-  approvedSubjects: /^([1-9]|[1-5][0-9]|60)$/,
-  average: /^(?:[1-9]|10)(?:\.00)?$/,
-  averageWithFails: /^(?:[1-9]|10)(?:\.00)?$/,
-  // careerTitle: /^[a-zA-Z]{3,50}$/,
-  studyProgram: /^(19[9-9][0-9]|20[0-9][0-9]|21[0-9][0-9]|2200)$/,
+  approvedSubjects: /^(?:[1-9]|[1-5][0-9]|60)$/,
+  average:/^(?:[0-9]|10)(?:\.\d{1,2})?$/,
+  averageWithFails: /^(?:[0-9]|10)(?:\.\d{1,2})?$/,
+  studyProgram: /^(199[0-9]|20[0-2][0-9]|2300)$/,
 }
 
 const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
@@ -57,7 +52,6 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
     turn: form.turn,
     average: form.average,
     averageWithFails: form.averageWithFails,
-    // careerTitle: form.careerTitle,
   }
 
   const {
@@ -92,7 +86,7 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
         {errors.approvedSubjects && <div>{errors?.approvedSubjects}</div>}
 
         <label>Plan especialidad</label>
-        <input name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
+        <input type='number' min="1990" max="2300" name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
         {errors.studyProgram && <div>{errors?.studyProgram}</div>}
 
         <label>Año que cursa</label>
@@ -123,10 +117,6 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
         <label>Promedio con aplazos</label>
         <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
         {errors.averageWithFails && <div>{errors?.averageWithFails}</div>}
-
-        {/* <label>Titulo Universitario</label>
-        <input name='careerTitle' type="text" placeholder="Ingeniero Electrico" onChange={changeHandler} onBlur={blurHandler} value={data.careerTitle} />
-        {errors.careerTitle && <div>{errors?.careerTitle}</div>} */}
 
       </div>
 
