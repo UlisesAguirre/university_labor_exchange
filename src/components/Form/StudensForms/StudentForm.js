@@ -33,8 +33,8 @@ const StudentForm = () => {
     const stepForwardHandler = (data) => {
     
         if (step === 4) {
+            setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
             alert('Datos cargados con exito! Seleccione enviar')
-            setForm((prevform) => ({ ...prevform, ['studentsSkills']: data }));
             // submitHandler();
         } else {
             setForm((prevForm) => ({ ...prevForm, ...data }));

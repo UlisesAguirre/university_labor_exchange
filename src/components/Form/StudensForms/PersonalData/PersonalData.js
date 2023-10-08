@@ -48,7 +48,7 @@ const validateData = (data, name) => {
 }
 
 const validInputs = {
-  username: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true }, //FIXME: 
+  username: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true }, 
   name: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   lastName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   email: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true },
@@ -89,7 +89,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
     legajo: form.legajo,
     documentType: form.documentType,
     documentNumber: form.documentNumber,
-    birthDate: format(new Date(form.birthDate), 'yyyy-MM-dd'),
+    birthDate: form.birthDate ? format(new Date(form.birthDate), 'yyyy-MM-dd') : null,
     civilStatus: form.civilStatus,
     cuil: form.cuil,
     sex: form.sex,

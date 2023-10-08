@@ -7,10 +7,32 @@ const useFrom = (props) => {
 
     const changeHandler = (e) => {
         const { value, name } = e.target;
-        if (name === 'idCarrer') {
-            setData({ ...data, [name]: parseInt(value) });
+        if (value === '') {
+            setData({ ...data, [name]: null });
+        } else {
+            setData({ ...data, [name]: value })
         }
-        setData({ ...data, [name]: value })
+
+    }
+
+    const changeFileHandler = (e) => {
+        const { files, name } = e.target
+
+        let error = '';
+       
+        const allowedExtensions = /(.jpg|.jpeg|.png|.pdf)$/i;
+       
+        if (!allowedExtensions.test(files[0].name)) {
+            error = 'Solo se aceptan las extenciones .jpg .jpeg .png .pdf';
+        }
+
+        setErrors({
+            ...errors,
+            [name]: error,
+        })
+
+        setData({ ...data, [name]: files[0] })
+        
     }
 
 
@@ -62,6 +84,7 @@ const useFrom = (props) => {
         blurHandler,
         moveForwardHandler,
         moveBackHandler,
+        changeFileHandler,
     }
 }
 

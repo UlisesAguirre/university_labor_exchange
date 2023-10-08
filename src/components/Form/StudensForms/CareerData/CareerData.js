@@ -6,14 +6,11 @@ import Spinner from "../../../Shared/Spinner/Spinner";
 // TODO: 
 // Agregar estilos
 
-// FIXME: validación cantidad max de materias aprobadas 
-
 
 const validateData = (data, name) => {
-
   let error = '';
 
-  if (regex[name]) {
+  if ((data[name] !== null && data[name] !== '') && regex[name]) {
     if (!regex[name].test(data[name])) {
       if ((name === 'average') || (name === 'averageWithFails')) {
         error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00";
@@ -22,7 +19,6 @@ const validateData = (data, name) => {
         error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
       }
       if (name === 'studyProgram') {
-        console.log(name)
         error = 'El Plan solo acepta años entre 1900 y 2200'
       }
     }
@@ -33,7 +29,7 @@ const validateData = (data, name) => {
 
 const regex = {
   approvedSubjects: /^(?:[1-9]|[1-5][0-9]|60)$/,
-  average:/^(?:[0-9]|10)(?:\.\d{1,2})?$/,
+  average: /^(?:[0-9]|10)(?:\.\d{1,2})?$/,
   averageWithFails: /^(?:[0-9]|10)(?:\.\d{1,2})?$/,
   studyProgram: /^(199[0-9]|20[0-2][0-9]|2300)$/,
 }
@@ -44,10 +40,11 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
   const careers = getData;
 
+
   const inicialData = {
-    idCarrer: form.idCarrer,
+    idCarrer: form.idCarrer ? form.idCarrer : null,
     approvedSubjects: form.approvedSubjects,
-    studyProgram: form.studyProgram ,
+    studyProgram: form.studyProgram,
     currentCareerYear: form.currentCareerYear,
     turn: form.turn,
     average: form.average,
@@ -67,14 +64,13 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
     <div >
       {(loading) && <Spinner />}
       {error && <span>error.message</span>}
-
       <p> Datos Universitarios </p>
 
       <div>
 
         <label>Carrera</label>
         <select name="idCarrer" onChange={changeHandler} onBlur={blurHandler} value={data.idCarrer}>
-          <option value={''}>Careera</option>
+          <option value=''>Careera</option>
           {careers.map((c) =>
             <option key={c.idCarrer} value={c.idCarrer}>{c.name}</option>
           )}
