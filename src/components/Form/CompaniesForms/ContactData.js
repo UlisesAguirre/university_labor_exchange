@@ -5,7 +5,7 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 const validateData = (data, name) => {
   let error = '';
 
-  if (data[name] ===  null || !data[name].trim())  {
+  if (data[name] === null || (typeof data[name] === 'string'  && !data[name].trim()))  {
     if (validInputs[name].require)  {
       error = "Este campo es obligatorio";
     }
@@ -30,9 +30,9 @@ const validateData = (data, name) => {
 
 
 const validInputs = {
-  recruiterName: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
-  recruiterLastName: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
-  recruiterPosition: { regex: /^[a-zA-Z\s]{3,50}$/, require: true, },
+  recruiterName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
+  recruiterLastName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
+  recruiterPosition: { regex:/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
   recruiterPhoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true, },
   recruiterEmail: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true, },
   recruiterRelWithCompany: { require: true, },

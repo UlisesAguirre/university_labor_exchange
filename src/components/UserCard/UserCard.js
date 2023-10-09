@@ -44,6 +44,8 @@ const UserCard = () => {
           {user.userType === "student" ? <button className='button'>Descargar cv</button> : <></>}
           
         </div>}
+        {/* FIXME: hay datos nulls en el student porque no son requeridos 
+        cambiar logica cuando tengamos un campo en student bool para esto  */}
       {Object.values(dataUser).includes(null) ?
         <div className={`profile-message-card ${theme}`}>
           <p>Te recomendamos que termines de completar tus datos para poder acceder a las

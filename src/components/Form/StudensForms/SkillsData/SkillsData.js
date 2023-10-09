@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import useFrom from "../../../../custom/useForm";
 import useGetRequest from "../../../../custom/useGetRequest";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
@@ -6,43 +6,55 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../../Shared/Spinner/Spinner";
 
-
 const validateData = (data, name) => {
-
   let error = '';
-
   return error;
 }
-
 
 const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
   const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetAllSkills');
-  const [newSkills, setNewSkills] = useState(form.studentsSkills);
+  const [studentsSkills, setStudentsSkills] = useState(form.studentsSkills);
+  const [messageError, setMessageError] = useState('');
 
   const skills = getData;
 
   const inicialData = {
     idSkill: '',
     skillLevel: '',
+    legajo: form.legajo,
   }
 
   const addSkill = (e) => {
     e.preventDefault();
     if (data.idSkill !== '' && data.skillLevel !== '') {
       data.idSkill = parseInt(data.idSkill);
-      setNewSkills([...newSkills, data]);
+      if(studentsSkills.filter((s)=> s.idSkill === data.idSkill).length !== 0){
+        setMessageError('La habilidad seleccionada ya existe en su lista! Debe eliminarla y volver a cargarla si desea actualizarla')
+      } else {
+        setStudentsSkills([...studentsSkills, data]);
+        setMessageError('')
+      }
+      
     }
   }
 
-  function obtenerSkillNamePorId(idSkill) {
+  function getSkillNameById(idSkill) {
     const skill = skills.find((item) => item.idSkill === idSkill);
     return skill ? skill.skillName : null;
   }
 
+  const deleteSkill = (idSkill,e) => {
+    e.preventDefault()
+    // var updatedSkills = studentsSkills.splice(index, 1);
+    setStudentsSkills(studentsSkills.filter(s =>
+      s.idSkill !== idSkill
+    ));
+  }
+
   const moveForwardHandler = (e) => {
     e.preventDefault();
-    stepForwardHandler(newSkills);
+    stepForwardHandler(studentsSkills);
   }
 
   const {
@@ -76,7 +88,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
         {errors.skillLevel && <div>{errors?.skillLevel}</div>}
 
         <BasicButton buttonName={'Agregar Habilidad'} buttonHandler={addSkill} />
-
+        {messageError && <div>{messageError}</div> }
 
         <table>
           <caption>Habilidades</caption>
@@ -87,11 +99,13 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
             </tr>
           </thead>
           <tbody>
-            {newSkills.map((ns, index) => (
+            {studentsSkills.map((ns, index) => (
               <tr key={index}>
-                <td>{obtenerSkillNamePorId(ns.idSkill)}</td>
+                <td>{getSkillNameById(ns.idSkill)}</td>
                 <td>{ns.skillLevel}</td>
-                <td><button> <FontAwesomeIcon icon={faTrash} /> </button></td>
+                <td><button onClick={(e)  => deleteSkill(ns.idSkill, e)}> 
+                  <FontAwesomeIcon icon={faTrash} /> 
+                </button></td>
               </tr>
             ))}
           </tbody>
