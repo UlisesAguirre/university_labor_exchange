@@ -3,19 +3,32 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 
 // TODO: 
 // Agregar estilos
-// agregar validaciones al campo de cv
+// Cambiar curriculumV a curriculum cuando lo carguemos a la base de datos
+
 
 const validateData = (data, name) => {
 
   let error = '';
 
-  if (regex[name]) {
-    if (!regex[name].test(data[name])) {
-      if (name === 'secondaryDegree') {
-        error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
-      }
-      if (name === 'observations') {
-        error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+  if (data[name] !== null && data[name] !== '') {
+    if (regex[name]) {
+      if (name = 'curriculumV') {
+        if (!regex[name].test(data[name].name)) {
+          error = 'Solo se aceptan las extenciones .jpg .jpeg .png .pdf'
+        }
+      } else if (!regex[name].test(data[name])) {
+        if (name === 'secondaryDegree') {
+          error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
+        }
+        if (name === 'observations') {
+          error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
+        }
+        if (name === 'githubProfileUrl') {
+          error = "La URL de GitHub debe tener un formato valido, como 'https://github.com/usuario/repositorio' o 'github.com/usuario/repositorio'."
+        }
+        if (name === 'linkedInProfileUrl') {
+          error = "La URL de LinkedIn debe tener un formato valido, como 'https://www.linkedin.com/in/nombre-de-usuario' o 'linkedin.com/in/nombre-de-usuario'."
+        }
       }
     }
   }
@@ -26,6 +39,9 @@ const validateData = (data, name) => {
 const regex = {
   secondaryDegree: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{0,60}$/,
   observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
+  githubProfileUrl: /^(https:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/,
+  linkedInProfileUrl: /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/,
+  curriculumV: /(.jpg|.jpeg|.png|.pdf)$/i
 };
 
 const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
@@ -34,7 +50,7 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
     secondaryDegree: form.secondaryDegree,
     githubProfileUrl: form.githubProfileUrl,
     linkedInProfileUrl: form.linkedInProfileUrl,
-    curriculumVitae: form.curriculumVitae,
+    curriculumV: form.curriculumV,
     observations: form.observations,
   };
 
@@ -44,7 +60,8 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
     changeHandler,
     blurHandler,
     moveForwardHandler,
-    moveBackHandler
+    moveBackHandler,
+    changeFileHandler
   } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
 
 
@@ -62,12 +79,12 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
         {errors.githubProfileUrl && <div>{errors?.githubProfileUrl}</div>}
 
         <label> Link de Linkedin </label>
-        <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
+        <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.linkedInProfileUrl} onChange={changeHandler} onBlur={blurHandler} />
         {errors.linkedInProfileUrl && <div>{errors?.linkedInProfileUrl}</div>}
 
-        <label>curriculum Vitae </label>
-        <input type='file' name="curriculumVitae" value={data.curriculumVitae} onChange={changeHandler} />
-
+        <label>curriculumV Vitae </label>
+        <input type='file' name="curriculumV" onChange={changeFileHandler} />
+        {errors.curriculumV && <div>{errors?.curriculumV}</div>}
 
         <label>Observaciones</label>
         <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={data.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>

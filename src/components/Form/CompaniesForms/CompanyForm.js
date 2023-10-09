@@ -29,16 +29,6 @@ const CompanyForm = () => {
         }
     }, [data]);
 
-    const deleteFormNulls = () => {
-        Object.entries(form).forEach(([name, value]) => {
-            if (value === null) {
-                setForm({ ...form, [name]: '' })
-            }
-        })
-        return form
-    }
-
-    //FIXME: VER SI ES NECESARIO PONERLO PORQUE CUANDO SE MANDA ME PARECE QUE NO SE SETTEA EN NULL
    
 
     const stepForwardHandler = (data) => {
@@ -46,7 +36,7 @@ const CompanyForm = () => {
         setForm({ ...form, ...data });
 
         if (step === 2) {
-          
+            alert('Datos cargados con exito! Seleccione enviar')
             // submitHandler(form);
         } else {
             setStep(step => step + 1);
@@ -72,7 +62,7 @@ const CompanyForm = () => {
     }
 
     const companyDataComponent = form ? (
-        <CompanyData stepForwardHandler={stepForwardHandler} form={deleteFormNulls()} setForm={setForm} />
+        <CompanyData stepForwardHandler={stepForwardHandler} form={form} setForm={setForm} />
     ) : null;
 
     return (
