@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import CompanyData from './CompanyData';
 import ContactData from './ContactData';
-import useGetBySomething from '../../../custom/UseGetBySomething';
+import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';

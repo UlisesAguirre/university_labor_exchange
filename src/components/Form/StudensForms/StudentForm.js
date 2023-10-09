@@ -4,7 +4,7 @@ import FormCareerData from './CareerData/CareerData';
 import FormOtherData from './OtherData/OtherData';
 import FormSkillsData from './SkillsData/SkillsData';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
-import useGetBySomething from '../../../custom/UseGetBySomething';
+import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';

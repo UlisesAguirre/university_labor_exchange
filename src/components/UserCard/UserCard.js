@@ -3,7 +3,7 @@ import Spinner from "../Shared/Spinner/Spinner"
 
 import "./userCard.css"
 import { ThemeContext } from '../Context/ThemeContext/ThemeContext'
-import useGetBySomething from '../../custom/UseGetBySomething';
+import useGetBySomething from '../../custom/useGetBySomething';
 import UserContext from '../Context/UserContext/UserContext';
 import { Link } from 'react-router-dom';
 
