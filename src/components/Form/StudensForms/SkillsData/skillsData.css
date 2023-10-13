@@ -1,0 +1,39 @@
+.skillsData-container {
+    margin: 1em;
+}
+
+.skillsData-form {
+    display: flex;
+    justify-content: center;
+    border-radius: 1em;
+    padding: 1em 4em;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.skillsData-form-column {
+    display: flex;
+    flex-direction: column;
+    padding: 0 3em;
+    width: 40%;
+    text-align: left;
+}
+
+.skillsData-form-column caption {
+    border-bottom: 1px solid;
+}
+
+.skillsData-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.skillsData-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.skillsData-form label {
+    font-size: 1.2em;
+}

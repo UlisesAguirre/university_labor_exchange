@@ -1,0 +1,29 @@
+.contactData-container {
+    margin: 1em;
+}
+
+.contactData-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 36vh;
+}
+
+
+
+.contactData-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.contactData-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.contactData-form label {
+    font-size: 1.2em;
+}

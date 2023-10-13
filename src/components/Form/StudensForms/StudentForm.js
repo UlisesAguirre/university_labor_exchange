@@ -4,13 +4,18 @@ import FormCareerData from './CareerData/CareerData';
 import FormOtherData from './OtherData/OtherData';
 import FormSkillsData from './SkillsData/SkillsData';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
-import useGetBySomething from '../../../custom/UseGetBySomething';
+import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';
 
+import "./studentForm.css"
+import { useNavigate } from 'react-router-dom';
+
 
 const StudentForm = () => {
+
+    const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
 
@@ -51,6 +56,8 @@ const StudentForm = () => {
         try {
             const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', form)
             console.log("Datos actualizados", updatedData);
+            alert("Datos actualizados correctamente");
+            navigate("/profile");
         } catch (putRequestError) {
             console.log("Error al actualizar datos", putRequestError);
         }
@@ -63,7 +70,7 @@ const StudentForm = () => {
 
     return (
 
-        <div>
+        <div className='studentForm-container'>
             {(loading || loadingPutRequest) && <Spinner />}
             <form>
 

@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import useFrom from '../../../custom/useForm';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
+import { ThemeContext } from '../../Context/ThemeContext/ThemeContext';
+
+import "./contactData.css"
 
 const validateData = (data, name) => {
   let error = '';
@@ -40,6 +43,8 @@ const validInputs = {
 
 const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
+  const {theme} = useContext(ThemeContext);
+
   const inicialData = {
     recruiterName: form.recruiterName,
     recruiterLastName: form.recruiterLastName,
@@ -60,30 +65,30 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
 
   return (
-    <div>
+    <div className='contactData-container'>
       <h2>Datos de Contacto</h2>
 
-      <div>
+      <div className={`contactData-form ${theme}`}>
         <label> Nombre * </label>
         <input type='text' name="recruiterName" placeholder="Nombre" value={data.recruiterName} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.recruiterName && <div>{errors?.recruiterName}</div>}
+        {errors.recruiterName && <div className="form-user-error-message">{errors?.recruiterName}</div>}
 
         <label> Apellido * </label>
         <input type='text' name="recruiterLastName" placeholder="Apellido" value={data.recruiterLastName} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.recruiterLastName && <div>{errors?.recruiterLastName}</div>}
+        {errors.recruiterLastName && <div className="form-user-error-message">{errors?.recruiterLastName}</div>}
 
         <label> Puesto/Cargo * </label>
         <input type='text' name="recruiterPosition" placeholder="Puesto" value={data.recruiterPosition} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.recruiterPosition && <div>{errors?.recruiterPosition}</div>}
+        {errors.recruiterPosition && <div className="form-user-error-message">{errors?.recruiterPosition}</div>}
 
         <label> Telefono * </label>
         <input type='text' name="recruiterPhoneNumber" placeholder="Telefono" value={data.recruiterPhoneNumber} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.recruiterPhoneNumber && <div>{errors?.recruiterPhoneNumber}</div>}
+        {errors.recruiterPhoneNumber && <div className="form-user-error-message">{errors?.recruiterPhoneNumber}</div>}
 
         <label> Email * </label>
         <input type='email' name="recruiterEmail" placeholder="example@gmail.com" value={data.recruiterEmail} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.recruiterEmail && <div>{errors?.recruiterEmail}</div>}
-
+        {errors.recruiterEmail && <div className="form-user-error-message">{errors?.recruiterEmail}</div>}
+        
 
         <label>Relación del Contacto con la empresa</label>
         <select name='recruiterRelWithCompany' value={data.recruiterRelWithCompany} onChange={changeHandler} onBlur={blurHandler}>
@@ -91,7 +96,7 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
           <option value={'EnEmpresa'}>Trabajo en la Empresa que solicita la Búsqueda</option>
           <option value={'EnConsultora'}>Trabajo para una consultora</option>
         </select>
-        {errors.recruiterRelWithCompany && <div>{errors?.recruiterRelWithCompany}</div>}
+        {errors.recruiterRelWithCompany && <div className="form-user-error-message">{errors?.recruiterRelWithCompany}</div>}
       </div>
 
       <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />

@@ -1,6 +1,10 @@
 
+import { useContext } from "react";
 import useFrom from "../../../custom/useForm"
 import BasicButton from "../../Shared/BasicButton/BasicButton";
+
+import "./companyData.css"
+import { ThemeContext } from "../../Context/ThemeContext/ThemeContext";
 
 const validateData = (data, name) => {
   let error = '';
@@ -56,6 +60,8 @@ const validInputs = {
 
 const CompanyData = ({ stepForwardHandler, form }) => {
 
+  const {theme} = useContext(ThemeContext);
+
   const inicialData = {
     companyName: form.companyName,
     socialReason: form.socialReason,
@@ -79,57 +85,57 @@ const CompanyData = ({ stepForwardHandler, form }) => {
 
 
   return (
-    <div>
+    <div className="companyData-container">
       <h2>Datos de la empresa</h2>
-      <div>
-
-        <p>Los campos marcados con (*) son obligatorios </p>
+      <div className={`companyData-form ${theme}`}>
 
         <label> Nombre de usuario * </label>
         <input type='text' name='username' placeholder="La casona" value={data.username} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.username && <div>{errors?.username}</div>}
+        {errors.username && <div className="form-user-error-message">{errors?.username}</div>}
 
         <label> Email *</label>
-        <input type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.email && <div>{errors?.email}</div>}
+        <input className='input-form-disabled' readOnly type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
+        {errors.email && <div className="form-user-error-message">{errors?.email}</div>}
+        <span> El email no puede modificarse </span>
 
         <label>Nombre de la empresa *</label>
         <input type='text' name="companyName" placeholder="La casona" value={data.companyName} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.companyName && <div>{errors?.companyName}</div>}
+        {errors.companyName && <div className="form-user-error-message">{errors?.companyName}</div>}
 
         <label>Razón Social *</label>
         <input type='text' name="socialReason" placeholder="La casona SA" value={data.socialReason} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.socialReason && <div>{errors?.socialReason}</div>}
+        {errors.socialReason && <div className="form-user-error-message">{errors?.socialReason}</div>}
 
         <label> Cuit *</label>
-        <input type='text' name="cuit" defaultValue={form.cuit} readOnly/>
+        <input className='input-form-disabled' type='text' name="cuit" defaultValue={form.cuit} readOnly/>
+        <span> El cuit no puede modificarse </span>
 
         <label> Telefono *</label>
         <input type='text' name="telephoneNumber" placeholder="3410000000" value={data.telephoneNumber} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.telephoneNumber && <div>{errors?.telephoneNumber}</div>}
+        {errors.telephoneNumber && <div className="form-user-error-message">{errors?.telephoneNumber}</div>}
 
         <label> Sector *</label>
         <input type='text' name="sector" placeholder="Industrial" value={data.sector} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.sector && <div>{errors?.sector}</div>}
+        {errors.sector && <div className="form-user-error-message">{errors?.sector}</div>}
 
         <label> Domicilio legal *</label>
         <input type='text' name="legalAddress" placeholder="Laprida 1200" value={data.legalAddress} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.legalAddress && <div>{errors?.legalAddress}</div>}
+        {errors.legalAddress && <div className="form-user-error-message">{errors?.legalAddress}</div>}
 
         <label>Codigo Postal *</label>
         <input type='text' name="postalCode" placeholder="2000" value={data.postalCode} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.postalCode && <div>{errors?.postalCode}</div>}
+        {errors.postalCode && <div className="form-user-error-message">{errors?.postalCode}</div>}
 
         <label>Web </label>
         <input type='text' name="web" placeholder="http://example.com" value={data.web} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.web && <div>{errors?.web}</div>}
+        {errors.web && <div className="form-user-error-message">{errors?.web}</div>}
 
         <label>Localidad *</label>
         <input type='text' name="location" placeholder="Rosario" value={data.location} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.location && <div>{errors?.location}</div>}
+        {errors.location && <div className="form-user-error-message">{errors?.location}</div>}
 
       </div>
-
+      <p>(*) Estos campos son obligatorios </p>
       <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
     </div>
 

@@ -1,15 +1,17 @@
 import { useContext, useEffect, useState } from 'react'
 import CompanyData from './CompanyData';
 import ContactData from './ContactData';
-import useGetBySomething from '../../../custom/UseGetBySomething';
+import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
+import { useNavigate } from 'react-router-dom';
 
 
 const CompanyForm = () => {
 
+    const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
 
@@ -55,6 +57,8 @@ const CompanyForm = () => {
         try {
             const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', form)
             console.log("Datos actualizados", updatedData);
+            alert("Datos actualizados correctamente");
+            navigate("/profile");
         } catch (putRequestError) {
             console.log("Error al actualizar datos", putRequestError);
             alert("Error al cargar los datos")

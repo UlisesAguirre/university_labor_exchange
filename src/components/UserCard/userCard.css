@@ -85,6 +85,16 @@
     padding-bottom: .3em;
 }
 
+.profile-company-card li {
+    display: flex;
+}
+
+.profile-company-card p {
+    font-weight: bold;
+    margin: 0;
+    padding-right: 1em;
+}
+
 .profile-message-card a {
     text-decoration: none;
 }

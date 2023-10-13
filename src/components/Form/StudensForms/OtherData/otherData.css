@@ -1,0 +1,26 @@
+.otherData-container {
+    margin: 1em;
+}
+
+.otherData-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.otherData-form input, .otherData-form select, .otherData-form textarea {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.otherData-form textarea {
+    resize: none;
+}
+
+.otherData-form label {
+    font-size: 1.2em;
+}

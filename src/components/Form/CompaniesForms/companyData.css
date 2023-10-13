@@ -1,0 +1,35 @@
+.companyData-container {
+    margin: 1em;
+}
+
+.companyData-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    height: 36vh;
+}
+
+.companyData-form span {
+    font-size: .7em;
+    font-style: italic;
+    color: gray;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.companyData-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.companyData-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.companyData-form label {
+    font-size: 1.2em;
+}

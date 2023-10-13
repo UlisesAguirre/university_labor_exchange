@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import useFrom from "../../../../custom/useForm";
 import useGetRequest from "../../../../custom/useGetRequest";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
 import Spinner from "../../../Shared/Spinner/Spinner";
+import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
+import "./careerData.css"
 
 // TODO: 
 // Agregar estilos
@@ -36,6 +39,8 @@ const regex = {
 
 const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
+  const {theme} = useContext(ThemeContext);
+
   const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
 
   const careers = getData;
@@ -61,29 +66,29 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
   } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
 
   return (
-    <div >
+    <div className="careerData-container">
       {(loading) && <Spinner />}
       {error && <span>error.message</span>}
-      <p> Datos Universitarios </p>
+      <h2> Datos Universitarios </h2>
 
-      <div>
+      <div className={`careerData-form ${theme}`}>
 
         <label>Carrera</label>
         <select name="idCarrer" onChange={changeHandler} onBlur={blurHandler} value={data.idCarrer}>
-          <option value=''>Careera</option>
+          <option value=''>Carrera</option>
           {careers.map((c) =>
             <option key={c.idCarrer} value={c.idCarrer}>{c.name}</option>
           )}
         </select>
-        {errors.idCarrer && <div>{errors?.idCarrer}</div>}
+        {errors.idCarrer && <div className="form-user-error-message">{errors?.idCarrer}</div>}
 
         <label>Cantidad materias aprobadas</label>
         <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects} />
-        {errors.approvedSubjects && <div>{errors?.approvedSubjects}</div>}
+        {errors.approvedSubjects && <div className="form-user-error-message">{errors?.approvedSubjects}</div>}
 
         <label>Plan especialidad</label>
         <input type='number' min="1990" max="2300" name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
-        {errors.studyProgram && <div>{errors?.studyProgram}</div>}
+        {errors.studyProgram && <div className="form-user-error-message">{errors?.studyProgram}</div>}
 
         <label>Año que cursa</label>
         <select name='currentCareerYear' onChange={changeHandler} onBlur={blurHandler} value={data.currentCareerYear}>
@@ -95,7 +100,7 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
           <option value={"5"}>5° año</option>
           <option value={"6"}>6° año</option>
         </select>
-        {errors.currentCareerYear && <div>{errors?.currentCareerYear}</div>}
+        {errors.currentCareerYear && <div className="form-user-error-message">{errors?.currentCareerYear}</div>}
 
         <label>Turno que cursa</label>
         <select name='turn' onChange={changeHandler} onBlur={blurHandler} value={data.turn}>
@@ -104,15 +109,15 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
           <option value='Tarde'>Tarde</option>
           <option value='Noche'>Noche</option>
         </select>
-        {errors.turn && <div>{errors?.turn}</div>}
+        {errors.turn && <div className="form-user-error-message">{errors?.turn}</div>}
 
         <label>Promedio sin aplazos</label>
         <input name='average' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.average} />
-        {errors.average && <div>{errors?.average}</div>}
+        {errors.average && <div className="form-user-error-message">{errors?.average}</div>}
 
         <label>Promedio con aplazos</label>
         <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
-        {errors.averageWithFails && <div>{errors?.averageWithFails}</div>}
+        {errors.averageWithFails && <div className="form-user-error-message">{errors?.averageWithFails}</div>}
 
       </div>
 
