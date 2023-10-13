@@ -32,7 +32,7 @@ const UserCard = () => {
   return (
     <div className='userCard-container'>
       {loading && <Spinner />}
-      {Object.values(dataUser).includes(null) ?
+      {dataUser.telephoneNumber == null ?
         <div className={`profile-title-card ${theme}`}>
           <p>¡ Bienvenido a la bolsa de trabajo !</p>
         </div> :
@@ -44,9 +44,8 @@ const UserCard = () => {
           {user.userType === "student" ? <button className='button'>Descargar cv</button> : <></>}
           
         </div>}
-        {/* FIXME: hay datos nulls en el student porque no son requeridos 
-        cambiar logica cuando tengamos un campo en student bool para esto  */}
-      {Object.values(dataUser).includes(null) ?
+
+      {dataUser.telephoneNumber == null ?
         <div className={`profile-message-card ${theme}`}>
           <p>Te recomendamos que termines de completar tus datos para poder acceder a las
             postulaciones.
@@ -88,12 +87,12 @@ const UserCard = () => {
           <div className={`profile-company-card ${theme}`}>
             <h2>Datos de la empresa:</h2>
             <ul>
-              <li>{dataUser.companyName}</li>
-              <li>{dataUser.socialReason}</li>
-              <li>{dataUser.cuit}</li>
-              <li>{dataUser.sector}</li>
-              <li>{dataUser.email}</li>
-              <li><a href={dataUser.web}>{dataUser.web}</a></li>
+              <li><p>Nombre: </p> {dataUser.companyName}</li>
+              <li><p>Razon social: </p>{dataUser.socialReason}</li>
+              <li><p>Cuit: </p>{dataUser.cuit}</li>
+              <li><p>Sector: </p>{dataUser.sector}</li>
+              <li><p>Email: </p>{dataUser.email}</li>
+              <li><p>Pagina web: </p><a href={dataUser.web}>{dataUser.web}</a></li>
             </ul>
           </div>
       }

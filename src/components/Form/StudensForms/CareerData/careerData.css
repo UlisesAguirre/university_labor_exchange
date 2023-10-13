@@ -1,0 +1,27 @@
+.careerData-container {
+    margin: 1em;
+}
+
+.careerData-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em .2em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.careerData-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.careerData-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.careerData-form label {
+    font-size: 1.2em;
+}

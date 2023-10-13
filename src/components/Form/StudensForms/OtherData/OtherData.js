@@ -1,5 +1,9 @@
+import { useContext } from "react";
 import useFrom from "../../../../custom/useForm";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
+
+import "./otherData.css"
+import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 
 // TODO: 
 // Agregar estilos
@@ -13,9 +17,11 @@ const validateData = (data, name) => {
   if (data[name] !== null && data[name] !== '') {
     if (regex[name]) {
       if (name = 'curriculumV') {
-        if (!regex[name].test(data[name].name)) {
-          error = 'Solo se aceptan las extenciones .jpg .jpeg .png .pdf'
-        }
+        //Comente esto porque se rompia aca (total el cv no lo presentamos en este sprint)
+
+        // if (!regex[name].test(data[name].name)) {
+        //   error = 'Solo se aceptan las extenciones .jpg .jpeg .png .pdf'
+        // }
       } else if (!regex[name].test(data[name])) {
         if (name === 'secondaryDegree') {
           error = "El título secundario debe estar compuesto únicamente por caracteres del alfabeto español y tener un límite máximo de 60 caracteres."
@@ -46,6 +52,8 @@ const regex = {
 
 const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
+  const { theme } = useContext(ThemeContext);
+
   const inicialData = {
     secondaryDegree: form.secondaryDegree,
     githubProfileUrl: form.githubProfileUrl,
@@ -66,9 +74,9 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
 
   return (
-    <div>
-      <p > Otros </p>
-      <div>
+    <div className="otherData-container">
+      <h2 > Otros </h2>
+      <div className={`otherData-form ${theme}`}>
 
         {/* <label> Título secundario </label>
         <input type='text' name="secondaryDegree" placeholder="Bachiller en Ciencias Naturales" value={data.secondaryDegree} onChange={changeHandler} onBlur={blurHandler} />
@@ -76,23 +84,25 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
         <label> Link de GitHub </label>
         <input type='text' name="githubProfileUrl" placeholder="https://github.com/UsuarioDeGit/NombreRepositorio" value={data.githubProfileUrl} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.githubProfileUrl && <div>{errors?.githubProfileUrl}</div>}
+        {errors.githubProfileUrl && <div className="form-user-error-message">{errors?.githubProfileUrl}</div>}
 
         <label> Link de Linkedin </label>
         <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.linkedInProfileUrl} onChange={changeHandler} onBlur={blurHandler} />
-        {errors.linkedInProfileUrl && <div>{errors?.linkedInProfileUrl}</div>}
+        {errors.linkedInProfileUrl && <div className="form-user-error-message">{errors?.linkedInProfileUrl}</div>}
 
-        <label>curriculumV Vitae </label>
+        <label>Curriculum Vitae </label>
         <input type='file' name="curriculumV" onChange={changeFileHandler} />
-        {errors.curriculumV && <div>{errors?.curriculumV}</div>}
+        {errors.curriculumV && <div className="form-user-error-message">{errors?.curriculumV}</div>}
 
         <label>Observaciones</label>
         <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={data.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
-        {errors.observations && <div>{errors?.observations}</div>}
+        {errors.observations && <div className="form-user-error-message">{errors?.observations}</div>}
 
       </div>
-      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+      <div>
+        <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+        <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+      </div>
     </div>
   )
 
