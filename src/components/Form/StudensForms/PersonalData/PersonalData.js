@@ -80,7 +80,7 @@ const validInputs = {
     regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
     require: false
   },
-  telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: false },
+  telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true },
 
 }
 
