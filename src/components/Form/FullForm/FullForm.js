@@ -12,7 +12,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
 
     const navigate = useNavigate();
 
-    const { postData, isLoading, error } = usePostRequest();
+    const { postData, isLoading, postError } = usePostRequest();
 
     const regex = {
         name: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
@@ -144,9 +144,9 @@ const FullForm = ({ title, nameButton, typeForm }) => {
             const url = (typeForm === 'Soy alumno') ?
                 "https://localhost:7049/api/Register/RegisterStudent" :
                 "https://localhost:7049/api/Register/RegisterCompany";
+            
 
-
-            const response = await postData(url, dataUser);
+            const response = await postData(url,  JSON.stringify(dataUser), { 'Content-Type': 'application/json',});
 
             if (response) {
                 alert('Usuario registrado correctamente');

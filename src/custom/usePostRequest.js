@@ -2,19 +2,17 @@ import { useState } from 'react';
 
 const usePostRequest = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [postError, setPostError] = useState(null);
 
-    const postData = async (url, data) => {
+    const postData = async (url, data, header) => {
         try {
             setIsLoading(true);
-            setError(null);
+            setPostError(null);
 
             const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
+                headers: header,
+                body: data,
             });
 
             if (!response.ok) {
@@ -25,13 +23,13 @@ const usePostRequest = () => {
             const responseData = await response.text();
 
             return responseData;
-        } catch (error) {
+        } catch (postError) {
             setIsLoading(false);
-            setError(error.message || 'Hubo un problema en la solicitud POST');
+            setPostError(postError.message || 'Hubo un problema en la solicitud POST');
         }
     };
 
-    return { postData, isLoading, error };
+    return { postData, isLoading, postError };
 };
 
 export default usePostRequest;
