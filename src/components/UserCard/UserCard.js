@@ -24,7 +24,6 @@ const UserCard = () => {
   useEffect(() => {
     if (data) {
       setDataUser(data);
-      console.log(data);
     }
   }, [data]);
 

@@ -16,25 +16,30 @@ const useFrom = (props) => {
     }
 
     const changeFileHandler = (e) => {
+
         const { files, name } = e.target
 
+        console.log(name)
+
         let error = '';
-       
-        const allowedExtensions = /(.jpg|.jpeg|.png|.pdf)$/i;
-       
-        if (!allowedExtensions.test(files[0].name)) {
-            error = 'Solo se aceptan las extenciones .jpg .jpeg .png .pdf';
+
+        const allowedExtensions = /(.pdf)$/i;
+
+        if (files[0]) {
+            
+            if (!allowedExtensions.test(files[0].name)) {
+                error = 'Solo se aceptan las extenciones .pdf';
+            }
+
+            setErrors({
+                ...errors,
+                [name]: error,
+            })
+
+            setData({ ...data, [name]: files[0] })
         }
 
-        setErrors({
-            ...errors,
-            [name]: error,
-        })
-
-        setData({ ...data, [name]: files[0] })
-        
     }
-
 
     const blurHandler = (e) => {
         const { name } = e.target
@@ -52,6 +57,7 @@ const useFrom = (props) => {
 
         Object.keys(data).forEach((name) => {
             const error = props.validateData(data, name)
+
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 [name]: error,
