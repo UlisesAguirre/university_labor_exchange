@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 //FIXME: falta acceder al nombre del archivo que estoy recibiendo que esta en el header.
 
-function useGetCurriculum(userId) {
+function useGetCurriculum(userId, refetch) {
   const [fileData, setFileData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ function useGetCurriculum(userId) {
     };
 
     downloadFile();
-  }, [userId]);
+  }, [userId, refetch]);
 
   return { fileData, loading, error };
 }

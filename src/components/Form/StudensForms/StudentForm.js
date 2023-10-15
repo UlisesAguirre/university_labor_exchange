@@ -57,7 +57,7 @@ const StudentForm = () => {
 
     const submitHandler = async () => {
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', form)
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(form), {'Content-Type': 'application/json'})
             console.log("Datos actualizados", updatedData);
             alert("Datos actualizados correctamente");
             navigate("/profile");

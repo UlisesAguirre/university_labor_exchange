@@ -1,31 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Spinner from '../../../Shared/Spinner/Spinner';
 import usePostRequest from '../../../../custom/usePostRequest';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faTrash, fas } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import usePutRequest from '../../../../custom/usePutRequest';
 import useGetCurriculum from '../../../../custom/useGetCurriculum';
 
 const Curriculum = ({ userId }) => {
-
-  const { postData, isLoading, postError } = usePostRequest();
+  const [refetch, setRefetch] = useState(false)
   const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
-  const { fileData, loading, error } = useGetCurriculum(userId);
+  const { fileData, loading, error } = useGetCurriculum(userId, refetch);
+  const [file, setfile] = useState(null);
   const [fileError, setFileError] = useState('');
-  const [curriculumName, setCurriculumName] = useState('Ningun archivo seleccionado');
-  const [deleteCurriculum, setDetele] = useState(true)
+  const [curriculumName, setCurriculumName] = useState('Ningun archivo seleccionado')
 
+  useEffect(() => {
+    if (fileData) {
+      setfile(fileData);
+      setCurriculumName('curriculum.pdf')
+    }
+  }, [fileData])
 
   const handleDownloadFile = (e) => {
     e.preventDefault()
-    if (fileData) {
-      const url = window.URL.createObjectURL(fileData);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', curriculumName);
-      document.body.appendChild(link);
-      link.click();
-    }
+    const url = window.URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', curriculumName);
+    document.body.appendChild(link);
+    link.click();
   }
 
   const changeFileHandler = async (e) => {
@@ -51,10 +54,9 @@ const Curriculum = ({ userId }) => {
         formData.append('Curriculum', files[0]);
         formData.append('Id', userId);
 
-        const response = await postData("https://localhost:7049/api/Student/AddCurriculum", formData, {});
+        const response = await sendPutRequest("https://localhost:7049/api/Student/AddCurriculum", formData, {});
+        setRefetch(true);
 
-        setCurriculumName('curriculum.pdf')
-        setDetele(true)
       }
     }
 
@@ -62,34 +64,41 @@ const Curriculum = ({ userId }) => {
 
   const deteleCurriculum = async (e) => {
     e.preventDefault()
-    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId);
+    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, { 'Content-Type': 'application/json', });
+    setRefetch(false);
+    setfile('')
     setCurriculumName('Ningun archivo seleccionado')
-    setDetele(false)
   }
 
 
   return (
     <>
-      {isLoading && loadingPutRequest && loading && <Spinner />}
+      {loadingPutRequest && loading && <Spinner />}
+
       <label>Curriculum Vitae </label>
+
       <div>
+
         <label className='add-curriculum'>
           Seleccione un Archivo
           <input type='file' name="curriculum" onChange={changeFileHandler} />
         </label>
-        <span>{fileData ? 'curriculum.pdf' : curriculumName }</span>
-        {fileData && deleteCurriculum &&
+
+        <span>{curriculumName}</span>
+
+        {file &&
           <>
             <button className='delete-button' onClick={deteleCurriculum}><FontAwesomeIcon icon={faTrash} /></button>
             <button className='delete-button' onClick={handleDownloadFile}><FontAwesomeIcon icon={faDownload} /></button>
           </>
         }
+
         {loading && <span> Cargando archivo...</span>}
         {error && <span>{error === ' Aún no tiene un curriculum' ? '' : error}</span>}
       </div>
 
       {fileError && <div className="form-user-error-message">{fileError}</div>}
-      {postError && <div className="form-user-error-message">{postError}</div>}
+      {putRequestError && <div className="form-user-error-message">{putRequestError}</div>}
 
       <div>
 

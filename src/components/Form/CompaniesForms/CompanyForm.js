@@ -31,7 +31,7 @@ const CompanyForm = () => {
         }
     }, [data]);
 
-   
+
 
     const stepForwardHandler = (data) => {
         //FIXME: tarda en cargar el form entonces hay q apretar 2 veces para guardar la información y no se actualizar el data
@@ -55,7 +55,7 @@ const CompanyForm = () => {
 
     const submitHandler = async () => {
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', form)
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', JSON.stringify(form), {'Content-Type': 'application/json'})
             console.log("Datos actualizados", updatedData);
             alert("Datos actualizados correctamente");
             navigate("/profile");
@@ -82,7 +82,7 @@ const CompanyForm = () => {
             </form>
 
             <div>
-                {step === 2 ? <BasicButton buttonName={'Enviar'} buttonHandler={submitHandler}/> : null}
+                {step === 2 ? <BasicButton buttonName={'Enviar'} buttonHandler={submitHandler} /> : null}
             </div>
 
             {putRequestError && <span>{putRequestError.message}</span>}
