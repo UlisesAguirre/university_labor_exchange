@@ -9,6 +9,7 @@ import CompanyForm from '../../components/Form/CompaniesForms/CompanyForm'
 
 import './userPage.css';
 import UserContext from '../../components/Context/UserContext/UserContext';
+import AdminCard from '../../components/AdminCard/AdminCard';
 
 const UserPage = () => {
 
@@ -19,9 +20,25 @@ const UserPage = () => {
       <UserMenu />
       <MenuCard>
         <Routes>
-          <Route path='/' element={<UserCard />} />
-          {user.userType === "student" && <Route path='/editprofile' element={<StudentForm />} /> }
-          {user.userType === "company" && <Route path='/editprofile' element={<CompanyForm />} /> }
+          {user.userType === "admin" ?
+            <>
+              <Route path='/*' element={<AdminCard />} />
+            </> :
+            <>
+              <Route path='/' element={<UserCard />} />
+              {user.userType === "student" &&
+                <>
+                  <Route path='/editprofile' element={<StudentForm />} />
+                </>
+              }
+              {user.userType === "company" &&
+                <>
+                  <Route path='/editprofile' element={<CompanyForm />} />
+                </>
+              }
+            </>
+          }
+
         </Routes>
       </MenuCard>
 

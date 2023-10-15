@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 2em 0;
-    padding-left: 1em;
+    padding: 2em 1em;
     background-color: var(--secondary-color);
     width: 15%;
     border-radius: 1em;
@@ -13,6 +12,17 @@
 .userMenu-options {
     display: flex;
     flex-direction: column;
+}
+
+.userMenu-options p {
+    margin: 0;
+    font-size: 1.1em;
+    border-bottom: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.userMenu-options p:nth-of-type(2)   {
+    padding-top: 1em;
 }
 
 .userMenu-container a {
