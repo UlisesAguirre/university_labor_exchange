@@ -6,6 +6,8 @@ function useGetBySomething(apiEndpoint, identifier) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  
+
   //Hay que implementar logica para cuando agreguemos la etiqueta [Authorize] en los endpoints
 
   useEffect(() => {
@@ -13,7 +15,15 @@ function useGetBySomething(apiEndpoint, identifier) {
     async function fetchData() {
       try {
         setLoading(true)
-        const response = await fetch(`${apiEndpoint}/${identifier}`);
+
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        const response = await fetch(`${apiEndpoint}/${identifier}`, {
+          headers,
+        });
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

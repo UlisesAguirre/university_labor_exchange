@@ -8,7 +8,13 @@ const useGetRequest = (url) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        const response = await fetch(url, {headers});
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
