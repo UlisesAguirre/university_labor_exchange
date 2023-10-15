@@ -1,0 +1,20 @@
+.managementList-container {
+    width: 100%;
+    border: 1px solid;
+    margin: 0 1em;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.managementList-title {
+    margin: 0;
+    padding-bottom: 1em;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.managementList-box {
+    border-radius: 1em;
+    max-height: 40vh;
+    overflow-y: auto;
+}

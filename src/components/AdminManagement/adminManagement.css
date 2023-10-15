@@ -1,0 +1,9 @@
+.adminManagement-container {
+    text-align: center;
+    width: 100%;
+}
+
+.admin-list-container {
+    display: flex;
+    width: 100%;
+}
