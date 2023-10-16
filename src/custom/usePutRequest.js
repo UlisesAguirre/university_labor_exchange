@@ -4,7 +4,7 @@ const usePutRequest = () => {
     const [ loadingPutRequest, setLoadingPutRequest] = useState(false);
     const [ putRequestError, setPutRequestError] = useState(null);
 
-    const sendPutRequest = async (url, data, header) => {
+    const sendPutRequest = async (url, data, contentType) => {
         try {
             setLoadingPutRequest(true);
             setPutRequestError(null);
@@ -14,10 +14,10 @@ const usePutRequest = () => {
             const response = await fetch(url, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': contentType,
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(data),
+                body: data,
             });
 
             if (!response.ok) {

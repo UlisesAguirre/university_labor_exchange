@@ -4,10 +4,10 @@ const usePostRequest = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [postError, setPostError] = useState(null);
 
-    const postData = async (url, data, header) => {
+    const postData = async (url, data) => {
         try {
             setIsLoading(true);
-            setError(null);
+            setPostError(null);
 
             const token = localStorage.getItem('token');
 
