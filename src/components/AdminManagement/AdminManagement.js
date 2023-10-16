@@ -2,13 +2,14 @@ import React from 'react'
 
 import "./adminManagement.css"
 import ManagementList from "../Lists/ManagementList/ManagementList"
+import ManagementMenu from '../ManagementMenu/ManagementMenu'
 
 const AdminManagement = ({ type }) => {
     return (
         <div className='adminManagement-container'>
             <h2>
                 {type === "users" && "Habilitar usuarios"}
-                {type === "jobPositions" && "Habilitar postulaciones"}
+                {type === "jobPositions" && "Habilitar ofertas laborales"}
             </h2>
             <div>
                 {type === "users" &&
@@ -19,11 +20,17 @@ const AdminManagement = ({ type }) => {
                 }
                 {type === "jobPositions" &&
                     <div className='admin-list-container'>
-                        <ManagementList url="" title="Ofertas laborales" />
+                        <ManagementList url="" title="Relacion de dependencia" />
                         <ManagementList url="" title="Pasantias" />
                     </div>
                 }
             </div>
+            {type === "careers" &&
+                    <ManagementMenu type="carrera" types="carreras"/> 
+                }
+                {type === "skills" &&
+                    <ManagementMenu type="habilidad" types="habilidades"/> 
+                }
         </div>
     )
 }

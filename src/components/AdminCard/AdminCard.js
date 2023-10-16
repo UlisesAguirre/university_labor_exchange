@@ -6,15 +6,15 @@ import AdminManagement from '../AdminManagement/AdminManagement'
 
 const AdminCard = () => {
     return (
-        <div>
+        <>
             <Routes>
                 <Route path='/' element="Hola"/>
                 <Route path='/users-management' element={<AdminManagement type="users" />}/>
                 <Route path='/jobpositions-management' element={<AdminManagement type="jobPositions" />} />
-                <Route path='/careers-management' element="Adios"/>
-                <Route path='/skills-management' element="Adios"/>
+                <Route path='/careers-management' element={<AdminManagement type="careers" />}/>
+                <Route path='/skills-management' element={<AdminManagement type="skills" />}/>
             </Routes>
-        </div>
+        </>
     )
 }
 
