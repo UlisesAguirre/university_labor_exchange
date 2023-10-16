@@ -1,0 +1,46 @@
+.jobOffer-container {
+    margin: 1em;
+}
+
+.jobOffer-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    height: 36vh;
+}
+
+.jobOffer-form span {
+    font-size: .7em;
+    font-style: italic;
+    color: gray;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.jobOffer-form p {
+    margin: 0.5rem;
+}
+
+.jobOffer-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.jobOffer-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.jobOffer-form label {
+    font-size: 1.2em;
+}
+
+.form-user-error-message {
+    font-size: .7em;
+    background-color: lightgrey;
+    border-radius: 5px;
+    color: red;
+}

@@ -30,7 +30,7 @@ const UserMenu = () => {
             <Link to="">Administrar ofertas</Link>
           </>}
         {user.userType === "student" && <Link>Ofertas laborales</Link>}
-        {user.userType === "company" && <Link>Ofertas realizadas</Link>}
+        {user.userType === "company" && <Link to='/profile/addoffer'>Ofertas realizadas</Link>}
         {user.userType === "admin" && <Link></Link>}
       </div>
       <div>
