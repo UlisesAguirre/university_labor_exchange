@@ -1,10 +1,11 @@
 import { addDays, format } from "date-fns";
-import { useState } from "react"
+import { useContext, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
 import './jobOffer.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import BasicButton from '../../../Shared/BasicButton/BasicButton'
+import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 
 const validateForm = (form, name) => {
     let error = ''
@@ -66,20 +67,22 @@ const validInputs = {
 
 const JobOffer = () => {
 
-    // const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
+    const { theme } = useContext(ThemeContext);
 
-    // const careersList = getData;
+    const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
 
-    const careersList = [
-        { idCarrer: 1, name: 'Ingeniería química' },
-        { idCarrer: 2, name: 'Ingeniería química 2' },
-        { idCarrer: 3, name: 'Ingeniería química 3' },
-    ]
+    const careersList = getData;
+
+    // const careersList = [
+    //     { idCarrer: 1, name: 'Ingeniería química' },
+    //     { idCarrer: 2, name: 'Ingeniería química 2' },
+    //     { idCarrer: 3, name: 'Ingeniería química 3' },
+    // ]
 
     const [careers, setCareers] = useState([]);
     const [visible, setVisible] = useState(false);
 
-    const [form, setForm] = useState({
+    const inicialForm = {
         jobType: '',
         endDate: '',
         numberOfPositionsToCover: '',
@@ -93,9 +96,9 @@ const JobOffer = () => {
         intershipDuration: '',
         tentativeStartDate: '',
         workDay: '',
-    })
+    }
 
-
+    const [form, setForm] = useState(inicialForm)
 
     const [errors, setErrors] = useState({})
 
@@ -181,7 +184,8 @@ const JobOffer = () => {
 
     }
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault()
 
     }
 
@@ -191,20 +195,10 @@ const JobOffer = () => {
 
             <h2>Ofertas Laborales</h2>
 
-            <form className="jobOffer-form">
+            {form.jobType ?
+                <>
+                    <form className={`jobOffer-form ${theme}`}>
 
-                <label>Tipo de búsqueda</label>
-                <select className='select' value={form.jobType} name='jobType' onChange={changeHandler} onBlur={blurHandler}>
-                    <option value=''>Seleccione pasantía o en relación de dependencia</option>
-                    <option value='Pasantía'>Pasantía</option>
-                    <option value='Trabajo'>En relación de dependencia</option>
-                </select>
-                {errors.jobType && <div className="form-user-error-message">{errors.jobType}</div>}
-
-                {form.jobType &&
-
-
-                    <>
                         <label>Titulo de la Oferta Laboral</label>
                         <input type="text" value={form.jobTitle} name='jobTitle' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.jobTitle && <div className="form-user-error-message">{errors.jobTitle}</div>}
@@ -280,18 +274,30 @@ const JobOffer = () => {
                         <label>Fecha Finalización de la Oferta</label>
                         <input type="date" value={form.endDate} name='endDate' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.endDate && <div className="form-user-error-message">{errors.endDate}</div>}
-                    </>
 
-                }
+                    </form>
 
-            </form>
+                    <div className="save-button">
+                        <BasicButton buttonName={'Atras'} buttonHandler={(e) => { setForm({ inicialForm }) }} />
+                        <BasicButton buttonName={'Guardar'} buttonHandler={saveHandler} />
+                    </div>
 
-            {form.jobType &&
-                <div className="save-button">
-                    <BasicButton buttonName={'Guardar'} buttonHandler={saveHandler} />
-                </div>
+                </>
+                :
+                <>
+                    <form className={`jobOffer-form ${theme}`}>
+                        <label>Tipo de búsqueda</label>
+                        <select className='select' value={form.jobType} name='jobType' onChange={changeHandler} onBlur={blurHandler}>
+                            <option value=''>Seleccione pasantía o en relación de dependencia</option>
+                            <option value='Pasantía'>Pasantía</option>
+                            <option value='Trabajo'>En relación de dependencia</option>
+                        </select>
+                        {errors.jobType && <div className="form-user-error-message">{errors.jobType}</div>}
+                    </form>
+
+                </>
+
             }
-
 
         </div>
 

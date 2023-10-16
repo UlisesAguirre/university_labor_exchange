@@ -19,9 +19,9 @@
     flex-direction: column;
     border-radius: 1em;
     padding: 1em 4em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     overflow-y: auto;
-    height: 43vh;
+    height: 45vh;
 }
 
 .jobOffer-form span {
@@ -129,6 +129,6 @@ input[type="checkbox" i] {
 
 .save-button{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     margin-right: 2rem;
 }
