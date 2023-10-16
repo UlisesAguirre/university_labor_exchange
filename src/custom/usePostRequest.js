@@ -7,12 +7,17 @@ const usePostRequest = () => {
     const postData = async (url, data, header) => {
         try {
             setIsLoading(true);
-            setPostError(null);
+            setError(null);
+
+            const token = localStorage.getItem('token');
 
             const response = await fetch(url, {
                 method: 'POST',
-                headers: header,
-                body: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {

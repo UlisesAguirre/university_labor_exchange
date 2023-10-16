@@ -1,0 +1,14 @@
+.managementMenu-button {
+    display: flex;
+    height: 100%;
+}
+
+.managementMenu-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.managementMenu-box h2 {
+    filter: var(--drop-shadow);
+}

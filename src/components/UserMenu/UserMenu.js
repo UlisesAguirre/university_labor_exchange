@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUserPen, faUsers, faBriefcase, faScrewdriverWrench, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 import "./userMenu.css"
 import { Link } from 'react-router-dom'
@@ -22,16 +24,19 @@ const UserMenu = () => {
       <div className='userMenu-options'>
         {user.userType !== "admin" ?
           <>
-            <Link to="/profile">Perfil</Link>
-            <Link to="/profile/editprofile">Editar perfil</Link>
+            <Link to="/profile"><FontAwesomeIcon icon={faUser} /> Perfil</Link>
+            <Link to="/profile/editprofile"><FontAwesomeIcon icon={faUserPen} /> Editar perfil</Link>
           </> :
           <>
-            <Link to="">Administrar usuarios</Link>
-            <Link to="">Administrar ofertas</Link>
+            <p>Habilitar:</p>
+            <Link to="/profile/users-management"><FontAwesomeIcon icon={faUsers} /> Usuarios</Link>
+            <Link to="/profile/jobpositions-management"><FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales</Link>
+            <p>Administrar:</p>
+            <Link to="/profile/careers-management"><FontAwesomeIcon icon={faGraduationCap} /> Carreras</Link>
+            <Link to="/profile/skills-management"><FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades</Link>
           </>}
-        {user.userType === "student" && <Link>Ofertas laborales</Link>}
-        {user.userType === "company" && <Link to='/profile/addoffer'>Ofertas realizadas</Link>}
-        {user.userType === "admin" && <Link></Link>}
+        {user.userType === "student" && <Link><FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales</Link>}
+        {user.userType === "company" && <Link><FontAwesomeIcon icon={faBriefcase} /> Ofertas realizadas</Link>}
       </div>
       <div>
         <Link to="/" onClick={logoutSession}>Cerrar sesión</Link>

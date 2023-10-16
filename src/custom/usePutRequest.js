@@ -9,10 +9,15 @@ const usePutRequest = () => {
             setLoadingPutRequest(true);
             setPutRequestError(null);
 
+            const token = localStorage.getItem('token');
+
             const response = await fetch(url, {
                 method: 'PUT',
-                headers: header,
-                body: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
