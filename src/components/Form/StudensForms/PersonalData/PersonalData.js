@@ -23,7 +23,7 @@ const validateData = (data, name) => {
     if (validInputs[name].regex) {
       if (!validInputs[name].regex.test(data[name])) {
         if (name === 'username' || name === 'name' || name === 'lastName' || name === 'address' || name === 'city' || name === 'province' || name === 'country') {
-          error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud máxima de 50 caracteres.";
+          error = "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
         }
         if (name === 'birthDate') {
           error = "La fecha debe tener formato dd/mm/yyyy"
