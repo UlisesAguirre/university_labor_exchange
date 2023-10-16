@@ -35,6 +35,7 @@ const UserPage = () => {
               {user.userType === "company" &&
                 <>
                   <Route path='/editprofile' element={<CompanyForm />} />
+                  <Route path='/add-offer' element={<JobOffer />} />
                 </>
               }
             </>
