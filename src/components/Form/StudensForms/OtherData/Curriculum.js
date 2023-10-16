@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Spinner from '../../../Shared/Spinner/Spinner';
-import usePostRequest from '../../../../custom/usePostRequest';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import usePutRequest from '../../../../custom/usePutRequest';
@@ -64,7 +63,7 @@ const Curriculum = ({ userId }) => {
 
   const deteleCurriculum = async (e) => {
     e.preventDefault()
-    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, { 'Content-Type': 'application/json', });
+    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, {'Content-Type': 'application/json'});
     setRefetch(false);
     setfile('')
     setCurriculumName('Ningun archivo seleccionado')

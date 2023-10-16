@@ -9,8 +9,6 @@ import Curriculum from "./Curriculum";
 
 // TODO: 
 // Agregar estilos
-// Cambiar curriculum a curriculum cuando lo carguemos a la base de datos
-
 
 const validateData = (data, name) => {
 
@@ -48,7 +46,6 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) =>
   const inicialData = {
     githubProfileUrl: form.githubProfileUrl,
     linkedInProfileUrl: form.linkedInProfileUrl,
-    curriculum: form.curriculum ? form.curriculum : 'Ningun archivo seleccionado',
     observations: form.observations,
   };
 
@@ -59,7 +56,6 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) =>
     blurHandler,
     moveForwardHandler,
     moveBackHandler,
-    changeFileHandler
   } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
 
 

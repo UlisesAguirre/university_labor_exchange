@@ -6,20 +6,21 @@ import { ThemeContext } from '../Context/ThemeContext/ThemeContext'
 import useGetBySomething from '../../custom/useGetBySomething';
 import UserContext from '../Context/UserContext/UserContext';
 import { Link } from 'react-router-dom';
+import DownloadCurriculum from '../DownloadCurriculum/DownloadCurriculum';
 
 const UserCard = () => {
   const { theme } = useContext(ThemeContext);
 
   const { user } = useContext(UserContext);
 
-  const url = user.userType === "student" ? 
-  'https://localhost:7049/api/Student/GetStudentProfile' :
-  'https://localhost:7049/api/Company/GetCompanyProfile' ;
+  const url = user.userType === "student" ?
+    'https://localhost:7049/api/Student/GetStudentProfile' :
+    'https://localhost:7049/api/Company/GetCompanyProfile';
 
   const [dataUser, setDataUser] = useState(" ");
 
 
-  const { data, loading, error } = useGetBySomething( url, user.id);
+  const { data, loading, error } = useGetBySomething(url, user.id);
 
   useEffect(() => {
     if (data) {
@@ -27,6 +28,7 @@ const UserCard = () => {
     }
   }, [data]);
 
+  
 
   return (
     <div className='userCard-container'>
@@ -40,8 +42,8 @@ const UserCard = () => {
             <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" />
             <h2>{dataUser.username}</h2>
           </div>
-          {user.userType === "student" ? <button className='button'>Descargar cv</button> : <></>}
-          
+          {user.userType === "student" ? <DownloadCurriculum userid={user.id}/> : <></>}
+
         </div>}
 
       {dataUser.telephoneNumber == null ?
@@ -82,7 +84,7 @@ const UserCard = () => {
 
               </div>
             </div>
-          </> : 
+          </> :
           <div className={`profile-company-card ${theme}`}>
             <h2>Datos de la empresa:</h2>
             <ul>

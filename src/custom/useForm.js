@@ -15,32 +15,6 @@ const useFrom = (props) => {
 
     }
 
-    const changeFileHandler = (e) => {
-
-        const { files, name } = e.target
-
-        console.log(name)
-
-        let error = '';
-
-        const allowedExtensions = /(.pdf)$/i;
-
-        if (files[0]) {
-            
-            if (!allowedExtensions.test(files[0].name)) {
-                error = 'Solo se aceptan las extenciones .pdf';
-            }
-
-            setErrors({
-                ...errors,
-                [name]: error,
-            })
-
-            setData({ ...data, [name]: files[0] })
-        }
-
-    }
-
     const blurHandler = (e) => {
         const { name } = e.target
         setErrors({
@@ -90,7 +64,6 @@ const useFrom = (props) => {
         blurHandler,
         moveForwardHandler,
         moveBackHandler,
-        changeFileHandler,
     }
 }
 
