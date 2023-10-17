@@ -1,0 +1,134 @@
+.showjobOffer-container{
+    margin: 1em;
+    max-height: 68vh;
+    display: flex;
+    
+}
+
+.jobOffer-container {
+    margin: 1em;
+    max-height: 68vh;
+}
+
+.jobOffer-container h2 {
+    margin: 0.5rem;
+}
+
+.jobOffer-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em;
+    margin-bottom: 0.5em;
+    overflow-y: auto;
+    height: 45vh;
+}
+
+.jobOffer-form span {
+    font-size: .7em;
+    font-style: italic;
+    color: gray;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.jobOffer-form p {
+    margin-block-start: 0.2em;
+    margin-block-end: 0.5em;
+}
+
+
+
+.jobOffer-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.jobOffer-form .select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.jobOffer-form label {
+    font-size: 1.2em;
+}
+
+.form-user-error-message {
+    font-size: .7em;
+    background-color: lightgrey;
+    border-radius: 5px;
+    color: red;
+}
+
+.select-multiple{
+    padding-top: 0.5rem;
+    padding-bottom: 5rem;
+}
+
+.jobOffer-form input[type="date"] {
+    width: fit-content;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.jobOffer-form textarea{
+    padding: 5px 12px;
+    min-height: 40px;
+    border-radius: 5px;
+}
+
+.select-container{
+    position: relative;
+    width: 100%;
+}
+
+.btn-text{
+    color: fieldtext !important;
+    background-color: initial !important;
+    font-style: normal !important;
+    font-size: 0.9em !important;
+    font-family: sans-serif;
+}
+.select-btn{
+    display: flex;
+    height: 32px;
+    align-items: center;
+    padding: 0 16px;
+    background-color: field;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+    border-radius: 0.5em;
+    cursor: pointer;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+
+.checkbox-container{
+    padding: 5px 12px;
+    display: flex;
+    flex-direction: column;
+    background-color: field;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+    border-radius: 0.5em;
+}
+
+input[type="checkbox" i] {
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+}
+
+.save-button{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
