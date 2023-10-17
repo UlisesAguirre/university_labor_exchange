@@ -1,0 +1,34 @@
+.addItem-container {
+    margin: 1em;
+}
+
+.addItem-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    padding: 1em 4em 1em 4em ;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 45vh;
+}
+
+.addItem-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.addItem-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.addItem-form label {
+    font-size: 1.2em;
+}
+
+.itemForm-error-message {
+    font-size: .7em;
+    background-color: lightgrey;
+    border-radius: 5px;
+    color: red;
+}

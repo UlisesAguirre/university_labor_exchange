@@ -125,7 +125,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                 });
             }
         } else {
-            setInput({ ...input, [e.target.name]: e.target.value.toLowerCase() });
+            setInput({ ...input, [e.target.name]: e.target.value });
         }
     };
 

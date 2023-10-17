@@ -21,8 +21,8 @@ const ManagementMenu = ({type, types}) => {
         </div>
         </div>
       ) : option === "add" ? 
-      <AddItemForm option={option} setOption={setOption} type={type}/> : 
-      <ItemsList option={option} setOption={setOption} type={type}/> }
+      <AddItemForm option={option} setOption={setOption} type={type} data="addItem"/> : 
+      <ItemsList option={option} setOption={setOption} type={type} types={types}/> }
     </div>
   )
 }

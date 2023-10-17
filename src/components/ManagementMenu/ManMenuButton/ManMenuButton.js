@@ -9,13 +9,13 @@ const ManMenuButton = ({ icon, name, setOption, option}) => {
 
     const {theme} = useContext(ThemeContext);
 
-    const typeFormHandler = () => {
+    const optionHandler = () => {
         setOption(option)
     }
 
     return (
         <div className='ManMenuButton-container'>
-            <button className={`ManMenuButton-box ${theme}`} onClick={typeFormHandler}>
+            <button className={`ManMenuButton-box ${theme}`} onClick={optionHandler}>
                 <div className='ManMenuButton-icon'><FontAwesomeIcon icon={icon} /></div>
                 <h2>{name}</h2>
             </button>

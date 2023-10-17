@@ -35,7 +35,7 @@ const FormLogin = () => {
 
   const handlerChangeInput = (e) => {
     if (e.target.name === "email") {
-      setInput({ ...input, [e.target.name]: e.target.value.toLowerCase() });
+      setInput({ ...input, [e.target.name]: e.target.value });
     } else {
       setInput({ ...input, [e.target.name]: e.target.value });
     }
