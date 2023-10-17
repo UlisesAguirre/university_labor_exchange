@@ -50,12 +50,14 @@ const Curriculum = ({ userId }) => {
 
       } else {
 
-        formData.append('Curriculum', files[0]);
         formData.append('Id', userId);
+        formData.append('Curriculum', files[0]);
 
-        const response = await sendPutRequest("https://localhost:7049/api/Student/AddCurriculum", formData, {});
-        setRefetch(true);
-
+        const response = await sendPutRequest("https://localhost:7049/api/Student/AddCurriculum",formData);
+        
+        if (response) {
+          setRefetch(true);
+        }
       }
     }
 
@@ -63,7 +65,7 @@ const Curriculum = ({ userId }) => {
 
   const deteleCurriculum = async (e) => {
     e.preventDefault()
-    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, {'Content-Type': 'application/json'});
+    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, 'application/json');
     setRefetch(false);
     setfile('')
     setCurriculumName('Ningun archivo seleccionado')

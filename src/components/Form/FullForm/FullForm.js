@@ -146,7 +146,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                 "https://localhost:7049/api/Register/RegisterCompany";
             
 
-            const response = await postData(url,  JSON.stringify(dataUser), { 'Content-Type': 'application/json',});
+            const response = await postData(url,dataUser);
 
             if (response) {
                 alert('Usuario registrado correctamente');

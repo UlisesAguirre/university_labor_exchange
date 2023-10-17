@@ -12,7 +12,12 @@ function useGetCurriculum(userId, refetch) {
       try {
         setLoading(true);
 
-        const response = await fetch(`https://localhost:7049/api/Student/GetCurriculum/${userId}`);
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        const response = await fetch(`https://localhost:7049/api/Student/GetCurriculum/${userId}`,{headers});
         if (!response.ok) {
           if(response.status === 404){
             throw new Error(' Aún no tiene un curriculum');
