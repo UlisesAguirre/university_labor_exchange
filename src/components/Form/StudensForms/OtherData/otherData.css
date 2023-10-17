@@ -6,13 +6,15 @@
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    padding: 1em 4em ;
+    padding: 1em 4em;
     margin-bottom: 1em;
     overflow-y: auto;
     max-height: 40vh;
 }
 
-.otherData-form input, .otherData-form select, .otherData-form textarea {
+.otherData-form input,
+.otherData-form select,
+.otherData-form textarea {
     padding: .5em;
     border-radius: .5em;
 }
@@ -23,4 +25,40 @@
 
 .otherData-form label {
     font-size: 1.2em;
+}
+
+
+.otherData-form .delete-button {
+    color: var(--primary-color);
+    background-color: transparent;
+    border: none;
+    align-items: center;
+}
+
+
+.add-curriculum{
+    font-family: sans-serif;
+    font-size: 0.9rem !important;
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 25px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+    margin-right: 16px;
+    transition: background-color 200ms;
+}
+
+.add-curriculum:hover {
+    background-color: #f3f4f6;
+}
+
+
+.add-curriculum:active {
+    background-color: #e5e7eb;
+}
+
+input[type="file"]{
+    display: none;
 }

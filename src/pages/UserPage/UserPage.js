@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserCard from '../../components/UserCard/UserCard';
 import StudentForm from '../../components/Form/StudensForms/StudentForm'
 import CompanyForm from '../../components/Form/CompaniesForms/CompanyForm'
+import JobOffer from '../../components/Form/CompaniesForms/JobOffer/JobOffer'
 // import CompaniesForms from '../../components/Form/CompaniesForms/CompaniesForms'
 
 import './userPage.css';
@@ -34,6 +35,7 @@ const UserPage = () => {
               {user.userType === "company" &&
                 <>
                   <Route path='/editprofile' element={<CompanyForm />} />
+                  <Route path='/add-offer' element={<JobOffer />} />
                 </>
               }
             </>

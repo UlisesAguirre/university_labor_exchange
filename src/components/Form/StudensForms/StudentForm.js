@@ -12,6 +12,7 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import "./studentForm.css"
 import { useNavigate } from 'react-router-dom';
 
+//FIXME: cuando agregemos el envio del token por header tengo que eliminar enviar el id al curriculum
 
 const StudentForm = () => {
 
@@ -24,6 +25,8 @@ const StudentForm = () => {
     const { data, loading, error } = useGetBySomething(url, user.id);
 
     const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+
+    
 
     useEffect(() => {
         if (data) {
@@ -54,7 +57,7 @@ const StudentForm = () => {
 
     const submitHandler = async () => {
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', form)
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(form),'application/json')
             console.log("Datos actualizados", updatedData);
             alert("Datos actualizados correctamente");
             navigate("/profile");
@@ -76,7 +79,7 @@ const StudentForm = () => {
 
                 {step === 1 && PersonalDataComponent}
                 {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
-                {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
+                {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} userId = {user.id} />}
                 {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
 
             </form>
