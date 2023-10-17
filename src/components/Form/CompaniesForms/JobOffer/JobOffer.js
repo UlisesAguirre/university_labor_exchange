@@ -8,6 +8,8 @@ import BasicButton from '../../../Shared/BasicButton/BasicButton'
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import usePostRequest from "../../../../custom/usePostRequest";
 
+//FIXME: agregar skills
+
 const validateForm = (form, name) => {
     let error = ''
 
