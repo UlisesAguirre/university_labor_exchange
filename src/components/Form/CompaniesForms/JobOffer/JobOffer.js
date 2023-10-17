@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import BasicButton from '../../../Shared/BasicButton/BasicButton'
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
+import usePostRequest from "../../../../custom/usePostRequest";
 
 const validateForm = (form, name) => {
     let error = ''
@@ -70,6 +71,7 @@ const JobOffer = () => {
     const { theme } = useContext(ThemeContext);
 
     const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
+    const { postData, isLoading, postError } = usePostRequest()
 
     const careersList = getData;
 
