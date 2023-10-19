@@ -18,7 +18,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetAllSkills');
+  const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetSkillsForForm');
   const [studentsSkills, setStudentsSkills] = useState(form.studentsSkills);
   const [messageError, setMessageError] = useState('');
 
