@@ -7,13 +7,14 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import BasicButton from '../../../Shared/BasicButton/BasicButton'
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import usePostRequest from "../../../../custom/usePostRequest";
+import Skills from "../../../Shared/Skills/Skills";
 
-//FIXME: agregar skills
+
 
 const validateForm = (form, name) => {
     let error = ''
 
-    if (name === 'careers') {
+    if (name === 'jobPositionCareer') {
         if (form[name].length <= 0) {
             error = "Este campo es obligatorio";
         }
@@ -31,10 +32,10 @@ const validateForm = (form, name) => {
                     error = "La cantidad de posiciones a cubrir debe ser mayor a 0 y menor a 2000"
                 }
                 if (name === 'jobTitle' || name === 'location' || name === 'positionToCover') {
-                    error = "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
+                    error =  "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
                 }
                 if (name === 'jobDescription' || name === 'benefitsOfferedDetail') {
-                    error = "El campo deben tener un límite máximo de 1500 caracteres."
+                    error =  "El campo deben tener un límite máximo de 1500 caracteres."
                 }
                 if (name === 'intershipDuration') {
                     error = "El campo debe contener un número del 1 al 12";
@@ -56,7 +57,7 @@ const validateForm = (form, name) => {
 const validInputs = {
     endDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
     numberOfPositionsToCover: { regex: /^(1\d{0,3}|[2-9]\d{0,2}|19\d{2})$/, require: true },
-    careers: { require: true },
+    jobPositionCareer: { require: true },
     jobType: { require: true },
     jobTitle: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
     jobDescription: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,\s]{1,1500}$/, require: true },
@@ -66,31 +67,24 @@ const validInputs = {
     intershipDuration: { regex: /^(1[0-2]|[2-9])$/, require: true },
     tentativeStartDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
     workDay: { require: true },
+    jobPositionSkill: {require: false},
+    createdDate:{require: true},
 }
 
 const JobOffer = () => {
 
     const { theme } = useContext(ThemeContext);
 
-    const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetAllCareers');
+    const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetCareersForForms');
     const { postData, isLoading, postError } = usePostRequest()
 
     const careersList = getData;
-
-    // const careersList = [
-    //     { idCarrer: 1, name: 'Ingeniería química' },
-    //     { idCarrer: 2, name: 'Ingeniería química 2' },
-    //     { idCarrer: 3, name: 'Ingeniería química 3' },
-    // ]
-
-    const [careers, setCareers] = useState([]);
-    const [visible, setVisible] = useState(false);
 
     const inicialForm = {
         jobType: '',
         endDate: '',
         numberOfPositionsToCover: '',
-        careers: [],
+        jobPositionCareer: new Array(),
         jobTitle: '',
         jobDescription: '',
         benefitsOfferedDetail: '',
@@ -100,11 +94,14 @@ const JobOffer = () => {
         intershipDuration: '',
         tentativeStartDate: '',
         workDay: '',
+        jobPositionSkill: new Array()
     }
 
     const [form, setForm] = useState(inicialForm)
 
     const [errors, setErrors] = useState({})
+
+    const [visible, setVisible] = useState(false);
 
 
     const changeHandler = (e) => {
@@ -112,59 +109,42 @@ const JobOffer = () => {
         setForm({ ...form, [name]: value })
     };
 
-    const changeCheckboxHandler = (e) => {
-        const { value } = e.target
-        if (careers.some((career) => career.idCarrer === value)) {
-            // Si ya existe en el array, lo eliminamos
-            setCareers((prevCareers) => prevCareers.filter((career) => career.idCarrer !== value));
-        } else {
-            // Si no existe en el array, lo agregamos como un objeto
-            setCareers((prevCareers) => [...prevCareers, { idCarrer: value }]);
-        }
-        setForm({ ...form, careers: careers })
-    };
 
+    const changeCheckboxHandler = (e) => {
+        const { checked, value } = e.target;
+        const updatedCareers = checked
+            ? [...form.jobPositionCareer, { idCareer: value }]
+            : form.jobPositionCareer.filter((career) => career.idCarrer !== value) ;
+        setForm({ ...form, jobPositionCareer: updatedCareers });
+    };
 
     const blurHandler = (e) => {
         const { name } = e.target
         setErrors({
             ...errors,
-            [name]: validateForm(form, name),
+            [name] : validateForm(form, name),
         })
     };
 
-
-    const saveHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         let isValid = true;
 
-        setForm({
-            ...form,
-            careers: careers,
-        })
-
-        let fieldsToKeep = [];
-
-        if (form.jobType === 'Pasantia') {
-            fieldsToKeep = ['jobType', 'endDate', 'numberOfPositionsToCover', 'careers', 'jobTitle', 'jobDescription',
-                'benefitsOfferedDetail', 'location', 'positionToCover', 'intershipDuration', 'tentativeStartDate ']
-
-        } else {
-            fieldsToKeep = ['jobType', 'endDate', 'numberOfPositionsToCover', 'careers', 'jobTitle', 'jobDescription',
-                'benefitsOfferedDetail', 'location', 'positionToCover', ' workDay']
-
-        }
+        const fieldsToRemove = form.jobType === 'Pasantía' ?
+            ['workDay']
+            :
+            ['intershipDuration', 'tentativeStartDate']
 
         const filteredForm = Object.keys(form)
-            .filter((key) => fieldsToKeep.includes(key))
-            .reduce((obj, key) => {
-                obj[key] = form[key];
-                return obj;
+            .filter(key => !fieldsToRemove.includes(key))
+            .reduce((object, key) => {
+                object[key] = form[key];
+                return object;
             }, {});
 
         Object.keys(filteredForm).forEach((name) => {
-
-            let error = validateForm(filteredForm, name)
+            
+            const error = validateForm(form, name)
 
             setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -174,6 +154,7 @@ const JobOffer = () => {
             if (error) {
                 isValid = false;
             }
+
         });
 
         if (!isValid) {
@@ -182,14 +163,15 @@ const JobOffer = () => {
 
         } else {
 
-            submitHandler();
-
+            const response = await postData('https://localhost:7049/api/Company/AddJobPosition',filteredForm);
+            console.log(response)
+            if (response) {
+                alert('Oferta laboral registrada correctamente');
+                setForm(inicialForm);
+            } else {
+                alert('Error al registrar la Oferta laboral');
+            }
         }
-
-    }
-
-    const submitHandler = (e) => {
-        e.preventDefault()
 
     }
 
@@ -226,14 +208,14 @@ const JobOffer = () => {
                         </div>
                         {visible &&
                             <div className="checkbox-container">
-                                {careersList && careersList.map((c) =>
+                                {careersList && careersList.map((c, index) =>
                                     <label className="btn-text">
-                                        <input type="checkbox" name='careers' key={c.idCarrer} value={c.idCarrer} onChange={changeCheckboxHandler} /> {c.name}
+                                        <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCarrer} onChange={changeCheckboxHandler} /> {c.name}
                                     </label>
                                 )}
                             </div>
                         }
-                        {errors.careers && <div className="form-user-error-message">{errors.careers}</div>}
+                        {errors.jobPositionCareer && <div className="form-user-error-message">{errors.jobPositionCareer}</div>}
 
                         <label>Descripción</label>
                         <p>Se sugiere que se detalle lo siguiente: Descripción del puesto, requerímientos, días y horarios y toda la información que se estime conveniente</p>
@@ -250,7 +232,7 @@ const JobOffer = () => {
                         <input type="text" value={form.location} name='location' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.location && <div className="form-user-error-message">{errors.location}</div>}
 
-                        {form.jobType === 'Pasantía' ?
+                        {form.jobType === 0 ?
                             (<>
                                 <label>Duración de la Pasantía</label>
                                 <p>En meses - Por Ley Mínimo 2 meses - Maximo 12 meses</p>
@@ -266,24 +248,28 @@ const JobOffer = () => {
                                 <label>Jornada Laboral</label>
                                 <select className='select' value={form.workDay} name="workDay" onChange={changeHandler} onBlur={blurHandler}>
                                     <option value=''>Seleccione pasantía o en relación de dependencia</option>
-                                    <option value='FullTime'>Full time</option>
-                                    <option value='PartTime'>Part Time</option>
-                                    <option value='Freelance'>Freelance</option>
+                                    <option value={0} >Full time</option>
+                                    <option value={1}>Part Time</option>
+                                    <option value={2}>Freelance</option>
                                 </select>
                                 {errors.workDay && <div className="form-user-error-message">{errors.workDay}</div>}
                             </>)
 
                         }
 
+
                         <label>Fecha Finalización de la Oferta</label>
                         <input type="date" value={form.endDate} name='endDate' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.endDate && <div className="form-user-error-message">{errors.endDate}</div>}
 
+                        <label>Habilidades esperadas</label>
+                        <Skills form={form} setForm={setForm} />
+
                     </form>
 
                     <div className="save-button">
-                        <BasicButton buttonName={'Atras'} buttonHandler={(e) => { setForm({ inicialForm }) }} />
-                        <BasicButton buttonName={'Guardar'} buttonHandler={saveHandler} />
+                        <BasicButton buttonName={'Atras'} buttonHandler={(e) => { setForm(inicialForm) }} />
+                        <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} />
                     </div>
 
                 </>
@@ -293,8 +279,8 @@ const JobOffer = () => {
                         <label>Tipo de búsqueda</label>
                         <select className='select' value={form.jobType} name='jobType' onChange={changeHandler} onBlur={blurHandler}>
                             <option value=''>Seleccione pasantía o en relación de dependencia</option>
-                            <option value='Pasantía'>Pasantía</option>
-                            <option value='Trabajo'>En relación de dependencia</option>
+                            <option value={0}>Pasantía</option>
+                            <option value={1}>En relación de dependencia</option>
                         </select>
                         {errors.jobType && <div className="form-user-error-message">{errors.jobType}</div>}
                     </form>
