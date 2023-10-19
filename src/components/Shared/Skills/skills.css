@@ -1,0 +1,39 @@
+.skills-form {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1em;
+    padding-top: 0.5em;
+    margin-bottom: 1em;
+    max-height: 40vh;
+}
+
+.skills-form-column {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    text-align: left;
+}
+
+.skills-form-column caption {
+    border-bottom: 1px solid;
+}
+
+
+.skills-form input {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.skills-form select {
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.skills-form label {
+    font-size: 16px !important;
+    margin-top: 0;
+}
+
+.skills-form-button{
+    padding: 0.3em;
+}

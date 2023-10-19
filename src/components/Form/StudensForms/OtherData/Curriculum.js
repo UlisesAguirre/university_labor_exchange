@@ -89,8 +89,8 @@ const Curriculum = ({ userId }) => {
 
         {file &&
           <>
-            <button className='delete-button' onClick={deteleCurriculum}><FontAwesomeIcon icon={faTrash} /></button>
-            <button className='delete-button' onClick={handleDownloadFile}><FontAwesomeIcon icon={faDownload} /></button>
+            <button className='button delete-button' onClick={deteleCurriculum}><FontAwesomeIcon icon={faTrash} /></button>
+            <button className='button delete-button' onClick={handleDownloadFile}><FontAwesomeIcon icon={faDownload} /></button>
           </>
         }
 
