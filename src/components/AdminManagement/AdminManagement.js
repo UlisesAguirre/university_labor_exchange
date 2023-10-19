@@ -20,8 +20,8 @@ const AdminManagement = ({ type }) => {
                 }
                 {type === "jobPositions" &&
                     <div className='admin-list-container'>
-                        <ManagementList url="" title="Relacion de dependencia" />
-                        <ManagementList url="" title="Pasantias" />
+                        <ManagementList url="https://localhost:7049/api/JobPosition/GetAllJobs" title="Relacion de dependencia" />
+                        <ManagementList url="https://localhost:7049/api/JobPosition/GetAllInterships" title="Pasantias" />
                     </div>
                 }
             </div>

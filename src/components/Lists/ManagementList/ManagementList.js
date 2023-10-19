@@ -48,7 +48,7 @@ const ManagementList = ({ url, title }) => {
                         rejectOnClick={rejectOnClick}
                         key={company.idUser} />
                 }))}
-                {title === "Ofertas laborales" && (data.map((job) => {
+                {title === "Relacion de dependencia" && (data.map((job) => {
                     return <JobsList
                         job={job}
                         acceptOnClick={acceptOnClick}
