@@ -29,10 +29,7 @@
 
 
 .otherData-form .delete-button {
-    color: var(--primary-color);
-    background-color: transparent;
-    border: none;
-    align-items: center;
+    padding: 0.3em;
 }
 
 
