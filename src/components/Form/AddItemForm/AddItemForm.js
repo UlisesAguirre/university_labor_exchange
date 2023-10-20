@@ -35,7 +35,7 @@ const AddItemForm = ({ setOption, type, data }) => {
     abbreviation: /^[a-zA-Z]{1,10}$/,
     careerType: /.+/,
     totalSubjets: /^[1-9]\d{0,1}$|^50$/,
-    skillName: /^[a-zA-Z ]{3,50}$/
+    skillName: /^[a-zA-ZáéíóúÁÉÍÓÚüÜ !@#$%^&*()-_+=,.<>;:?/'"{}[\] ]{3,50}$/
   };
 
 
@@ -46,7 +46,7 @@ const AddItemForm = ({ setOption, type, data }) => {
       careerType: data === "addItem" ? null : regex.careerType.test(data.careerType),
       totalSubjets: data === "addItem" ? null : regex.totalSubjets.test(data.totalSubjets)
     } : {
-      skillName: null
+      skillName: data === "addItem" ? null : regex.skillName.test(data.skillName)
     }
   );
 

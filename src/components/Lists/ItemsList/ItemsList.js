@@ -17,11 +17,11 @@ const ItemsList = ({ option, setOption, type, types }) => {
   const [dataUpdate, setDataUpdate] = useState(null);
 
   const url = type === "carrera" ?
-    "https://localhost:7049/api/Career/GetAllCareers" :
-    "https://localhost:7049/api/Skill/GetAllSkills"
+    "https://localhost:7049/api/Career/GetCareersForForms" :
+    "https://localhost:7049/api/Skill/GetSkillsForForm"
 
   const deleteUrl = type === "carrera" ?
-    "" :
+    "https://localhost:7049/api/Career/DeleteCareer" :
     "https://localhost:7049/api/Skill/DeleteSkill"
 
   const { deleteData, loadingDelete, errorDelete } = useDeleteById();
@@ -98,6 +98,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
                       <p className='itemsList-skill-name'>{item.skillName}</p>
                     </div>
                     <div>
+                      <button className='button' onClick={() => modeHandler(item)}>Editar</button>
                       <button className='button' onClick={() => deleteHandler(item.idSkill)}>Eliminar</button>
                     </div>
                   </div>
@@ -107,7 +108,9 @@ const ItemsList = ({ option, setOption, type, types }) => {
           <BasicButton buttonName="Volver" buttonHandler={optionHandler} />
         </div> :
         <>
-          <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} />
+        {type === "carrera" ? 
+          <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> :
+          <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> }
         </>}
     </div>
   )
