@@ -1,0 +1,15 @@
+.companyJobOffer-button {
+    display: flex;
+    height: 100%;
+}
+
+.companyJobOffer-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+}
+
+.companyJobOffer-box h2 {
+    filter: var(--drop-shadow);
+}

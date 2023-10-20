@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { differenceInYears, format } from 'date-fns';
 
 import useFrom from "../../../../custom/useForm"
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
@@ -6,6 +6,7 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 import "./personalData.css"
 import { useContext } from 'react';
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext"
+import useGet from '../../../../custom/useGet';
 
 
 //TODO:  estilos y ver de llamar a la api para los datos de direccion. 
@@ -48,6 +49,12 @@ const validateData = (data, name) => {
         }
       }
     }
+    if (name === 'birthDate') {
+      const date = differenceInYears(new Date(), new Date(data[name]));
+      if (date < 17) {
+        error = 'Debe ser mayor a 17 años'
+      }
+    }
   }
 
   return error;
@@ -87,6 +94,8 @@ const validInputs = {
 
 const FormPersonalData = ({ form, stepForwardHandler }) => {
 
+  const provinces = useGet('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=id, nombre')
+
   const { theme } = useContext(ThemeContext);
 
   const inicialData = {
@@ -122,8 +131,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
   return (
     <div className="personalData-form-container">
       <h2>Datos Personales</h2>
-
-
+      
       <div className={`personalData-form ${theme}`}>
         <div className='personalData-form-column'>
           <div>
@@ -259,10 +267,13 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
             {errors.country && <div className="form-user-error-message">{errors?.country}</div>}
 
             <label> Provincia </label>
-            <input type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler} />
-            {/* <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
-          <option value="1">Santa Fe</option>
-        </select> */}
+            {/* <input type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler} /> */}
+            <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
+               {provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
+                <option key={p.id} value={p.nombre}>{p.nombre}</option>
+              )
+            }
+            </select>
             {errors.province && <div className="form-user-error-message">{errors?.province}</div>}
 
             <label> Localidad </label>

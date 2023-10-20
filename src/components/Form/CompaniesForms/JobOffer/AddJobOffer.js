@@ -1,7 +1,7 @@
 import { addDays, format } from "date-fns";
 import { useContext, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
-import './jobOffer.css'
+import './addJobOffer.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import BasicButton from '../../../Shared/BasicButton/BasicButton'
@@ -32,10 +32,10 @@ const validateForm = (form, name) => {
                     error = "La cantidad de posiciones a cubrir debe ser mayor a 0 y menor a 2000"
                 }
                 if (name === 'jobTitle' || name === 'location' || name === 'positionToCover') {
-                    error =  "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
+                    error = "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
                 }
                 if (name === 'jobDescription' || name === 'benefitsOfferedDetail') {
-                    error =  "El campo deben tener un límite máximo de 1500 caracteres."
+                    error = "El campo deben tener un límite máximo de 1500 caracteres."
                 }
                 if (name === 'intershipDuration') {
                     error = "El campo debe contener un número del 1 al 12";
@@ -67,11 +67,11 @@ const validInputs = {
     intershipDuration: { regex: /^(1[0-2]|[2-9])$/, require: true },
     tentativeStartDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
     workDay: { require: true },
-    jobPositionSkill: {require: false},
-    createdDate:{require: true},
+    jobPositionSkill: { require: false },
+    createdDate: { require: true },
 }
 
-const JobOffer = () => {
+const AddJobOffer = () => {
 
     const { theme } = useContext(ThemeContext);
 
@@ -114,7 +114,7 @@ const JobOffer = () => {
         const { checked, value } = e.target;
         const updatedCareers = checked
             ? [...form.jobPositionCareer, { idCareer: value }]
-            : form.jobPositionCareer.filter((career) => career.idCarrer !== value) ;
+            : form.jobPositionCareer.filter((career) => career.idCarrer !== value);
         setForm({ ...form, jobPositionCareer: updatedCareers });
     };
 
@@ -122,15 +122,21 @@ const JobOffer = () => {
         const { name } = e.target
         setErrors({
             ...errors,
-            [name] : validateForm(form, name),
+            [name]: validateForm(form, name),
         })
     };
+
+    const goBackHandler = (e) => {
+        e.preventDefault()
+        setForm(inicialForm)
+        setErrors({})
+    }
 
     const submitHandler = async (e) => {
         e.preventDefault();
         let isValid = true;
 
-        const fieldsToRemove = form.jobType === 'Pasantía' ?
+        const fieldsToRemove = form.jobType === '0' ?
             ['workDay']
             :
             ['intershipDuration', 'tentativeStartDate']
@@ -143,7 +149,7 @@ const JobOffer = () => {
             }, {});
 
         Object.keys(filteredForm).forEach((name) => {
-            
+
             const error = validateForm(form, name)
 
             setErrors((prevErrors) => ({
@@ -163,7 +169,7 @@ const JobOffer = () => {
 
         } else {
 
-            const response = await postData('https://localhost:7049/api/Company/AddJobPosition',filteredForm);
+            const response = await postData('https://localhost:7049/api/Company/AddJobPosition', filteredForm);
             console.log(response)
             if (response) {
                 alert('Oferta laboral registrada correctamente');
@@ -232,23 +238,26 @@ const JobOffer = () => {
                         <input type="text" value={form.location} name='location' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.location && <div className="form-user-error-message">{errors.location}</div>}
 
-                        {form.jobType === 0 ?
+                        {form.jobType === '0' ?
                             (<>
+
                                 <label>Duración de la Pasantía</label>
                                 <p>En meses - Por Ley Mínimo 2 meses - Maximo 12 meses</p>
                                 <input type="number" min='2' max='12' value={form.intershipDuration} name='intershipDuration' onChange={changeHandler} onBlur={blurHandler} />
                                 {errors.intershipDuration && <div className="form-user-error-message">{errors.intershipDuration}</div>}
 
+
                                 <label>Fecha Tentativa de Inicio de la Pasantía</label>
                                 <input type="date" value={form.tentativeStartDate} name='tentativeStartDate' onChange={changeHandler} onBlur={blurHandler} />
                                 {errors.tentativeStartDate && <div className="form-user-error-message">{errors.tentativeStartDate}</div>}
+
                             </>)
                             :
                             (<>
                                 <label>Jornada Laboral</label>
                                 <select className='select' value={form.workDay} name="workDay" onChange={changeHandler} onBlur={blurHandler}>
                                     <option value=''>Seleccione pasantía o en relación de dependencia</option>
-                                    <option value={0} >Full time</option>
+                                    <option value={0}>Full time</option>
                                     <option value={1}>Part Time</option>
                                     <option value={2}>Freelance</option>
                                 </select>
@@ -268,7 +277,7 @@ const JobOffer = () => {
                     </form>
 
                     <div className="save-button">
-                        <BasicButton buttonName={'Atras'} buttonHandler={(e) => { setForm(inicialForm) }} />
+                        <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />
                         <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} />
                     </div>
 
@@ -294,5 +303,5 @@ const JobOffer = () => {
     )
 }
 
-export default JobOffer
+export default AddJobOffer
 
