@@ -6,8 +6,6 @@ function useGetBySomething(apiEndpoint, identifier) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  
-
   //Hay que implementar logica para cuando agreguemos la etiqueta [Authorize] en los endpoints
 
   useEffect(() => {

@@ -56,7 +56,7 @@ const Curriculum = ({ userId }) => {
         const response = await sendPutRequest("https://localhost:7049/api/Student/AddCurriculum",formData);
         
         if (response) {
-          setRefetch(true);
+          setRefetch(!refetch);
         }
       }
     }
@@ -66,7 +66,7 @@ const Curriculum = ({ userId }) => {
   const deteleCurriculum = async (e) => {
     e.preventDefault()
     const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, 'application/json');
-    setRefetch(false);
+    setRefetch(!refetch);
     setfile('')
     setCurriculumName('Ningun archivo seleccionado')
   }
