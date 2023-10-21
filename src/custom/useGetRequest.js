@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useGetRequest = (url) => {
+const useGetRequest = (url, forceUpdate      ) => {
   const [getData, setGetData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const useGetRequest = (url) => {
     };
 
     fetchData();
-  }, [url]);
+  }, [url, forceUpdate]);
 
   return {getData, loading, error };
 };

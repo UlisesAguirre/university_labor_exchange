@@ -21,10 +21,22 @@
     border-top: 3px solid;
 }
 
-.enabled-state { /*Arreglar esto cuando se tenga la columna de estado en la BD*/
+.enabled-state {
     padding: .2em; 
     border-radius: .2em;
     background-color: lightgreen;
+}
+
+.disabled-state {
+  padding: .2em; 
+  border-radius: .2em;
+  background-color: lightcoral;
+}
+
+.unassigned-state {
+  padding: .2em; 
+  border-radius: .2em;
+  background-color: lightgray;
 }
 
 /* Diseños de todas las listas: */
