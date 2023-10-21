@@ -18,9 +18,7 @@ const CompaniesList = ({ company, stateOnClick}) => {
         </div>
         <div className='data-generic-list'>
           <p>Email: {company.email}</p>
-          {company.state === 0 ? <p className="enabled-state">Estado: Habilitado</p> :
-            company.state === 1 ? <p className="disabled-state">Estado: Deshabilitado</p> :
-              <p className="unassigned-state">Estado: Sin asignar</p>}
+          
         </div>
         <div className={!menuVisible ? 'arrow-generic-list' : "arrow-generic-list-disabled"}>
           {!menuVisible ? <FontAwesomeIcon icon={faCircleUp} /> : <FontAwesomeIcon icon={faCircleDown} />}

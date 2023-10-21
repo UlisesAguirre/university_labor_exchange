@@ -35,7 +35,7 @@ const UserMenu = () => {
             <Link to="/profile/careers-management"><FontAwesomeIcon icon={faGraduationCap} /> Carreras</Link>
             <Link to="/profile/skills-management"><FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades</Link>
           </>}
-        {user.userType === "student" && <Link><FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales</Link>}
+        {user.userType === "student" && <Link to="/profile/view-offers"><FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales</Link>}
         {user.userType === "company" && <Link to='/profile/add-offer'><FontAwesomeIcon icon={faBriefcase} /> Ofertas realizadas</Link>}
       </div>
       <div>

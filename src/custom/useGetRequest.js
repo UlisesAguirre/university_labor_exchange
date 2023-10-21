@@ -22,7 +22,6 @@ const useGetRequest = (url, forceUpdate      ) => {
 
         const responseData = await response.json();
         setGetData(responseData);
-        console.log(getData)
         setLoading(false);
       } catch (error) {
         setError(error);
