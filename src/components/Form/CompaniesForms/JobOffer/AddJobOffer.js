@@ -1,5 +1,5 @@
 import { addDays, format } from "date-fns";
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
 import './addJobOffer.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -103,17 +103,15 @@ const AddJobOffer = () => {
 
     const [visible, setVisible] = useState(false);
 
-
     const changeHandler = (e) => {
         const { value, name } = e.target;
         setForm({ ...form, [name]: value })
     };
 
-
     const changeCheckboxHandler = (e) => {
         const { checked, value } = e.target;
         const updatedCareers = checked
-            ? [...form.jobPositionCareer, { idCareer: value }]
+            ? [...form.jobPositionCareer, { idCarrer: value }]
             : form.jobPositionCareer.filter((career) => career.idCarrer !== value);
         setForm({ ...form, jobPositionCareer: updatedCareers });
     };
@@ -130,6 +128,15 @@ const AddJobOffer = () => {
         e.preventDefault()
         setForm(inicialForm)
         setErrors({})
+    }
+
+    const checkboxBlurHandler = (e) => {
+        e.preventDefault();
+        setVisible(!visible);
+        setErrors({
+            ...errors,
+            'jobPositionCareer': validateForm(form, 'jobPositionCareer'),
+        })
     }
 
     const submitHandler = async (e) => {
@@ -201,26 +208,21 @@ const AddJobOffer = () => {
                         {errors.positionToCover && <div className="form-user-error-message">{errors.positionToCover}</div>}
 
                         <label>Cantidad de Puestos a Cubrir</label>
-                        <input type="number" value={form.numberOfPositionsToCover} name='numberOfPositionsToCover' onChange={changeHandler} onBlur={blurHandler} />
+                        <input type="number" value={form.numberOfPositionsToCover} 
+                            name='numberOfPositionsToCover' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.numberOfPositionsToCover && <div className="form-user-error-message">{errors.numberOfPositionsToCover}</div>}
 
 
                         <label>Carreras Destino</label>
-                        <div className="select-container">
-                            <div className="select-btn" onClick={(e) => { setVisible(visible ? false : true) }}>
-                                <span className="btn-text">Seleccione las carreras destino para curbrir su puesto de trabajo</span>
-                                <span className="btn-text"><FontAwesomeIcon icon={faChevronDown} /></span>
-                            </div>
+                        <p>Seleccione las carreras para las cuales esta destinada la busqueda laboral</p>
+                        <div className="checkbox-container" onBlur={checkboxBlurHandler}>
+                            {careersList && careersList.map((c, index) =>
+                                <label className="btn-text">
+                                    <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCarrer} onChange={changeCheckboxHandler} /> {c.name}
+                                </label>
+                            )}
                         </div>
-                        {visible &&
-                            <div className="checkbox-container">
-                                {careersList && careersList.map((c, index) =>
-                                    <label className="btn-text">
-                                        <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCarrer} onChange={changeCheckboxHandler} /> {c.name}
-                                    </label>
-                                )}
-                            </div>
-                        }
+
                         {errors.jobPositionCareer && <div className="form-user-error-message">{errors.jobPositionCareer}</div>}
 
                         <label>Descripción</label>
