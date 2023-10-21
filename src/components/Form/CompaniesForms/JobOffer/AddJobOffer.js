@@ -1,15 +1,13 @@
 import { addDays, format } from "date-fns";
 import { useContext, useRef, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
+
 import './addJobOffer.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 import BasicButton from '../../../Shared/BasicButton/BasicButton'
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import usePostRequest from "../../../../custom/usePostRequest";
 import Skills from "../../../Shared/Skills/Skills";
-
-
 
 const validateForm = (form, name) => {
     let error = ''
@@ -37,7 +35,7 @@ const validateForm = (form, name) => {
                 if (name === 'jobDescription' || name === 'benefitsOfferedDetail') {
                     error = "El campo deben tener un límite máximo de 1500 caracteres."
                 }
-                if (name === 'intershipDuration') {
+                if (name === 'internshipDuration') {
                     error = "El campo debe contener un número del 1 al 12";
                 }
             }
@@ -53,7 +51,6 @@ const validateForm = (form, name) => {
     return error
 }
 
-
 const validInputs = {
     endDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
     numberOfPositionsToCover: { regex: /^(1\d{0,3}|[2-9]\d{0,2}|19\d{2})$/, require: true },
@@ -64,14 +61,14 @@ const validInputs = {
     benefitsOfferedDetail: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,\s]{1,1500}$/, require: true },
     location: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
     positionToCover: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
-    intershipDuration: { regex: /^(1[0-2]|[2-9])$/, require: true },
+    internshipDuration: { regex: /^(1[0-2]|[2-9])$/, require: true },
     tentativeStartDate: { regex: /^\d{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/, require: true },
     workDay: { require: true },
     jobPositionSkill: { require: false },
     createdDate: { require: true },
 }
 
-const AddJobOffer = () => {
+const AddJobOffer = ({ setOption }) => {
 
     const { theme } = useContext(ThemeContext);
 
@@ -91,7 +88,7 @@ const AddJobOffer = () => {
         location: '',
         positionToCover: '',
         createdDate: format(new Date(), 'yyyy-MM-dd'),
-        intershipDuration: '',
+        internshipDuration: '',
         tentativeStartDate: '',
         workDay: '',
         jobPositionSkill: new Array()
@@ -111,8 +108,8 @@ const AddJobOffer = () => {
     const changeCheckboxHandler = (e) => {
         const { checked, value } = e.target;
         const updatedCareers = checked
-            ? [...form.jobPositionCareer, { idCarrer: value }]
-            : form.jobPositionCareer.filter((career) => career.idCarrer !== value);
+            ? [...form.jobPositionCareer, { idCareer: value }]
+            : form.jobPositionCareer.filter((career) => career.idCareer !== value);
         setForm({ ...form, jobPositionCareer: updatedCareers });
     };
 
@@ -146,7 +143,7 @@ const AddJobOffer = () => {
         const fieldsToRemove = form.jobType === '0' ?
             ['workDay']
             :
-            ['intershipDuration', 'tentativeStartDate']
+            ['internshipDuration', 'tentativeStartDate']
 
         const filteredForm = Object.keys(form)
             .filter(key => !fieldsToRemove.includes(key))
@@ -188,6 +185,10 @@ const AddJobOffer = () => {
 
     }
 
+    const goBackToMenu = (e) => {
+        setOption('')
+    }
+
 
     return (
         <div className="jobOffer-container">
@@ -208,7 +209,7 @@ const AddJobOffer = () => {
                         {errors.positionToCover && <div className="form-user-error-message">{errors.positionToCover}</div>}
 
                         <label>Cantidad de Puestos a Cubrir</label>
-                        <input type="number" value={form.numberOfPositionsToCover} 
+                        <input type="number" value={form.numberOfPositionsToCover}
                             name='numberOfPositionsToCover' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.numberOfPositionsToCover && <div className="form-user-error-message">{errors.numberOfPositionsToCover}</div>}
 
@@ -218,7 +219,7 @@ const AddJobOffer = () => {
                         <div className="checkbox-container" onBlur={checkboxBlurHandler}>
                             {careersList && careersList.map((c, index) =>
                                 <label className="btn-text">
-                                    <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCarrer} onChange={changeCheckboxHandler} /> {c.name}
+                                    <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCareer} onChange={changeCheckboxHandler} /> {c.name}
                                 </label>
                             )}
                         </div>
@@ -245,8 +246,8 @@ const AddJobOffer = () => {
 
                                 <label>Duración de la Pasantía</label>
                                 <p>En meses - Por Ley Mínimo 2 meses - Maximo 12 meses</p>
-                                <input type="number" min='2' max='12' value={form.intershipDuration} name='intershipDuration' onChange={changeHandler} onBlur={blurHandler} />
-                                {errors.intershipDuration && <div className="form-user-error-message">{errors.intershipDuration}</div>}
+                                <input type="number" min='2' max='12' value={form.internshipDuration} name='internshipDuration' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.internshipDuration && <div className="form-user-error-message">{errors.internshipDuration}</div>}
 
 
                                 <label>Fecha Tentativa de Inicio de la Pasantía</label>
@@ -268,7 +269,6 @@ const AddJobOffer = () => {
 
                         }
 
-
                         <label>Fecha Finalización de la Oferta</label>
                         <input type="date" value={form.endDate} name='endDate' onChange={changeHandler} onBlur={blurHandler} />
                         {errors.endDate && <div className="form-user-error-message">{errors.endDate}</div>}
@@ -277,11 +277,6 @@ const AddJobOffer = () => {
                         <Skills form={form} setForm={setForm} />
 
                     </form>
-
-                    <div className="save-button">
-                        <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />
-                        <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} />
-                    </div>
 
                 </>
                 :
@@ -299,6 +294,11 @@ const AddJobOffer = () => {
                 </>
 
             }
+            <div className="save-button">
+                {form.jobType && <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />}
+                <BasicButton buttonName={'Volver al menú'} buttonHandler={goBackToMenu} />
+                {form.jobType && <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} />}
+            </div>
 
         </div>
 

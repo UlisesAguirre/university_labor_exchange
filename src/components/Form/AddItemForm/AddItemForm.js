@@ -18,7 +18,7 @@ const AddItemForm = ({ setOption, type, data }) => {
 
   const [dataItem, setDataItem] = useState(
     type === "carrera" ? {
-      idCarrer: 0,
+      idCareer: 0,
       name: "",
       abbreviation: "",
       careerType: "",
