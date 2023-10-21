@@ -1,0 +1,60 @@
+.itemList-container {
+    margin: 1em;
+}
+
+.itemList-box {
+    border-radius: 1em;
+    margin-bottom: 1em;
+    overflow-y: auto;
+    max-height: 45vh;
+}
+
+.itemsList-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-bottom: 1px solid;
+}
+
+.itemsList-row {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    width: 40%;
+}
+
+.itemsList-row div{
+    display: flex;
+    align-items: center;
+}
+
+.itemsList-career-item p {
+    margin: .5em;
+}
+
+.itemsList-career-title {
+    font-size: 1.2em;
+    padding-right: 1em;
+    text-decoration: underline;
+}
+
+.itemsList-career-name {
+    font-style: italic;
+}
+
+.itemsList-skill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemsList-skill-title {
+    font-size: 1.2em;
+    padding-right: 3em;
+    text-decoration: underline;
+}
+
+.itemsList-skill-name {
+    font-style: italic;
+}

@@ -3,6 +3,7 @@ import React from 'react'
 import "./adminManagement.css"
 import ManagementList from "../Lists/ManagementList/ManagementList"
 import ManagementMenu from '../ManagementMenu/ManagementMenu'
+import JobsManMenu from '../ManagementMenu/JobsManMenu/JobsManMenu'
 
 const AdminManagement = ({ type }) => {
     return (
@@ -14,23 +15,20 @@ const AdminManagement = ({ type }) => {
             <div>
                 {type === "users" &&
                     <div className='admin-list-container'>
-                        <ManagementList url="https://localhost:7049/api/Student/GetAllStudents" title="Alumnos" />
-                        <ManagementList url="https://localhost:7049/api/Company/GetAllCompanies" title="Empresas" />
+                        <ManagementList url="https://localhost:7049/api/Student/GetStudentsToAdmin" title="Alumnos" />
+                        <ManagementList url="https://localhost:7049/api/Company/GetCompaniesToAdmin" title="Empresas" />
                     </div>
                 }
                 {type === "jobPositions" &&
-                    <div className='admin-list-container'>
-                        <ManagementList url="" title="Relacion de dependencia" />
-                        <ManagementList url="" title="Pasantias" />
-                    </div>
+                    <JobsManMenu />
                 }
             </div>
             {type === "careers" &&
-                    <ManagementMenu type="carrera" types="carreras"/> 
-                }
-                {type === "skills" &&
-                    <ManagementMenu type="habilidad" types="habilidades"/> 
-                }
+                <ManagementMenu type="carrera" types="carreras" />
+            }
+            {type === "skills" &&
+                <ManagementMenu type="habilidad" types="habilidades" />
+            }
         </div>
     )
 }

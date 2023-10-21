@@ -3,23 +3,24 @@ import ListCard from "../ListCard/ListCard"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleDown, faCircleUp } from '@fortawesome/free-solid-svg-icons'
 
-const StudentsList = ({ student, acceptOnClick, rejectOnClick }) => {
+const StudentsList = ({ student, stateOnClick }) => {
 
     const [menuVisible, setMenuVisible] = useState(false);
 
-    //Arreglar esto cuando se tenga la columna en la BD
-    const estado = "enabled-state"
 
     return (
         <div className='generic-list-container'>
             <ListCard menuVisible={menuVisible} setMenuVisible={setMenuVisible}>
                 <div className='title-generic-list'>
-                    <p>{student.name} {student.lastName}</p>
+                    <p>{student.username}</p>
                     <p>Legajo: {student.legajo}</p>
                 </div>
                 <div className='data-generic-list'>
                     <p>Email: {student.email}</p>
-                    <p className={estado}>Estado: Habilitado</p>
+                    {student.state === 0 ? <p className="enabled-state">Estado: Habilitado</p> :
+                        student.state === 1 ? <p className="disabled-state">Estado: Deshabilitado</p> :
+                            <p className="unassigned-state">Estado: Sin asignar</p>}
+
                 </div>
                 <div className={!menuVisible ? 'arrow-generic-list' : "arrow-generic-list-disabled"}>
                     {!menuVisible ? <FontAwesomeIcon icon={faCircleUp} /> : <FontAwesomeIcon icon={faCircleDown} />}
@@ -28,8 +29,12 @@ const StudentsList = ({ student, acceptOnClick, rejectOnClick }) => {
                     <div className="button-generic-list">
                         <p>¿Deseas cambiar el estado del alumno?</p>
                         <div className='button-generic-box'>
-                            <button className='button' onClick={acceptOnClick}>Habilitar</button>
-                            <button className='button' onClick={rejectOnClick}>Deshabilitar</button>
+                            <button className='button' onClick={() => stateOnClick("Alumno habilitado", 0, student.idUser)}>
+                                Habilitar
+                            </button>
+                            <button className='button' onClick={() => stateOnClick("Alumno deshabilitado", 1, student.idUser)}>
+                                Deshabilitar
+                            </button>
                         </div>
                     </div>
                 )}

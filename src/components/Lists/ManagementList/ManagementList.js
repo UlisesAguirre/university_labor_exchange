@@ -1,67 +1,77 @@
-import React, { useEffect } from 'react'
 import useGetRequest from "../../../custom/useGetRequest"
 import Spinner from "../../Shared/Spinner/Spinner"
 
 import "./managementList.css"
 import StudentsList from '../StudentsList/StudentsList'
 import CompaniesList from '../CompaniesList/CompaniesList'
-import IntershipList from "../IntershipsList/IntershipsList"
-import JobsList from "../JobsList/JobsList"
+import usePutRequest from '../../../custom/usePutRequest'
+import { useState } from "react"
+import JobPositionsList from "../JobPositionsList/JobPositionsList"
+import JobPositionCard from "../../Shared/JobPositionCard/JobPositionCard"
 
 const ManagementList = ({ url, title }) => {
 
-    const { getData, loading, error } = useGetRequest(url);
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [targetJob, setTargetJob] = useState();
+
+    const [forceUpdate, setForceUpdate] = useState(false)
+
+    const { getData, loading, error } = useGetRequest(url, forceUpdate);
+
+    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
 
     const data = getData;
 
-    useEffect(() => {
+    const stateOnClick = async (type, state, idUser) => {
+        const data = {
+            idUser: idUser,
+            state: state
+        }
 
-    }, [data]);
+        try {
+            await sendPutRequest("https://localhost:7049/api/Student/SetUserState", JSON.stringify(data), 'application/json');
+            alert(type);
 
-    console.log(getData)
+            setForceUpdate(!forceUpdate);
+        } catch (putRequestError) {
+            console.log("Error: ", putRequestError)
+        }
 
-    const acceptOnClick = () => {
-        alert("Alumno habilitado")
-    };
-
-    const rejectOnClick = () => {
-        alert("Alumno deshabilitado")
     };
 
     return (
         <div className='managementList-container'>
-            {loading && <Spinner />}
+            {(loading || loadingPutRequest) && <Spinner />}
+
             <p className='managementList-title'>{title}</p>
 
             <div className='managementList-box'>
                 {title === "Alumnos" && (data.map((student) => {
                     return <StudentsList
                         student={student}
-                        acceptOnClick={acceptOnClick}
-                        rejectOnClick={rejectOnClick}
+                        stateOnClick={stateOnClick}
                         key={student.idUser} />
                 }))}
                 {title === "Empresas" && (data.map((company) => {
                     return <CompaniesList
                         company={company}
-                        acceptOnClick={acceptOnClick}
-                        rejectOnClick={rejectOnClick}
+                        stateOnClick={stateOnClick}
                         key={company.idUser} />
                 }))}
-                {title === "Ofertas laborales" && (data.map((job) => {
-                    return <JobsList
-                        job={job}
-                        acceptOnClick={acceptOnClick}
-                        rejectOnClick={rejectOnClick}
-                        key={job.idJobPosition} />
-                }))}
-                {title === "Pasantias" && (data.map((intership) => {
-                    return <IntershipList
-                        intership={intership}
-                        acceptOnClick={acceptOnClick}
-                        rejectOnClick={rejectOnClick}
-                        key={intership.idJobPosition} />
-                }))}
+                {!menuVisible ? (
+                    (title === "Relacion de dependencia" || title === "Pasantias") && (
+                        data.map((jobPosition) => (
+                            <JobPositionsList
+                                jobPosition={jobPosition}
+                                menuVisible={menuVisible}
+                                setMenuVisible={setMenuVisible}
+                                setTargetJob={setTargetJob}
+                                title={title}
+                                key={jobPosition.idJobPosition}
+                            />
+                        ))
+                    ) 
+                ) : <JobPositionCard jobPosition={targetJob}/>}
             </div>
         </div>
     )

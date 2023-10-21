@@ -11,6 +11,7 @@ import './userPage.css';
 import UserContext from '../../components/Context/UserContext/UserContext';
 import AdminCard from '../../components/AdminCard/AdminCard';
 import CompanyJobOffer from '../../components/CompanyJobOffer/CompanyJobOffer';
+import JobPositionMenu from '../../components/JobPositionMenu/JobPositionMenu';
 
 const UserPage = () => {
 
@@ -30,6 +31,7 @@ const UserPage = () => {
               {user.userType === "student" &&
                 <>
                   <Route path='/editprofile' element={<StudentForm />} />
+                  <Route path='/view-offers' element={<JobPositionMenu title ="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetAllInterships"/>} />
                 </>
               }
               {user.userType === "company" &&
