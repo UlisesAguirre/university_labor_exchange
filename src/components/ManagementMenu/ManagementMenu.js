@@ -14,7 +14,6 @@ const ManagementMenu = ({type, types}) => {
     <div className='managementMenu-container'>
       {option === "" ? (
         <div className='managementMenu-box'>
-        <h2>Administrar {types}</h2>
         <div className='managementMenu-button'>
           <ManMenuButton icon={faSquarePlus} name={`Agregar ${type}`} setOption={setOption} option="add" />
           <ManMenuButton icon={faGear} name={`Editar ${types}`} setOption={setOption} option="Edit" />

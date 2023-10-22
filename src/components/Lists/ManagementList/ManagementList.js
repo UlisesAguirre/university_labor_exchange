@@ -70,8 +70,10 @@ const ManagementList = ({ url, title }) => {
                                 key={jobPosition.idJobPosition}
                             />
                         ))
-                    ) 
-                ) : <JobPositionCard jobPosition={targetJob}/>}
+                    )
+                ) : <JobPositionCard jobPosition={targetJob}
+                    menuVisible={menuVisible}
+                    setMenuVisible={setMenuVisible} />}
             </div>
         </div>
     )

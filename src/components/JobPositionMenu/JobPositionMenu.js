@@ -3,6 +3,8 @@ import ManagementList from '../Lists/ManagementList/ManagementList'
 import JobPositionsList from '../Lists/JobPositionsList/JobPositionsList';
 import useGetRequest from '../../custom/useGetRequest';
 import Spinner from '../Shared/Spinner/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 import "./jobPositionMenu.css"
 import JobPositionCard from '../Shared/JobPositionCard/JobPositionCard';
@@ -40,7 +42,7 @@ const JobPositionMenu = ({ title, url, setOption }) => {
     return (
         <>
             <div className='jobPositionMenu-container'>
-                {(title !== "Ofertas laborales disponibles" || title === "Ofertas laborales ") ?
+                {(title !== "Ofertas laborales disponibles" &&  title !== "Ofertas laborales") ?
                     <ManagementList url={url} title={title} /> :
                     <div className='jobPositionMenu-box'>
                     {loading && <Spinner/>}
@@ -58,14 +60,19 @@ const JobPositionMenu = ({ title, url, setOption }) => {
                                 />
                             ))
                         ) : (
-                            <JobPositionCard jobPosition={targetJob} />
+                            <JobPositionCard jobPosition={targetJob} 
+                            menuVisible={menuVisible}
+                            setMenuVisible={setMenuVisible}  />
                         )
                         }
                         </div>
                     </div>
                 }
             </div>
-            {title !== "Ofertas laborales disponibles" && <button onClick={optionHandler} className='button'>Volver</button>}
+            {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") && 
+            <button onClick={optionHandler} className='button'>
+                <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
+                </button>}
         </>
     )
 }
