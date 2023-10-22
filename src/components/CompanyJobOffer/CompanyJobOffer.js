@@ -2,9 +2,9 @@ import { faList, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react'
 import AddJobOffer from '../Form/CompaniesForms/JobOffer/AddJobOffer';
 import ManMenuButton from '../ManagementMenu/ManMenuButton/ManMenuButton';
-import JobsManMenu from '../ManagementMenu/JobsManMenu/JobsManMenu';
 import "./companyJobOffer.css"
 import BasicButton from '../Shared/BasicButton/BasicButton';
+import JobPositionMenu from '../JobPositionMenu/JobPositionMenu';
 
 const CompanyJobOffer = () => {
     const [option, setOption] = useState('');
@@ -42,9 +42,7 @@ const CompanyJobOffer = () => {
                     :
                     (
                         <div className='companyJobOffer-box'>
-                            <h2>Ver ofertas laborales</h2>
-                            <JobsManMenu/>
-                            {button}
+                            <JobPositionMenu title={"Ofertas laborales"} url={'https://localhost:7049/api/Company/GetCompanyJobPositionsInfo'} setOption={setOption}/>
                         </div>
                     )
                 )

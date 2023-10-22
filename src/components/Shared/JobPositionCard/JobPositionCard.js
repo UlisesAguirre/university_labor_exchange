@@ -95,8 +95,6 @@ const JobPositionCard = ({ jobPosition }) => {
                 }
             </div>
 
-
-
         </div>
     );
 };
