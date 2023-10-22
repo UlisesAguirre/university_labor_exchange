@@ -6,11 +6,14 @@ import ManagementMenu from '../ManagementMenu/ManagementMenu'
 import JobsManMenu from '../ManagementMenu/JobsManMenu/JobsManMenu'
 
 const AdminManagement = ({ type }) => {
+    
     return (
         <div className='adminManagement-container'>
             <h2>
                 {type === "users" && "Habilitar usuarios"}
                 {type === "jobPositions" && "Habilitar ofertas laborales"}
+                {type === "careers" && "Administrar carreras"}
+                {type === "skills" && "Administrar habilidades"}
             </h2>
             <div>
                 {type === "users" &&

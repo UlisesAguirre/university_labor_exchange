@@ -1,9 +1,21 @@
-.job-position-card{
+.job-position-card {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1% 2%;
     text-align: start;
+    height: 100%;
+}
+
+.job-position-title {
+    display: flex;
+    align-items: center;
+}
+
+.job-position-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
 }
 
 .job-position-info {
@@ -14,7 +26,7 @@
     width: 100%;
 }
 
-.job-position-skills{
+.job-position-skills {
     margin-top: 1%;
     text-align: start;
     width: 100%;
@@ -24,35 +36,61 @@ td {
     padding-left: 0.5%;
 }
 
-.job-position-skills caption{
+.job-position-skills caption {
     border-bottom: 1px solid;
     margin-bottom: 1%;
 }
 
-.job-position-info h4{
+.job-position-info h4 {
     padding: 0.5%;
     margin: 0.5%;
 }
 
-.job-position-info p{
+.job-position-info p {
     padding: 0.5%;
     margin: 0.5%;
 }
 
-.job-position-info-row{
+.job-position-info-row {
     display: flex;
     align-content: flex-start;
     justify-content: flex-start;
     width: 100%;
 }
 
-.job-position-info-row h4{
+.job-position-info-row h4 {
     padding: 0.5%;
     margin: 0.5%;
 }
 
-.job-position-info-row p{
+.job-position-info-row p {
     padding: 0.5%;
     margin: 0.5%;
 }
 
+.jobPosition-fixed-div {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--secondary-color);
+    border: 1px solid;
+    border-top-left-radius: 1em;
+    padding: .5em 0;
+}
+
+.jobPosition-fixed-div h2 {
+    padding-left: .5em;
+    margin: 0;
+}
+
+.jobPosition-buttons button {
+    margin-right: 1em;
+}
+
+.job-position-icon {
+    transform: rotate(180deg);
+}

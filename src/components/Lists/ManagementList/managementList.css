@@ -8,13 +8,13 @@
 
 .managementList-title {
     margin: 0;
-    padding-bottom: 1em;
     font-weight: bold;
     font-size: 1.3em;
 }
 
 .managementList-box {
     border-radius: 1em;
-    max-height: 35vh;
+    max-height: 40vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }

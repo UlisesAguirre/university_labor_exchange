@@ -3,6 +3,8 @@ import ManagementList from '../Lists/ManagementList/ManagementList'
 import JobPositionsList from '../Lists/JobPositionsList/JobPositionsList';
 import useGetRequest from '../../custom/useGetRequest';
 import Spinner from '../Shared/Spinner/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 import "./jobPositionMenu.css"
 import JobPositionCard from '../Shared/JobPositionCard/JobPositionCard';
@@ -40,34 +42,37 @@ const JobPositionMenu = ({ title, url, setOption }) => {
     return (
         <>
             <div className='jobPositionMenu-container'>
-                {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") ?
+                {(title !== "Ofertas laborales disponibles" &&  title !== "Ofertas laborales") ?
                     <ManagementList url={url} title={title} /> :
                     <div className='jobPositionMenu-box'>
                         {loading && <Spinner />}
                         <h2>{title}</h2>
                         <div className='jobPositionMenu-list'>
-                            {!menuVisible ? (
-                                data.map((jobPosition) => (
-                                    <JobPositionsList
-                                        jobPosition={jobPosition}
-                                        menuVisible={menuVisible}
-                                        setMenuVisible={setMenuVisible}
-                                        setTargetJob={setTargetJob}
-                                        title={title}
-                                        key={jobPosition.idJobPosition}
-                                    />
-                                ))
-                            ) : (
-                                <JobPositionCard jobPosition={targetJob} />
-                            )
-                            }
+                        {!menuVisible ? (
+                            data.map((jobPosition) => (
+                                <JobPositionsList
+                                    jobPosition={jobPosition}
+                                    menuVisible={menuVisible}
+                                    setMenuVisible={setMenuVisible}
+                                    setTargetJob={setTargetJob}
+                                    title={title}
+                                    key={jobPosition.idJobPosition}
+                                />
+                            ))
+                        ) : (
+                            <JobPositionCard jobPosition={targetJob} 
+                            menuVisible={menuVisible}
+                            setMenuVisible={setMenuVisible}  />
+                        )
+                        }
                         </div>
                     </div>
                 }
             </div>
-            <div>
-                {title !== "Ofertas laborales disponibles" && <button onClick={optionHandler} className='button'>Volver</button>}
-            </div>
+            {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") && 
+            <button onClick={optionHandler} className='button'>
+                <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
+                </button>}
         </>
     )
 }
