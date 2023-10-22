@@ -1,3 +1,8 @@
+.companyJobOffer-container{
+    height: 80%;
+}
+
+
 .companyJobOffer-button {
     display: flex;
     height: 100%;
@@ -12,4 +17,9 @@
 
 .companyJobOffer-box h2 {
     filter: var(--drop-shadow);
+}
+
+.companyJobOffer-goBackbutton{
+    display: flex;
+    justify-content: center;
 }

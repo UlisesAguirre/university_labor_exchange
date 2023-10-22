@@ -61,7 +61,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
             {type === "carrera" &&
               (
                 getData.map((item) => (
-                  <div key={item.idCarrer} className='itemsList-item'>
+                  <div key={item.idCareer} className='itemsList-item'>
                     <div className='itemsList-row'>
                       <div>
                         <p className='itemsList-career-title'>Nombre: </p>
@@ -84,7 +84,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
                     </div>
                     <div>
                       <button className='button' onClick={() => modeHandler(item)}>Editar</button>
-                      <button className='button' onClick={() => deleteHandler(item.idCarrer)}>Eliminar</button>
+                      <button className='button' onClick={() => deleteHandler(item.idCareer)}>Eliminar</button>
                     </div>
                   </div>
                 ))

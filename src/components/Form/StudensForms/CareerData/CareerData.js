@@ -47,7 +47,7 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
 
   const inicialData = {
-    idCarrer: form.idCarrer ? form.idCarrer : null,
+    idCareer: form.idCareer ? form.idCareer : null,
     approvedSubjects: form.approvedSubjects,
     studyProgram: form.studyProgram,
     currentCareerYear: form.currentCareerYear,
@@ -74,13 +74,13 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
       <div className={`careerData-form ${theme}`}>
 
         <label>Carrera</label>
-        <select name="idCarrer" onChange={changeHandler} onBlur={blurHandler} value={data.idCarrer}>
+        <select name="idCareer" onChange={changeHandler} onBlur={blurHandler} value={data.idCareer}>
           <option value=''>Carrera</option>
           {careers.map((c) =>
-            <option key={c.idCarrer} value={c.idCarrer}>{c.name}</option>
+            <option key={c.idCareer} value={c.idCareer}>{c.name}</option>
           )}
         </select>
-        {errors.idCarrer && <div className="form-user-error-message">{errors?.idCarrer}</div>}
+        {errors.idCareer && <div className="form-user-error-message">{errors?.idCareer}</div>}
 
         <label>Cantidad materias aprobadas</label>
         <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects} />

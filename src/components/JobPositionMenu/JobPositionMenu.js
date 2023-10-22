@@ -38,7 +38,7 @@ const JobPositionMenu = ({ title, url, setOption }) => {
     }
 
     return (
-        <div>
+        <>
             <div className='jobPositionMenu-container'>
                 {(title !== "Ofertas laborales disponibles" || title === "Ofertas laborales ") ?
                     <ManagementList url={url} title={title} /> :
@@ -66,7 +66,7 @@ const JobPositionMenu = ({ title, url, setOption }) => {
                 }
             </div>
             {title !== "Ofertas laborales disponibles" && <button onClick={optionHandler} className='button'>Volver</button>}
-        </div >
+        </>
     )
 }
 
