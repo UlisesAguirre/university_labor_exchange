@@ -3,12 +3,12 @@ import Spinner from '../../../Shared/Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import usePutRequest from '../../../../custom/usePutRequest';
-import useGetCurriculum from '../../../../custom/useGetCurriculum';
+import UseGetCurriculum from '../../../../custom/UseGetCurriculum';
 
 const Curriculum = ({ userId }) => {
   const [refetch, setRefetch] = useState(false)
   const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
-  const { fileData, loading, error } = useGetCurriculum(userId, refetch);
+  const { fileData, loading, error } = UseGetCurriculum(userId, refetch);
   const [file, setfile] = useState(null);
   const [fileError, setFileError] = useState('');
   const [curriculumName, setCurriculumName] = useState('Ningun archivo seleccionado')
