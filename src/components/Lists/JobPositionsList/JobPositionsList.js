@@ -23,7 +23,7 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
         </div>
         <div className='data-generic-list'>
           <p>Puesto: {jobPosition.positionToCover}</p>
-          {(title === "Pasantias" || title === "Relacion de dependencia") && (
+          {(title === "Pasantias" || title === "Relacion de dependencia" || title === "Ofertas laborales") && (
             jobPosition.state === 0 ? <p className="enabled-state">Estado: Habilitado</p> :
               jobPosition.state === 1 ? <p className="disabled-state">Estado: Deshabilitado</p> :
                 <p className="unassigned-state">Estado: Sin asignar</p>

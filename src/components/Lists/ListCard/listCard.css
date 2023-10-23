@@ -1,77 +1,103 @@
 .listCard-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1em;
 }
 
 .listCard-container:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .listCard-container p {
-    margin: .2em;
+  margin: .2em;
 }
 
 .generic-list-container {
-    display: flex;
-    justify-content: center;
-    border-top: 3px solid;
+  display: flex;
+  justify-content: center;
+  border-top: 3px solid;
+}
+
+.student-list {
+  border-radius: 0px !important;
+}
+
+.student-listCard-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.data-student-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-student-list p {
+  margin: 0.2em;
+  text-align: start;
 }
 
 .enabled-state {
-    padding: .2em; 
-    border-radius: .2em;
-    background-color: lightgreen;
+  padding: .2em;
+  border-radius: .2em;
+  background-color: lightgreen;
 }
 
 .disabled-state {
-  padding: .2em; 
+  padding: .2em;
   border-radius: .2em;
   background-color: lightcoral;
 }
 
 .unassigned-state {
-  padding: .2em; 
+  padding: .2em;
   border-radius: .2em;
   background-color: lightgray;
 }
 
 /* Diseños de todas las listas: */
 
-.title-generic-list, .data-generic-list {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
+.title-generic-list,
+.data-generic-list {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-  .button-generic-list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 1em;
-    padding: 1em 0;
-    border: 1px solid;
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
-  }
+.button-generic-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1em;
+  padding: 1em 0;
+  border: 1px solid;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
 
-  .button-generic-box {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .arrow-generic-list, .arrow-generic-list-disabled {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    font-size: 1.3em;
-    transition: transform .7s
-  }
+.button-generic-box {
+  display: flex;
+  justify-content: space-around;
+}
 
-  .listCard-container:hover .arrow-generic-list, .arrow-generic-list-disabled {
-    transform: rotate(180deg);
-    transition: transform .7s
-  }
+.arrow-generic-list,
+.arrow-generic-list-disabled {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.3em;
+  transition: transform .7s
+}
+
+.listCard-container:hover .arrow-generic-list,
+.arrow-generic-list-disabled {
+  transform: rotate(180deg);
+  transition: transform .7s
+}

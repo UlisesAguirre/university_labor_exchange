@@ -1,9 +1,8 @@
 import React from 'react'
-import useGetCurriculum from '../../custom/useGetCurriculum';
+import UseGetCurriculum from '../../custom/UseGetCurriculum';
 
-const DownloadCurriculum = (userid) => {
-
-    const { fileData } = useGetCurriculum(userid);
+const DownloadCurriculum = ({ userid }) => {
+    const { fileData } = UseGetCurriculum(userid);
 
     const handleDownloadFile = (e) => {
         e.preventDefault()
@@ -17,9 +16,8 @@ const DownloadCurriculum = (userid) => {
         }
     }
 
-
     return (
-        <button className='button' onClick={handleDownloadFile}>Descargar cv</button> 
+        <button className='button' onClick={handleDownloadFile}>Descargar cv</button>
     )
 }
 
