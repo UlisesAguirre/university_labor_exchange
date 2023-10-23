@@ -1,4 +1,4 @@
-import { useContext} from "react"
+import { useContext } from "react"
 import { ThemeContext } from "../../Context/ThemeContext/ThemeContext"
 
 const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJob, title }) => {
@@ -19,7 +19,7 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
       <div className={`listCard-container ${theme}`} onClick={viewJobOnClick} >
         <div className='title-generic-list'>
           <p>Titulo: {jobPosition.jobTitle}</p>
-          <p>Creador: {jobPosition.idCompany}</p> {/*No traje el nombre de la empresa en el endpoint D:<*/}
+          <p>Creador: {jobPosition.companyName}</p>
         </div>
         <div className='data-generic-list'>
           <p>Puesto: {jobPosition.positionToCover}</p>
@@ -28,7 +28,14 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
               jobPosition.state === 1 ? <p className="disabled-state">Estado: Deshabilitado</p> :
                 <p className="unassigned-state">Estado: Sin asignar</p>
           )}
+
+          {title === "Ofertas laborales disponibles" && <p>Tipo: {jobPosition.jobType}</p>}
         </div>
+        {jobPosition.studentsJobPositions.length !== 0 &&
+          <div className="message-student-apllied">
+            <p>Postulado</p>
+          </div>
+        }
       </div>
     </div>
   )

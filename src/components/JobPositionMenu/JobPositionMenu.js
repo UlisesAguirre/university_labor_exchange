@@ -28,7 +28,10 @@ const JobPositionMenu = ({ title, url, setOption }) => {
     //Ofertas laborales = Empresa
     //Ofertas laborales disponibles = Alumnos
 
-    const { getData, loading, error } = useGetRequest(url)
+    
+    const [forceUpdate, setForceUpdate] = useState(false)
+
+    const { getData, loading, error } = useGetRequest(url, forceUpdate)
 
     const data = getData;
 
@@ -37,6 +40,10 @@ const JobPositionMenu = ({ title, url, setOption }) => {
 
     const optionHandler = () => {
         setOption("")
+    }
+
+    const forcedUpdate = () => {
+        setForceUpdate(!forceUpdate);
     }
 
     return (
@@ -62,7 +69,8 @@ const JobPositionMenu = ({ title, url, setOption }) => {
                             ) : (
                                 <JobPositionCard jobPosition={targetJob}
                                     menuVisible={menuVisible}
-                                    setMenuVisible={setMenuVisible} />
+                                    setMenuVisible={setMenuVisible}
+                                    forcedUpdate={forcedUpdate} />
                             )
                             }
                         </div>

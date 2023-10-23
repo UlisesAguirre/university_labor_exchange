@@ -101,3 +101,9 @@
   transform: rotate(180deg);
   transition: transform .7s
 }
+
+.message-student-apllied {
+  width: 100%;
+  background-color: lightgreen;
+  border-radius: .5em;
+}

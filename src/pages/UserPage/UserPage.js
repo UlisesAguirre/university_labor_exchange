@@ -31,7 +31,7 @@ const UserPage = () => {
               {user.userType === "student" &&
                 <>
                   <Route path='/editprofile' element={<StudentForm />} />
-                  <Route path='/view-offers' element={<JobPositionMenu title ="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetAllInterships"/>} />
+                  <Route path='/view-offers' element={<JobPositionMenu title ="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions"/>} />
                 </>
               }
               {user.userType === "company" &&

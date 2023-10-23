@@ -29,12 +29,17 @@ const StudentsList = ({ student, stateOnClick }) => {
                     <div className="button-generic-list">
                         <p>¿Deseas cambiar el estado del alumno?</p>
                         <div className='button-generic-box'>
-                            <button className='button' onClick={() => stateOnClick("Alumno habilitado", 0, student.idUser)}>
-                                Habilitar
-                            </button>
-                            <button className='button' onClick={() => stateOnClick("Alumno deshabilitado", 1, student.idUser)}>
-                                Deshabilitar
-                            </button>
+
+                            {(student.state === 2 || student.state === 1) &&
+                                <button className='button' onClick={() => stateOnClick("Alumno habilitado", 0, student.idUser)}>
+                                    Habilitar
+                                </button>
+                            }
+                            {(student.state === 2 || student.state === 0) &&
+                                <button className='button' onClick={() => stateOnClick("Alumno deshabilitado", 1, student.idUser)}>
+                                    Deshabilitar
+                                </button>
+                            }
                         </div>
                     </div>
                 )}

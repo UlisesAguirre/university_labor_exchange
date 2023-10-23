@@ -5,13 +5,19 @@ import React, { useContext, useState } from 'react';
 import UserContext from "../../Context/UserContext/UserContext"
 import './jobPositionCard.css'
 import { ThemeContext } from '../../Context/ThemeContext/ThemeContext';
-import ApplicantsList from '../../Lists/ApplicantsList/ApplicantsList';
+import ApplicantsList from "../../Lists/ApplicantsList/ApplicantsList"
+import Spinner from "../Spinner/Spinner"
+import usePutRequest from "../../../custom/usePutRequest"
+import usePostRequest from '../../../custom/usePostRequest';
 
-const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible }) => {
+
+const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdate }) => {
 
     const { user } = useContext(UserContext);
-
     const { theme } = useContext(ThemeContext);
+
+    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+    const { postData, isLoading, postError } = usePostRequest();
 
     const [goBackToJobPosition, setGoBacktoJobPosition] = useState(false)
 
@@ -40,8 +46,41 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible }) => {
         setMenuVisible(!menuVisible);
     };
 
+    const stateOnClick = async (state, description) => {
+
+        const data = {
+            idJobPosition: jobPosition.idJobPosition,
+            state: state,
+        }
+
+        try {
+            await sendPutRequest("https://localhost:7049/api/JobPosition/SetJobPositionState", JSON.stringify(data), "application/json");
+            alert(`Oferta ${description}`);
+            jobPosition.state = state;
+            forcedUpdate();
+        } catch (putRequestError) {
+            console.log("Error: ", putRequestError)
+        }
+    }
+
+    const applicationOnClick = async () => {
+        const idJobPosition = jobPosition.idJobPosition
+        try {
+            await postData('https://localhost:7049/api/JobPosition/AddStudentJobPosition', idJobPosition);
+            alert("Se ha postulado satisfactoriamente");
+            
+            jobPosition.studentsJobPositions = {
+                legajo: "applied"
+            }
+            forcedUpdate();
+        } catch (postError) {
+            console.log("Error:", postError)
+        }
+    }
+
     return (
         <div className={`job-position-card ${theme}`}>
+            {(loadingPutRequest || isLoading) && <Spinner />}
             {goBackToJobPosition ?
                 (applicantsList)
                 :
@@ -55,12 +94,26 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible }) => {
                                 <h2>{jobPosition.jobTitle}</h2>
                             </div>
                             <div className='jobPosition-buttons'>
-                                {user.userType === "student" && <button className='button'>Postularme</button>}
+                                {user.userType === "student" && (
+                                    jobPosition.studentsJobPositions.length === 0 ?
+                                    <button className='button' onClick={applicationOnClick}>Postularme</button> :
+                                    <button className='button' disabled>Postulado</button>)}
                                 {user.userType === "company" && jobPosition.state === 0 && <button className='button' onClick={seeApplicantsHandler}>Ver postulantes</button>}
                                 {user.userType === "admin" &&
                                     <>
-                                        <button className='button'>Habilitar</button>
-                                        <button className='button'>Deshabilitar</button>
+                                        {(jobPosition.state === 2 || jobPosition.state === 1) &&
+                                            <button
+                                                className='button'
+                                                onClick={() => stateOnClick(0, "habilitada")}>
+                                                Habilitar
+                                            </button>}
+
+                                        {(jobPosition.state === 2 || jobPosition.state === 0) &&
+                                            <button
+                                                className='button'
+                                                onClick={() => stateOnClick(1, "deshabilitada")}>
+                                                Deshabilitar
+                                            </button>}
                                     </>}
                             </div>
                         </div>
