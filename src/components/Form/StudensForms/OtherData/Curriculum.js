@@ -3,7 +3,7 @@ import Spinner from '../../../Shared/Spinner/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import usePutRequest from '../../../../custom/usePutRequest';
-import UseGetCurriculum from '../../../../custom/UseGetCurriculum';
+import UseGetCurriculum from '../../../../custom/useGetCurriculum';
 
 const Curriculum = ({ userId }) => {
   const [refetch, setRefetch] = useState(false)

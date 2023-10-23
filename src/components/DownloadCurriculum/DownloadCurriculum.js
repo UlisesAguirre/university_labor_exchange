@@ -1,5 +1,5 @@
 import React from 'react'
-import UseGetCurriculum from '../../custom/UseGetCurriculum';
+import UseGetCurriculum from '../../custom/useGetCurriculum';
 
 const DownloadCurriculum = ({ userid }) => {
     const { fileData } = UseGetCurriculum(userid);

@@ -1,4 +1,4 @@
-import { useContext} from "react"
+import { useContext } from "react"
 import { ThemeContext } from "../../Context/ThemeContext/ThemeContext"
 
 const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJob, title }) => {
@@ -31,6 +31,11 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
 
           {title === "Ofertas laborales disponibles" && <p>Tipo: {jobPosition.jobType}</p>}
         </div>
+        {jobPosition.studentsJobPositions.length !== 0 &&
+          <div className="message-student-apllied">
+            <p>Postulado</p>
+          </div>
+        }
       </div>
     </div>
   )
