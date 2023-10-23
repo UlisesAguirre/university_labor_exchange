@@ -31,7 +31,7 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
 
           {title === "Ofertas laborales disponibles" && <p>Tipo: {jobPosition.jobType}</p>}
         </div>
-        {jobPosition.studentsJobPositions.length !== 0 &&
+        {title === "Ofertas laborales disponibles" && jobPosition.studentsJobPositions.length !== 0 &&
           <div className="message-student-apllied">
             <p>Postulado</p>
           </div>
