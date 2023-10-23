@@ -1,23 +1,49 @@
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
-import React, { useContext } from 'react';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext} from 'react';
 import UserContext from "../../Context/UserContext/UserContext"
 import './jobPositionCard.css'
 import { ThemeContext } from '../../Context/ThemeContext/ThemeContext';
+import usePutRequest from "../../../custom/usePutRequest"
+import Spinner from "../Spinner/Spinner"
 
-const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible }) => {
+const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdate }) => {
 
     const { user } = useContext(UserContext);
 
     const { theme } = useContext(ThemeContext);
 
+    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+
+    const url = user.userType === "admin" ? "https://localhost:7049/api/JobPosition/SetJobPositionState" :
+        null //Poner los demas links
+
     const returnOnClick = () => {
         setMenuVisible(!menuVisible);
     };
 
+    const stateOnClick = async (state, description) => {
+
+        const data = {
+            idJobPosition: jobPosition.idJobPosition,
+            state: state,
+        }
+
+        try {
+            await sendPutRequest(url,JSON.stringify(data), "application/json");
+            alert(`Oferta ${description}`);
+            jobPosition.state = state;
+            forcedUpdate();
+        }catch(putRequestError) {
+            console.log("Error: ", putRequestError)
+        }
+
+    }
+
     return (
         <div className={`job-position-card ${theme}`}>
+            {loadingPutRequest && <Spinner/>}
             <div className='jobPosition-fixed-div'>
                 <div className='job-position-title'>
                     <button className='button' onClick={returnOnClick}>
@@ -30,8 +56,19 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible }) => {
                     {user.userType === "company" && <button className='button'>Ver postulantes</button>}
                     {user.userType === "admin" &&
                         <>
-                            <button className='button'>Habilitar</button>
-                            <button className='button'>Deshabilitar</button>
+                            {(jobPosition.state === 2 || jobPosition.state === 1) &&
+                                <button
+                                    className='button'
+                                    onClick={() => stateOnClick(0,"habilitada")}>
+                                    Habilitar
+                                </button>}
+
+                            {(jobPosition.state === 2 || jobPosition.state === 0) &&
+                                <button
+                                    className='button'
+                                    onClick={() => stateOnClick(1, "deshabilitada")}>
+                                    Deshabilitar
+                                </button>}
                         </>}
                 </div>
             </div>

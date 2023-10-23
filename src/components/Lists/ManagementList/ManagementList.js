@@ -38,6 +38,9 @@ const ManagementList = ({ url, title }) => {
         }
 
     };
+    const forcedUpdate =()=> {
+        setForceUpdate(!forceUpdate);
+    }
 
     return (
         <div className='managementList-container'>
@@ -73,7 +76,9 @@ const ManagementList = ({ url, title }) => {
                     )
                 ) : <JobPositionCard jobPosition={targetJob}
                     menuVisible={menuVisible}
-                    setMenuVisible={setMenuVisible} />}
+                    setMenuVisible={setMenuVisible}
+                    forcedUpdate={forcedUpdate} />
+                    }
             </div>
         </div>
     )
