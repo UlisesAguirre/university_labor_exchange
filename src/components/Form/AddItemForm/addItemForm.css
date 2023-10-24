@@ -2,6 +2,12 @@
     margin: 1em;
 }
 
+.addItem-container h2 {
+    font-size: 1.3em;
+    margin: 0;
+    filter: var(--drop-shadow);
+}
+
 .addItem-form {
     display: flex;
     flex-direction: column;
@@ -9,7 +15,9 @@
     padding: 1em 4em 1em 4em ;
     margin-bottom: 1em;
     overflow-y: auto;
-    max-height: 45vh;
+    min-height: 38vh;
+    max-height: 38vh;
+    box-shadow: var(--box-shadow);
 }
 
 .addItem-form input {
@@ -24,6 +32,7 @@
 
 .addItem-form label {
     font-size: 1.2em;
+    text-align: left;
 }
 
 .itemForm-error-message {

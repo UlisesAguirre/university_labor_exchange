@@ -2,6 +2,10 @@
     margin: 1em;
 }
 
+.contactData-container h2 {
+    filter: var(--drop-shadow);
+}
+
 .contactData-form {
     display: flex;
     flex-direction: column;
@@ -10,6 +14,7 @@
     margin-bottom: 1em;
     overflow-y: auto;
     max-height: 36vh;
+    box-shadow: var(--box-shadow);
 }
 
 

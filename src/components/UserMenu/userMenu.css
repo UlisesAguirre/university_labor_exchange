@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 2em 1em;
+    padding: 1em 1em 2em;
     background-color: var(--secondary-color);
     width: 15%;
     border-radius: 1em;
@@ -14,9 +14,15 @@
     flex-direction: column;
 }
 
+.userMenu-options h2 {
+    font-size: 1.5em;
+    margin: 0 0 .2em;
+    color: var(--primary-color);
+}
+
 .userMenu-options p {
     margin: 0;
-    font-size: 1.1em;
+    font-size: 1em;
     border-bottom: 1px solid var(--primary-color);
     color: var(--primary-color);
 }
@@ -25,15 +31,29 @@
     padding-top: 1em;
 }
 
-.userMenu-container a {
+.userMenu-options a {
     text-decoration: none;
-    font-size: 1.3em;
+    font-size: 1.1em;
+    white-space: nowrap;
     color: var(--primary-color);
 }
 
-.userMenu-container a:hover {
+.userMenu-options a:hover {
     transform: scale(1.01);
     transform-origin: center;
     transition: .1s;
     color: #000;
+}
+
+.userMenu-option-active{
+    color: #000;
+    border: 1px solid;
+}
+
+.userMenu-logout a{
+    text-decoration: none;
+}
+
+.userMenu-logout span {
+    padding-left: .4em;
 }

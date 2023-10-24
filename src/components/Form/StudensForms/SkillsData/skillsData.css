@@ -2,14 +2,20 @@
     margin: 1em;
 }
 
+.skillsData-container h2 {
+    filter: var(--drop-shadow);
+}
+
 .skillsData-form {
     display: flex;
     justify-content: center;
     border-radius: 1em;
-    padding: 1em 4em;
+    padding: 1em;
     margin-bottom: 1em;
     overflow-y: auto;
+    min-height: 40vh;
     max-height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .skillsData-form-column {

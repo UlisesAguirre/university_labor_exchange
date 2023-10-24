@@ -4,6 +4,11 @@
     height: 100%;
 }
 
+.adminManagement-container h2 {
+    margin: .5em 0;
+    filter: var(--drop-shadow);
+}
+
 .admin-list-container {
     display: flex;
     width: 100%;

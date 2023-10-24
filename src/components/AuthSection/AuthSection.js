@@ -1,22 +1,27 @@
 import React, { useContext } from 'react'
-import { faRightToBracket, faPenToSquare, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket, faPenToSquare, faBars } from '@fortawesome/free-solid-svg-icons';
 import UserButton from '../Shared/UserButton/UserButton'
 import "./authSection.css"
 import UserContext from '../Context/UserContext/UserContext';
+import { useLocation } from 'react-router-dom';
 
 const AuthSection = () => {
 
+  const location = useLocation();
+
   const { user } = useContext(UserContext);
 
+  console.log(location.pathname.startsWith)
+
   return (
-    <div className={!user ? 'authSection-container' : 'authSection-logged-container' }>
+    <div className={!user ? 'authSection-container' : 'authSection-logged-container'}>
       {!user ?
         <>
           <UserButton to="/login" buttonName="Iniciar sesion" icon={faRightToBracket} />
           <UserButton to="/signup" buttonName="Registrarse" icon={faPenToSquare} />
         </> :
         <>
-        <UserButton to="/profile" buttonName={user.username} icon={faUser} />
+        {!location.pathname.startsWith("/profile") && <UserButton to="/profile" buttonName="Menu" icon={faBars} /> }
         </>}
     </div>
   )

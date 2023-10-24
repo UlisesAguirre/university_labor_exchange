@@ -28,7 +28,8 @@ const UserCard = () => {
     }
   }, [data]);
 
-  
+  console.log(data);
+
 
   return (
     <div className='userCard-container'>
@@ -40,9 +41,9 @@ const UserCard = () => {
         <div className={`profile-name-card ${theme}`}>
           <div>
             <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" />
-            <h2>{dataUser.username}</h2>
+            <h2 className='userCard-username'>{dataUser.username}</h2>
           </div>
-          {user.userType === "student" ? <DownloadCurriculum userid={user.id}/> : <></>}
+          {user.userType === "student" ? <DownloadCurriculum userid={user.id} /> : <></>}
 
         </div>}
 
@@ -58,43 +59,98 @@ const UserCard = () => {
             <div className="profile-data-card">
               <div className={`profile-data-box ${theme}`}>
                 <h2>Datos del perfil:</h2>
-                <ul>
-                  <li>{dataUser.name} {dataUser.lastName}</li>
-                  <li>{dataUser.city}, {dataUser.province}</li>
-                  <li>{dataUser.country}</li>
-                  <li>{dataUser.telephoneNumber}</li>
-                  <li>{dataUser.email}</li>
-                  <li><a href={dataUser.linkedInProfileUrl}>{dataUser.linkedInProfileUrl}</a></li>
-                  <li><a href={dataUser.githubProfileUrl}>{dataUser.githubProfileUrl}</a></li>
-                </ul>
+                <div>
+                  <span>Nombre completo:</span>
+                  <span>{dataUser.name} {dataUser.lastName}</span>
+                </div>
+                <div>
+                  <span>Ciudad:</span>
+                  <span>{dataUser.city}, {dataUser.province}</span>
+                </div>
+                <div>
+                  <span>Pais:</span>
+                  <span>{dataUser.country}</span>
+                </div>
+                <div>
+                  <span>Telefono:</span>
+                  <span>{dataUser.telephoneNumber}</span>
+                </div>
+                <div>
+                  <span>Email:</span>
+                  <span>{dataUser.email}</span>
+                </div>
+                {dataUser.linkedInProfileUrl !== null &&
+                  <div>
+                    <span>LinkedIn:</span>
+                    <span><a href={dataUser.linkedInProfileUrl}>{dataUser.linkedInProfileUrl}</a></span>
+                  </div>
+                }
+                {dataUser.githubProfileUrl !== null &&
+                  <div>
+                    <span>GitHub:</span>
+                    <span><a href={dataUser.githubProfileUrl}>{dataUser.githubProfileUrl}</a></span>
+                  </div>
+                }
+
               </div>
               <div className={`profile-data-box ${theme}`}>
-                <h2>Info carrera:</h2>
-                <ul>
-                  <li>{dataUser.career/* ACA HAY QUE VER EL TEMA DE LAS CARRERAS*/}</li>
-                  <li>Cursando: {dataUser.currentCareerYear}° año</li>
-                  <li>Promedio: {dataUser.average}</li>
-                  <li>Materias aprobadas: {dataUser.approvedSubjects}</li>
-                </ul>
-
+                <h2>Perfil academico:</h2>
+                <div>
+                  <span>Carrera:</span>
+                  <span>{dataUser.careerName}</span>
+                </div>
+                <div>
+                  <span>Cursando:</span>
+                  <span>{dataUser.currentCareerYear}° año</span>
+                </div>
+                <div>
+                  <span>Promedio:</span>
+                  <span>{dataUser.average}</span>
+                </div>
+                <div>
+                  <span>Materias aprobadas:</span>
+                  <span>{dataUser.approvedSubjects}</span>
+                </div>
               </div>
               <div className={`profile-data-box ${theme}`}>
                 <h2>Skills:</h2>
-                {/* Hay que mapear las habilidades una vez armadas*/}
-
+                {dataUser.studentsSkills.map((skill) => {
+                  return <div key={skill.idSkill}>
+                    <span>{skill.skillName}</span>
+                    <span>{skill.skillLevel}</span>
+                  </div>
+                })}
               </div>
             </div>
           </> :
           <div className={`profile-company-card ${theme}`}>
             <h2>Datos de la empresa:</h2>
-            <ul>
-              <li><p>Nombre: </p> {dataUser.companyName}</li>
-              <li><p>Razon social: </p>{dataUser.socialReason}</li>
-              <li><p>Cuit: </p>{dataUser.cuit}</li>
-              <li><p>Sector: </p>{dataUser.sector}</li>
-              <li><p>Email: </p>{dataUser.email}</li>
-              <li><p>Pagina web: </p><a href={dataUser.web}>{dataUser.web}</a></li>
-            </ul>
+            <div>
+              <span>Nombre:</span>
+              <span>{dataUser.companyName}</span>
+            </div>
+            <div>
+              <span>Razon social:</span>
+              <span>{dataUser.socialReason}</span>
+            </div>
+            <div>
+              <span>Cuit:</span>
+              <span>{dataUser.cuit}</span>
+            </div>
+            <div>
+              <span>Sector:</span>
+              <span>{dataUser.sector}</span>
+            </div>
+            <div>
+              <span>Email:</span>
+              <span>{dataUser.email}</span>
+            </div>
+            {dataUser.web !== null &&
+              <div>
+                <span>Pagina web:</span>
+                <span><a href={dataUser.web}>{dataUser.web}</a></span>
+              </div>
+            }
           </div>
       }
     </div>

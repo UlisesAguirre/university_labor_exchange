@@ -52,8 +52,8 @@ const ItemsList = ({ option, setOption, type, types }) => {
   }
 
   return (
-    <div>
-      <h2>Editar {types}:</h2>
+    <div className='itemsList-container'>
+      <h2 className='itemsList-title'>Editar {types}:</h2>
       {(loading || loadingDelete) && <Spinner />}
       {!updateMode ?
         <div className='itemList-container'>
