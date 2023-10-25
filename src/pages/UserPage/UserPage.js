@@ -20,32 +20,35 @@ const UserPage = () => {
   return (
     <div className='userPage-container'>
       <UserMenu />
+
       <MenuCard>
-        <Routes>
-          {user.userType === "admin" ?
-            <>
-              <Route path='/*' element={<AdminCard />} />
-            </> :
-            <>
-              <Route path='/' element={<UserCard />} />
-              {user.userType === "student" &&
+        {user.state === "SinAsignar" ? <>No asignado</> : user.state === "Deshabilitado" ? <>Deshabilitado</> :
+          <>
+            <Routes>
+              {user.userType === "admin" ?
                 <>
-                  <Route path='/editprofile' element={<StudentForm />} />
-                  <Route path='/view-offers' element={<JobPositionMenu title ="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions"/>} />
+                  <Route path='/*' element={<AdminCard />} />
+                </> :
+                <>
+                  <Route path='/' element={<UserCard />} />
+                  {user.userType === "student" &&
+                    <>
+                      <Route path='/editprofile' element={<StudentForm />} />
+                      <Route path='/view-offers' element={<JobPositionMenu title="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions" />} />
+                    </>
+                  }
+                  {user.userType === "company" &&
+                    <>
+                      <Route path='/editprofile' element={<CompanyForm />} />
+                      <Route path='/add-offer' element={<CompanyJobOffer />} />
+                    </>
+                  }
                 </>
               }
-              {user.userType === "company" &&
-                <>
-                  <Route path='/editprofile' element={<CompanyForm />} />
-                  <Route path='/add-offer' element={<CompanyJobOffer />} />
-                </>
-              }
-            </>
-          }
 
-        </Routes>
+            </Routes>
+          </>}
       </MenuCard>
-
     </div>
   );
 }

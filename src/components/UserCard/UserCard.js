@@ -11,7 +11,7 @@ import DownloadCurriculum from '../DownloadCurriculum/DownloadCurriculum';
 const UserCard = () => {
   const { theme } = useContext(ThemeContext);
 
-  const { user } = useContext(UserContext);
+  const { user, viewOffer } = useContext(UserContext);
 
   const url = user.userType === "student" ?
     'https://localhost:7049/api/Student/GetStudentProfile' :
@@ -25,6 +25,10 @@ const UserCard = () => {
   useEffect(() => {
     if (data) {
       setDataUser(data);
+
+      if (data.telephoneNumber != null) {
+        viewOffer();
+      }
     }
   }, [data]);
 

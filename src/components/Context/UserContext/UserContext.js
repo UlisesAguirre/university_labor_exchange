@@ -21,7 +21,9 @@ const UserProvider = ({ children }) => {
       id: decodedToken.sub,
       email: decodedToken.email,
       username: decodedToken.username,
-      userType: decodedToken.role
+      userType: decodedToken.role,
+      state: decodedToken.state,
+      viewOffer: false
     }
 
     setUser(userData);
@@ -34,8 +36,17 @@ const UserProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const viewOffer = () => {
+    setUser({
+      ...user,
+      viewOffer: true
+    })
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, viewOffer }}>
       {children}
     </UserContext.Provider>
   );
