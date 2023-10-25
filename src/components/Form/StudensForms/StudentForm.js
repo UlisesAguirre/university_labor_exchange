@@ -26,8 +26,6 @@ const StudentForm = () => {
 
     const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
 
-    
-
     useEffect(() => {
         if (data) {
             setForm(data)
@@ -43,7 +41,7 @@ const StudentForm = () => {
         if (step === 4) {
             setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
             alert('Datos cargados con exito! Seleccione enviar')
-            // submitHandler();
+            submitHandler({ ...form, 'studentsSkills': data });
         } else {
             setForm((prevForm) => ({ ...prevForm, ...data }));
             setStep(step => step + 1);
@@ -55,9 +53,9 @@ const StudentForm = () => {
         setStep(step => step - 1);
     };
 
-    const submitHandler = async () => {
+    const submitHandler = async (formToUpdate) => {
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(form),'application/json')
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(formToUpdate),'application/json')
             console.log("Datos actualizados", updatedData);
             alert("Datos actualizados correctamente");
             navigate("/profile");
@@ -83,10 +81,6 @@ const StudentForm = () => {
                 {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
 
             </form>
-
-            <div>
-                {step === 4 ? <BasicButton buttonName={'Enviar'} buttonHandler={submitHandler} /> : null}
-            </div>
 
             {putRequestError && <span>{putRequestError.message}</span>}
             {error && <span>{error.message}</span>}

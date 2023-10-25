@@ -5,18 +5,17 @@ import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import usePutRequest from '../../../../custom/usePutRequest';
 import UseGetCurriculum from '../../../../custom/useGetCurriculum';
 
-const Curriculum = ({ userId }) => {
+const Curriculum = ({ userId, name, lastName, setcurriculum, errors, setErrors }) => {
   const [refetch, setRefetch] = useState(false)
   const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
   const { fileData, loading, error } = UseGetCurriculum(userId, refetch);
   const [file, setfile] = useState(null);
-  const [fileError, setFileError] = useState('');
   const [curriculumName, setCurriculumName] = useState('Ningun archivo seleccionado')
 
   useEffect(() => {
     if (fileData) {
       setfile(fileData);
-      setCurriculumName('curriculum.pdf')
+      setCurriculumName(`${name}${lastName}.pdf`)
     }
   }, [fileData])
 
@@ -34,21 +33,19 @@ const Curriculum = ({ userId }) => {
 
     const { files } = e.target
 
-    setFileError('');
-
     const formData = new FormData();
 
     const allowedExtensions = /(.pdf)$/i;
 
     if (files[0]) {
 
-      setCurriculumName(files[0].name);
-
+    
       if (!allowedExtensions.test(files[0].name)) {
 
-        setFileError('Solo se aceptan las extenciones .pdf');
+        setErrors({...errors, 'curriculum' : 'Solo se aceptan las extenciones .pdf'});
 
       } else {
+        setCurriculumName(files[0].name);
 
         formData.append('Id', userId);
         formData.append('Curriculum', files[0]);
@@ -57,6 +54,8 @@ const Curriculum = ({ userId }) => {
         
         if (response) {
           setRefetch(!refetch);
+          setcurriculum(true);
+          setErrors({...errors, 'curriculum' : ''});
         }
       }
     }
@@ -69,6 +68,7 @@ const Curriculum = ({ userId }) => {
     setRefetch(!refetch);
     setfile('')
     setCurriculumName('Ningun archivo seleccionado')
+    setcurriculum(false);
   }
 
 
@@ -98,13 +98,8 @@ const Curriculum = ({ userId }) => {
         {error && <span>{error === ' Aún no tiene un curriculum' ? '' : error}</span>}
       </div>
 
-      {fileError && <div className="form-user-error-message">{fileError}</div>}
+      {errors.curriculum && <div className="form-user-error-message">{errors?.curriculum}</div>}
       {putRequestError && <div className="form-user-error-message">{putRequestError}</div>}
-
-      <div>
-
-
-      </div>
 
     </>
   )

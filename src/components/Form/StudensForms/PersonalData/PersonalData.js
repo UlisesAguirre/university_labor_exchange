@@ -9,8 +9,6 @@ import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext"
 import useGet from '../../../../custom/useGet';
 
 
-//TODO:  estilos y ver de llamar a la api para los datos de direccion. 
-
 const validateData = (data, name) => {
 
 
@@ -131,7 +129,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
   return (
     <div className="personalData-form-container">
       <h2>Datos Personales</h2>
-      
+
       <div className={`personalData-form ${theme}`}>
         <div className='personalData-form-column'>
           <div>
@@ -269,10 +267,10 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
             <label> Provincia </label>
             {/* <input type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler} /> */}
             <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
-               {provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
+              {provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
                 <option key={p.id} value={p.nombre}>{p.nombre}</option>
               )
-            }
+              }
             </select>
             {errors.province && <div className="form-user-error-message">{errors?.province}</div>}
 
@@ -289,6 +287,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
       </div>
 
       <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>
+
       <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
 
     </div >

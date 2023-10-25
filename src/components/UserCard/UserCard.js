@@ -42,7 +42,7 @@ const UserCard = () => {
             <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" />
             <h2>{dataUser.username}</h2>
           </div>
-          {user.userType === "student" ? <DownloadCurriculum userid={user.id}/> : <></>}
+          {user.userType === "student" ? <DownloadCurriculum userid={user.id} name={dataUser.name} lastName={dataUser.lastName}/> : <></>}
 
         </div>}
 

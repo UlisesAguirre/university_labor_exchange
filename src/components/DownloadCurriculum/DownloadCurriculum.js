@@ -1,7 +1,7 @@
 import React from 'react'
 import UseGetCurriculum from '../../custom/useGetCurriculum';
 
-const DownloadCurriculum = ({ userid }) => {
+const DownloadCurriculum = ({ userid, name, lastName }) => {
     const { fileData } = UseGetCurriculum(userid);
 
     const handleDownloadFile = (e) => {
@@ -10,7 +10,7 @@ const DownloadCurriculum = ({ userid }) => {
             const url = window.URL.createObjectURL(fileData);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'curriculum.pdf');
+            link.setAttribute('download', `${name}${lastName}.pdf`);
             document.body.appendChild(link);
             link.click();
         }

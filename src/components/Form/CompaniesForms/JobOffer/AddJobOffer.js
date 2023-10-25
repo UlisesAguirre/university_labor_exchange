@@ -57,8 +57,8 @@ const validInputs = {
     jobPositionCareer: { require: true },
     jobType: { require: true },
     jobTitle: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
-    jobDescription: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,\s]{1,1500}$/, require: true },
-    benefitsOfferedDetail: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,\s]{1,1500}$/, require: true },
+    jobDescription: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,:\s]{1,1500}$/, require: true },
+    benefitsOfferedDetail: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,:\s]{1,1500}$/, require: true },
     location: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
     positionToCover: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
     internshipDuration: { regex: /^(1[0-2]|[2-9])$/, require: true },
@@ -259,7 +259,7 @@ const AddJobOffer = ({ setOption }) => {
                             (<>
                                 <label>Jornada Laboral</label>
                                 <select className='select' value={form.workDay} name="workDay" onChange={changeHandler} onBlur={blurHandler}>
-                                    <option value=''>Seleccione pasantía o en relación de dependencia</option>
+                                    <option value=''>Seleccione tipo de jornada laboral</option>
                                     <option value={0}>Full time</option>
                                     <option value={1}>Part Time</option>
                                     <option value={2}>Freelance</option>

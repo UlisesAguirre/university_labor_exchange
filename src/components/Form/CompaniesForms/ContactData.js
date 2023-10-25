@@ -8,8 +8,8 @@ import "./contactData.css"
 const validateData = (data, name) => {
   let error = '';
 
-  if (data[name] === null || (typeof data[name] === 'string'  && !data[name].trim()))  {
-    if (validInputs[name].require)  {
+  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
+    if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
@@ -35,7 +35,7 @@ const validateData = (data, name) => {
 const validInputs = {
   recruiterName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
   recruiterLastName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
-  recruiterPosition: { regex:/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
+  recruiterPosition: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true, },
   recruiterPhoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true, },
   recruiterEmail: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true, },
   recruiterRelWithCompany: { require: true, },
@@ -43,7 +43,7 @@ const validInputs = {
 
 const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const inicialData = {
     recruiterName: form.recruiterName,
@@ -61,7 +61,7 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
     blurHandler,
     moveBackHandler,
     moveForwardHandler
-  } = useFrom({ inicialData, validateData, stepBackHandler, stepForwardHandler})
+  } = useFrom({ inicialData, validateData, stepBackHandler, stepForwardHandler })
 
 
   return (
@@ -88,7 +88,7 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
         <label> Email * </label>
         <input type='email' name="recruiterEmail" placeholder="example@gmail.com" value={data.recruiterEmail} onChange={changeHandler} onBlur={blurHandler} />
         {errors.recruiterEmail && <div className="form-user-error-message">{errors?.recruiterEmail}</div>}
-        
+
 
         <label>Relación del Contacto con la empresa</label>
         <select name='recruiterRelWithCompany' value={data.recruiterRelWithCompany} onChange={changeHandler} onBlur={blurHandler}>
@@ -99,8 +99,10 @@ const ContactData = ({ form, stepBackHandler, stepForwardHandler }) => {
         {errors.recruiterRelWithCompany && <div className="form-user-error-message">{errors?.recruiterRelWithCompany}</div>}
       </div>
 
+
       <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
       <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
+
 
     </div >
   )

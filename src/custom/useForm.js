@@ -42,6 +42,11 @@ const useFrom = (props) => {
             }
         });
 
+        if(props.curriculum === false){
+            setErrors(({...errors, 'curriculum': 'Debe cargar un curriculum .pdf'}))
+            isValid = false;
+        }
+
         if (!isValid) {
 
             alert('Hay errores');
@@ -60,6 +65,7 @@ const useFrom = (props) => {
     return {
         data,
         errors,
+        setErrors,
         changeHandler,
         blurHandler,
         moveForwardHandler,

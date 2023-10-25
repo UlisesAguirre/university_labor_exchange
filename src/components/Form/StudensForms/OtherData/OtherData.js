@@ -1,14 +1,10 @@
-import { useContext} from "react";
+import { useContext, useState } from "react";
 import useFrom from "../../../../custom/useForm";
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
 
 import "./otherData.css"
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import Curriculum from "./Curriculum";
-
-
-// TODO: 
-// Agregar estilos
 
 const validateData = (data, name) => {
 
@@ -29,19 +25,20 @@ const validateData = (data, name) => {
       }
     }
   }
-
   return error;
 }
 
 const regex = {
-  observations: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s]{0,400}$/,
-  githubProfileUrl: /^(https:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/,
+  observations: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,:\s]{1,400}$/,
+  githubProfileUrl: /^(https?:\/\/)?(www\.)?github\.com\/\w+$/,
   linkedInProfileUrl: /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/,
 };
 
 const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) => {
 
   const { theme } = useContext(ThemeContext);
+
+  const [curriculum, setcurriculum] = useState(form.curriculum ? true : false);
 
   const inicialData = {
     githubProfileUrl: form.githubProfileUrl,
@@ -52,15 +49,17 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) =>
   const {
     data,
     errors,
+    setErrors,
     changeHandler,
     blurHandler,
     moveForwardHandler,
     moveBackHandler,
-  } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
+  } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler, curriculum })
 
 
   return (
     <div className="otherData-container">
+      {console.log(curriculum, form.curriculum)}
       <h2 > Otros </h2>
       <div className={`otherData-form ${theme}`}>
         <label> Link de GitHub </label>
@@ -71,18 +70,17 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) =>
         <input type='text' name="linkedInProfileUrl" placeholder="https://www.linkedin.com/in/urlPerfil" value={data.linkedInProfileUrl} onChange={changeHandler} onBlur={blurHandler} />
         {errors.linkedInProfileUrl && <div className="form-user-error-message">{errors?.linkedInProfileUrl}</div>}
 
-        <Curriculum userId={userId}/>
-
+        <Curriculum userId={userId} name={form.name} lastName={form.lastName} setcurriculum={setcurriculum} setErrors={setErrors} errors={errors}/>
         <label>Observaciones</label>
         <textarea name='observations' placeholder=" Agrega observaciones y/o información curricular adicional " value={data.observations} onChange={changeHandler} onBlur={blurHandler}></textarea>
         {errors.observations && <div className="form-user-error-message">{errors?.observations}</div>}
 
       </div>
 
-      <div>
-        <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-        <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
-      </div>
+
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+
     </div>
   )
 

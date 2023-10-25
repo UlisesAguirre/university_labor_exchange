@@ -124,10 +124,8 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
       </div>
 
-      <div>
-        <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-        <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
-      </div>
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
 
     </div>
   )

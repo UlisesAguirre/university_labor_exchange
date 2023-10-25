@@ -18,7 +18,7 @@ const ApplicantsList = ({ studentsJobPositions }) => {
                                 <p>Email: {student.email}</p>
                             </div>
                             <div className='data-student-list'>
-                                <DownloadCurriculum userid={student.idUser} />
+                                <DownloadCurriculum userid={student.idUser} name={student.name} lastName={student.lastName} />
                             </div>
                         </div>
                     </div>

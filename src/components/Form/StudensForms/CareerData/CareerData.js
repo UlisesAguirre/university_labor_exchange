@@ -39,7 +39,7 @@ const regex = {
 
 const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetCareersForForms');
 
@@ -121,10 +121,9 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
       </div>
 
-      <div>
-        <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-        <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
-      </div>
+
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
 
     </div>
   )
