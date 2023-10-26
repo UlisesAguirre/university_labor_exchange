@@ -1,0 +1,25 @@
+.disabledMessage-container {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid;
+    border-radius: 1em;
+    box-shadow: var(--box-shadow);
+}
+
+.disabledMessage-description {
+    font-size: 1.5em;
+}
+
+.disabledMessage-img {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 80%;
+}
+
+.disabledMessage-img img {
+    width: 10em;
+}

@@ -27,44 +27,40 @@ const UserMenu = () => {
           {user.userType !== "admin" ?
             <>
               <Link to="/profile">
-                <FontAwesomeIcon icon={faUser} />
-                Perfil
+                <FontAwesomeIcon icon={faUser} /> Perfil
               </Link>
               <Link to="/profile/editprofile">
-                <FontAwesomeIcon icon={faUserPen} />
-                Editar perfil
+                <FontAwesomeIcon icon={faUserPen} /> Editar perfil
               </Link>
             </> :
             <>
               <p>Habilitar:</p>
               <Link to="/profile/users-management">
-                <FontAwesomeIcon icon={faUsers} />
-                Usuarios
+                <FontAwesomeIcon icon={faUsers} /> Usuarios
               </Link>
               <Link to="/profile/jobpositions-management">
-                <FontAwesomeIcon icon={faBriefcase} />
-                Ofertas laborales
+                <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales
               </Link>
               <p>Administrar:</p>
               <Link to="/profile/careers-management">
-                <FontAwesomeIcon icon={faGraduationCap} />
-                Carreras
+                <FontAwesomeIcon icon={faGraduationCap} /> Carreras
               </Link>
               <Link to="/profile/skills-management">
-                <FontAwesomeIcon icon={faScrewdriverWrench} />
-                Habilidades
+                <FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades
               </Link>
             </>}
-          {user.userType === "student" &&
-            <Link to="/profile/view-offers">
-              <FontAwesomeIcon icon={faBriefcase} />
-              Ofertas laborales</Link>}
+          {user.viewOffer && <>
+            {user.userType === "student" &&
+              <Link to="/profile/view-offers">
+                <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales</Link>}
 
-          {user.userType === "company" &&
-            <Link to='/profile/add-offer'>
-              <FontAwesomeIcon icon={faBriefcase} />
-              Ofertas realizadas
-            </Link>}
+            {user.userType === "company" &&
+              <Link to='/profile/add-offer'>
+                <FontAwesomeIcon icon={faBriefcase} /> Ofertas realizadas
+              </Link>}
+          </>
+          }
+
         </>
         }
       </div>

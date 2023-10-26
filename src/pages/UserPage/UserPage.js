@@ -12,6 +12,8 @@ import UserContext from '../../components/Context/UserContext/UserContext';
 import AdminCard from '../../components/AdminCard/AdminCard';
 import CompanyJobOffer from '../../components/CompanyJobOffer/CompanyJobOffer';
 import JobPositionMenu from '../../components/JobPositionMenu/JobPositionMenu';
+import DisabledMessage from '../../components/MessageComponents/DisabledMessage/DisabledMessage';
+import UnasignedMessage from "../../components/MessageComponents/UnasignedMessage/UnasignedMessage";
 
 const UserPage = () => {
 
@@ -20,9 +22,8 @@ const UserPage = () => {
   return (
     <div className='userPage-container'>
       <UserMenu />
-
       <MenuCard>
-        {user.state === "SinAsignar" ? <>No asignado</> : user.state === "Deshabilitado" ? <>Deshabilitado</> :
+        {user.state === "SinAsignar" ? <UnasignedMessage/> : user.state === "Deshabilitado" ? <DisabledMessage />:
           <>
             <Routes>
               {user.userType === "admin" ?
