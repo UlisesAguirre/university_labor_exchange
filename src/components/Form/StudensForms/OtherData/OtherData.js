@@ -29,7 +29,7 @@ const validateData = (data, name) => {
 }
 
 const regex = {
-  observations: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,:\s]{1,400}$/,
+  observations:/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ.,:\s0-9]{1,400}$/,
   githubProfileUrl: /^(https?:\/\/)?(www\.)?github\.com\/\w+$/,
   linkedInProfileUrl: /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/,
 };

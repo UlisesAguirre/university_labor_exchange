@@ -16,6 +16,7 @@ const Curriculum = ({ userId, name, lastName, setcurriculum, errors, setErrors }
     if (fileData) {
       setfile(fileData);
       setCurriculumName(`${name}${lastName}.pdf`)
+      setcurriculum(true)
     }
   }, [fileData])
 
