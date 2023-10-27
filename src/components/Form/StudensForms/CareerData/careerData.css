@@ -2,14 +2,20 @@
     margin: 1em;
 }
 
+.careerData-container h2{
+    filter: var(--drop-shadow);
+}
+
 .careerData-form {
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    padding: 1em 4em .2em 4em ;
+    padding: 1em 4em 1em 4em ;
     margin-bottom: 1em;
     overflow-y: auto;
+    min-height: 40vh;
     max-height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .careerData-form input {

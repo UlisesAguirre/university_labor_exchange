@@ -1,5 +1,7 @@
 import React from 'react'
 import UseGetCurriculum from '../../custom/useGetCurriculum';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 const DownloadCurriculum = ({ userid, name, lastName }) => {
     const { fileData } = UseGetCurriculum(userid);
@@ -17,7 +19,9 @@ const DownloadCurriculum = ({ userid, name, lastName }) => {
     }
 
     return (
-        <button className='button' onClick={handleDownloadFile}>Descargar cv</button>
+        <button className='button' onClick={handleDownloadFile}>
+            <FontAwesomeIcon icon={faDownload} /> Descargar cv
+        </button>
     )
 }
 

@@ -2,6 +2,10 @@
     margin: 1em;
 }
 
+.companyData-container h2 {
+    filter: var(--drop-shadow);
+}
+
 .companyData-form {
     display: flex;
     flex-direction: column;
@@ -10,6 +14,7 @@
     margin-bottom: 1em;
     overflow-y: auto;
     height: 36vh;
+    box-shadow: var(--box-shadow);
 }
 
 .companyData-form span {

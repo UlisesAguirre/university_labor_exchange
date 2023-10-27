@@ -4,17 +4,19 @@
     margin: 0 1em;
     padding: 1em;
     border-radius: 1em;
+    box-shadow: var(--box-shadow);
 }
 
 .managementList-title {
     margin: 0;
     font-weight: bold;
     font-size: 1.3em;
+    filter: var(--drop-shadow);
 }
 
 .managementList-box {
     border-radius: 1em;
-    max-height: 40vh;
+    max-height: 38vh;
     overflow-y: auto;
     overflow-x: hidden;
 }

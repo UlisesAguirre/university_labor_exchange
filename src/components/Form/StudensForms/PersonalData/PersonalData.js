@@ -165,7 +165,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
             <div className="input-content">
               <label> Legajo </label>
 
-              <input className='input-form-disabled' type='text' name='legajo' defaultValue={data.legajo} onChange={changeHandler} onBlur={blurHandler} readOnly />
+              <input className='input-form-disabled' type='text' name='legajo' defaultValue={data.legajo} onChange={changeHandler} onBlur={blurHandler} readOnly disabled />
               <span> El legajo no puede modificarse </span>
             </div>
             {/* {errors.legajo && <div>{errors?.legajo}</div>} */}
@@ -285,10 +285,10 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
         </div>
 
       </div>
-
-      <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>
-
-      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+      <div className='personalData-requerid-message'>
+        <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+        <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>
+      </div>
 
     </div >
   )

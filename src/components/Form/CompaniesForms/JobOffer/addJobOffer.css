@@ -11,6 +11,7 @@
 
 .jobOffer-container h2 {
     margin: 0.5rem;
+    filter: var(--drop-shadow);
 }
 
 .jobOffer-form {
@@ -20,7 +21,8 @@
     padding: 1em 4em;
     margin-bottom: 0.5em;
     overflow-y: auto;
-    height: 45vh;
+    height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .jobOffer-form span {

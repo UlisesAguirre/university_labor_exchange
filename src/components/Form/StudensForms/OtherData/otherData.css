@@ -2,6 +2,10 @@
     margin: 1em;
 }
 
+.otherData-container h2 {
+    filter: var(--drop-shadow);
+}
+
 .otherData-form {
     display: flex;
     flex-direction: column;
@@ -9,7 +13,9 @@
     padding: 1em 4em;
     margin-bottom: 1em;
     overflow-y: auto;
+    min-height: 40vh;
     max-height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .otherData-form input,

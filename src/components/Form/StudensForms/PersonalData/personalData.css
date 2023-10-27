@@ -3,6 +3,10 @@
     height: 20%;
 }
 
+.personalData-form-container h2 {
+    filter: var(--drop-shadow);
+}
+
 .personalData-form-container input {
     padding: .5em;
     border-radius: .5em;
@@ -42,9 +46,12 @@
     display: flex;
     justify-content: center;
     border-radius: 1em;
+    margin-bottom: 1em;
     padding: 1em;
     overflow-y: auto;
+    min-height: 40vh;
     max-height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .personalData-form-column {
@@ -52,6 +59,7 @@
     flex-direction: column;
     padding: 0 3em;
     width: 40%;
+    height: 100%;
 }
 
 .personalData-document-container {
@@ -78,6 +86,10 @@
     margin: 0;
 }
 
+.personalData-requerid-message {
+    display: flex;
+    justify-content: space-between;
+}
 /* Estilos para el scrollbar, para que quede mas bonito */
 ::-webkit-scrollbar {
     width: 12px;
