@@ -1,12 +1,19 @@
+.itemsList-container h2 {    
+    font-size: 1.3em;
+    margin: 0;
+    filter: var(--drop-shadow);
+}
+
 .itemList-container {
-    margin: 1em;
+    margin: 0 1em;
 }
 
 .itemList-box {
     border-radius: 1em;
     margin-bottom: 1em;
     overflow-y: auto;
-    max-height: 45vh;
+    max-height: 40vh;
+    box-shadow: var(--box-shadow);
 }
 
 .itemsList-item {

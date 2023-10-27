@@ -77,7 +77,7 @@ const JobPositionMenu = ({ title, url, setOption }) => {
                     </div>
                 }
             </div>
-            {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") &&
+            {(title !== "Ofertas laborales disponibles") &&
                 <button onClick={optionHandler} className='button'>
                     <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
                 </button>}

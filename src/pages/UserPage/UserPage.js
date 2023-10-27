@@ -12,6 +12,8 @@ import UserContext from '../../components/Context/UserContext/UserContext';
 import AdminCard from '../../components/AdminCard/AdminCard';
 import CompanyJobOffer from '../../components/CompanyJobOffer/CompanyJobOffer';
 import JobPositionMenu from '../../components/JobPositionMenu/JobPositionMenu';
+import DisabledMessage from '../../components/MessageComponents/DisabledMessage/DisabledMessage';
+import UnasignedMessage from "../../components/MessageComponents/UnasignedMessage/UnasignedMessage";
 
 const UserPage = () => {
 
@@ -21,31 +23,33 @@ const UserPage = () => {
     <div className='userPage-container'>
       <UserMenu />
       <MenuCard>
-        <Routes>
-          {user.userType === "admin" ?
-            <>
-              <Route path='/*' element={<AdminCard />} />
-            </> :
-            <>
-              <Route path='/' element={<UserCard />} />
-              {user.userType === "student" &&
+        {user.state === "SinAsignar" ? <UnasignedMessage/> : user.state === "Deshabilitado" ? <DisabledMessage />:
+          <>
+            <Routes>
+              {user.userType === "admin" ?
                 <>
-                  <Route path='/editprofile' element={<StudentForm />} />
-                  <Route path='/view-offers' element={<JobPositionMenu title ="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions"/>} />
+                  <Route path='/*' element={<AdminCard />} />
+                </> :
+                <>
+                  <Route path='/' element={<UserCard />} />
+                  {user.userType === "student" &&
+                    <>
+                      <Route path='/editprofile' element={<StudentForm />} />
+                      <Route path='/view-offers' element={<JobPositionMenu title="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions" />} />
+                    </>
+                  }
+                  {user.userType === "company" &&
+                    <>
+                      <Route path='/editprofile' element={<CompanyForm />} />
+                      <Route path='/add-offer' element={<CompanyJobOffer />} />
+                    </>
+                  }
                 </>
               }
-              {user.userType === "company" &&
-                <>
-                  <Route path='/editprofile' element={<CompanyForm />} />
-                  <Route path='/add-offer' element={<CompanyJobOffer />} />
-                </>
-              }
-            </>
-          }
 
-        </Routes>
+            </Routes>
+          </>}
       </MenuCard>
-
     </div>
   );
 }

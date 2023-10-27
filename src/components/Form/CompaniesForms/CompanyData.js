@@ -60,7 +60,7 @@ const validInputs = {
 
 const CompanyData = ({ stepForwardHandler, form }) => {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const inicialData = {
     companyName: form.companyName,
@@ -94,7 +94,7 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         {errors.username && <div className="form-user-error-message">{errors?.username}</div>}
 
         <label> Email *</label>
-        <input className='input-form-disabled' readOnly type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
+        <input className='input-form-disabled' readOnly disabled type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
         {errors.email && <div className="form-user-error-message">{errors?.email}</div>}
         <span> El email no puede modificarse </span>
 
@@ -107,7 +107,7 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         {errors.socialReason && <div className="form-user-error-message">{errors?.socialReason}</div>}
 
         <label> Cuit *</label>
-        <input className='input-form-disabled' type='text' name="cuit" defaultValue={form.cuit} readOnly/>
+        <input className='input-form-disabled' type='text' name="cuit" defaultValue={form.cuit} readOnly disabled />
         <span> El cuit no puede modificarse </span>
 
         <label> Telefono *</label>
@@ -135,8 +135,10 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         {errors.location && <div className="form-user-error-message">{errors?.location}</div>}
 
       </div>
-      <p>(*) Estos campos son obligatorios </p>
-      <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+      <div className='personalData-requerid-message'>
+        <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
+        <p>(*) Estos campos son obligatorios </p>
+      </div>
     </div>
 
   )

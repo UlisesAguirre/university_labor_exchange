@@ -85,6 +85,7 @@ td {
 .jobPosition-fixed-div h2 {
     padding-left: .5em;
     margin: 0;
+    filter: var(--drop-shadow);
 }
 
 .jobPosition-buttons button {
