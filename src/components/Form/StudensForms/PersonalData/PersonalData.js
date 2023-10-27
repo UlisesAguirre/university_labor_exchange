@@ -9,8 +9,6 @@ import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext"
 import useGet from '../../../../custom/useGet';
 
 
-//TODO:  estilos y ver de llamar a la api para los datos de direccion. 
-
 const validateData = (data, name) => {
 
 

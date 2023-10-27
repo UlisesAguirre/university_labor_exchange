@@ -28,7 +28,7 @@ const Skills = ({ form, setForm }) => {
 
     const addSkill = (e) => {
         e.preventDefault();
-        if (jobPositionSkill.idSkill !== '' && jobPositionSkill.skillLevel !== '') {
+        if (jobPositionSkill.idSkill && jobPositionSkill.skillLevel) {
             jobPositionSkill.idSkill = parseInt(jobPositionSkill.idSkill);
             if (form.jobPositionSkill.filter((s) => s.idSkill === jobPositionSkill.idSkill).length !== 0) {
                 setMessageError('La habilidad seleccionada ya existe en su lista! Debe eliminarla y volver a cargarla si desea actualizarla')
@@ -37,6 +37,8 @@ const Skills = ({ form, setForm }) => {
                 setMessageError('')
             }
 
+        }else{
+            setMessageError("Debe completar ambos campos para agregar la habilidad");
         }
     }
 
@@ -66,9 +68,9 @@ const Skills = ({ form, setForm }) => {
                     <label className='skills-form-label'>Nivel de habilidad</label>
                     <select name="skillLevel" onChange={changeHandler} value={jobPositionSkill.skillLevel}>
                         <option value='' >Seleccione Nivel de Habilidad</option>
-                        <option value={"bajo"}>Bajo</option>
-                        <option value={"intermedio"}>Intermedio</option>
-                        <option value={"alto"}>Alto</option>
+                        <option value={"Bajo"}>Bajo</option>
+                        <option value={"Intermedio"}>Intermedio</option>
+                        <option value={"Alto"}>Alto</option>
                     </select>
 
                     <button className='skills-form-button button' onClick={addSkill}>Agregar Habilidad</button>

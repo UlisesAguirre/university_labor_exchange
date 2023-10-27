@@ -39,7 +39,7 @@ const CompanyForm = () => {
 
         if (step === 2) {
             alert('Datos cargados con exito! Seleccione enviar')
-            // submitHandler(form);
+            submitHandler({ ...form, ...data });
         } else {
             setStep(step => step + 1);
         }
@@ -53,9 +53,9 @@ const CompanyForm = () => {
         setStep(step => step - 1);
     };
 
-    const submitHandler = async () => {
+    const submitHandler = async (formToUpdate) => {
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', JSON.stringify(form), 'application/json')
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', JSON.stringify(formToUpdate), 'application/json')
             console.log("Datos actualizados", updatedData);
             alert("Datos actualizados correctamente");
             navigate("/profile");
@@ -80,10 +80,6 @@ const CompanyForm = () => {
                 {step === 2 && <ContactData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} setForm={setForm} />}
 
             </form>
-
-            <div>
-                {step === 2 ? <BasicButton buttonName={'Enviar'} buttonHandler={submitHandler} /> : null}
-            </div>
 
             {putRequestError && <span>{putRequestError.message}</span>}
             {error && <span>{error.message}</span>}

@@ -32,7 +32,7 @@ const validateData = (data, name) => {
           error = 'El codigo postal solo acepta un número de 4 digítos';
         }
         if (name === 'web') {
-          error = 'La web debe respetar el formato http://example.com ';
+          error = 'La web debe respetar el formato http://example.com[.ar] o www.example.com[.ar] ';
         }
         if (name === 'email') {
           error = 'El email debe respectar el formato example@gmail.com';
@@ -46,13 +46,13 @@ const validateData = (data, name) => {
 
 const validInputs = {
   companyName: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
-  socialReason: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
+  socialReason: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ. ]{3,50}$/, require: true },
   cuit: { require: true },
   telephoneNumber: { regex: /^\+?[1-9]\d{9,10}$/, require: true },
   sector: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   legalAddress: { regex: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]{3,50}$/, require: true },
   postalCode: { regex: /^\d{4}$/, require: true },
-  web: { regex: /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/ },
+  web: { regex: /^(https?:\/\/)?(www\.)?[\w-]+\.\w+(\.\w+)?$/, },
   location: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   username: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: true },
   email: { regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, require: true },

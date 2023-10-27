@@ -32,7 +32,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
   const addSkill = (e) => {
     e.preventDefault();
-    if (data.idSkill !== '' && data.skillLevel !== '') {
+    if (data.idSkill && data.skillLevel) {
       data.idSkill = parseInt(data.idSkill);
       if (studentsSkills.filter((s) => s.idSkill === data.idSkill).length !== 0) {
         setMessageError('La habilidad seleccionada ya existe en su lista! Debe eliminarla y volver a cargarla si desea actualizarla')
@@ -40,7 +40,8 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
         setStudentsSkills([...studentsSkills, data]);
         setMessageError('')
       }
-
+    }else{
+      setMessageError("Debe completar ambos campos antes de agregar la habilidad");
     }
   }
 
@@ -88,9 +89,9 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
           <label>Nivel de habilidad</label>
           <select name="skillLevel" onChange={changeHandler} onBlur={blurHandler} value={data.skillLevel}>
             <option value='' >Nivel</option>
-            <option value={"bajo"}>Bajo</option>
-            <option value={"intermedio"}>Intermedio</option>
-            <option value={"alto"}>Alto</option>
+            <option value={"Bajo"}>Bajo</option>
+            <option value={"Intermedio"}>Intermedio</option>
+            <option value={"Alto"}>Alto</option>
           </select>
           {errors.skillLevel && <div className="form-user-error-message">{errors?.skillLevel}</div>}
 
@@ -124,10 +125,8 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
       </div>
 
-      <div>
-        <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-        <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
-      </div>
+      <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
+      <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
 
     </div>
   )
