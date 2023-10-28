@@ -1,6 +1,7 @@
 import { addDays, format } from "date-fns";
 import { useContext, useRef, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
+import Spinner from "../../../Shared/Spinner/Spinner"
 
 import './addJobOffer.css'
 
@@ -192,6 +193,7 @@ const AddJobOffer = ({ setOption }) => {
 
     return (
         <div className="jobOffer-container">
+            {(loading || isLoading ) && <Spinner/>}
 
             <h2>Ofertas Laborales</h2>
 

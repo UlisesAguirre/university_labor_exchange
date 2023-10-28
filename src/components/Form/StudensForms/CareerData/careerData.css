@@ -31,3 +31,15 @@
 .careerData-form label {
     font-size: 1.2em;
 }
+
+.careerData-checkbox {
+    margin-top: 1em;
+    padding: .5em;
+    border: 1px solid;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3);
+}

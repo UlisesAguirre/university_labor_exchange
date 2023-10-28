@@ -54,6 +54,7 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
     turn: form.turn,
     average: form.average,
     averageWithFails: form.averageWithFails,
+    careerSubscription: form.careerSubscription ? false : true,
   }
 
   const {
@@ -64,6 +65,9 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
     moveForwardHandler,
     moveBackHandler
   } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
+
+
+  console.log(data.careerSubscription)
 
   return (
     <div className="careerData-container">
@@ -119,9 +123,12 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
         <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
         {errors.averageWithFails && <div className="form-user-error-message">{errors?.averageWithFails}</div>}
 
+        <div className="careerData-checkbox">
+          <input type="checkbox" onChange={changeHandler} name="careerSubscription" />
+          <label> Deseo recibir notificaciones de ofertas laborales relacionadas a mi carrera.</label>
+        </div>
+
       </div>
-
-
       <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
       <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
 

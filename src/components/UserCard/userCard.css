@@ -6,6 +6,45 @@
     filter: var(--drop-shadow);
 }
 
+.userCard-notifications {
+    background-color: rgb(250, 151, 151);
+    border-radius: 5px;
+    padding: .2em;
+}
+
+.userCard-notifications-link {
+    display: flex;
+}
+
+.userCard-notifications:hover {
+  transform: scale(1.05);
+  transform-origin: center;
+  transition: .3s;
+}
+
+.userCard-notifications a {
+    text-decoration: none;
+    color: #201c1c;
+}
+
+.userCard-notifications-icon {
+    font-size: 1.1em;
+    padding: 0 .5em 0 .3em;
+    border-right: 1px solid lightcoral;
+}
+
+.userCard-notifications-description {
+    display: flex;
+    flex-direction: column;
+    padding-left: .5em;
+}
+
+.userCard-notifications p {
+    margin: 0;
+    font-size: .8em;
+    text-align: center;
+}
+
 .profile-name-card {
     display: flex;
     justify-content: space-between;

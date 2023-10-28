@@ -32,6 +32,7 @@ const StudentForm = () => {
         }
     }, [data]);
 
+
     const [form, setForm] = useState('');
 
     const [step, setStep] = useState(1);
@@ -57,6 +58,7 @@ const StudentForm = () => {
         try {
             const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(formToUpdate),'application/json')
             console.log("Datos actualizados", updatedData);
+            console.log(formToUpdate)
             alert("Datos actualizados correctamente");
             navigate("/profile");
         } catch (putRequestError) {

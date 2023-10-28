@@ -236,7 +236,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
 
           <div>
             <div className="input-content">
-              <label> Telefono </label>
+              <label> Telefono *</label>
               <input type="text" name="telephoneNumber" placeholder="341000000000" value={data.telephoneNumber} onChange={changeHandler} onBlur={blurHandler} />
             </div>
             {errors.telephoneNumber && <div className="form-user-error-message">{errors?.telephoneNumber}</div>}

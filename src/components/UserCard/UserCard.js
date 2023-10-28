@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Spinner from "../Shared/Spinner/Spinner"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 import "./userCard.css"
 import { ThemeContext } from '../Context/ThemeContext/ThemeContext'
@@ -47,7 +49,23 @@ const UserCard = () => {
             <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" />
             <h2 className='userCard-username'>{dataUser.username}</h2>
           </div>
-          {user.userType === "student" ? <DownloadCurriculum userid={user.id} name={dataUser.name} lastName={dataUser.lastName}/> : <></>}
+          {user.userType === "student" &&
+            (dataUser.careerNotification !== null && dataUser.careerNotification > 0) && (
+              <div className='userCard-notifications'>
+                <Link to="/profile/view-offers" className='userCard-notifications-link'>
+                  <div className='userCard-notifications-icon'>
+                    <FontAwesomeIcon icon={faBell} />
+                  </div>
+                  <div className='userCard-notifications-description'>
+                    <p>Hay <b>{dataUser.careerNotification}</b> ofertas nuevas relacionadas con tu carrera:</p>
+                    <p>¡Míralas ahora!</p>
+                  </div>
+                </Link>
+              </div>
+            )
+          }
+
+          {user.userType === "student" ? <DownloadCurriculum userid={user.id} name={dataUser.name} lastName={dataUser.lastName} /> : <></>}
 
         </div>}
 
