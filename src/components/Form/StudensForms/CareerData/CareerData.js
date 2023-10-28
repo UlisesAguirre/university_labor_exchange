@@ -64,9 +64,6 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
     moveBackHandler
   } = useFrom({ inicialData, validateData, stepForwardHandler, stepBackHandler })
 
-
-  console.log(data.careerSubscription)
-
   return (
     <div className="careerData-container">
       {(loading) && <Spinner />}
