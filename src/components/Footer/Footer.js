@@ -13,7 +13,6 @@ const Footer = () => {
     <div className='footer-container'>
       <ThemeButton/>
       <p>Derechos reservados &copy; PPS</p>
-      <Link to='/FAQ' className='link'>Preguntas frecuentes</Link>
       <div className='chat'><Chat/></div>
     </div>
   )
