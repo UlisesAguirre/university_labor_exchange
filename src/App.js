@@ -10,10 +10,11 @@ import Signup from './pages/Signup/Signup';
 
 import './App.css';
 import UserPage from './pages/UserPage/UserPage';
+import FAQ from './pages/FAQ/FAQ';
 
 function App() {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className="App">
@@ -23,8 +24,9 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/*" element={<UserPage /> } />
+          <Route path="/profile/*" element={<UserPage />} />
           <Route path="/*" element="" />
+          <Route path='/FAQ' element={<FAQ/>}/>
         </Routes>
       </div>
       <Footer />

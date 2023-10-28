@@ -23,7 +23,7 @@ const useFrom = (props) => {
         const { name } = e.target
         setErrors({
             ...errors,
-            [name]: props.validateData(data, name),
+            [name]: props.validateData(data[name], name),
         })
     };
 
@@ -34,7 +34,8 @@ const useFrom = (props) => {
         let isValid = true;
 
         Object.keys(data).forEach((name) => {
-            const error = props.validateData(data, name)
+            
+            const error = props.validateData(data[name], name)
 
             setErrors((prevErrors) => ({
                 ...prevErrors,

@@ -41,7 +41,7 @@ const AddItemForm = ({ setOption, type, data }) => {
 
 
   const regex = {
-    name: /^[a-zA-Z ]{3,50}$/,
+    name: /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]{3,50}$/,
     abbreviation: /^[a-zA-Z]{1,10}$/,
     careerType: /.+/,
     totalSubjets: /^[1-9]\d{0,1}$|^50$/,

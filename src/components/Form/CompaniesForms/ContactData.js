@@ -8,13 +8,13 @@ import "./contactData.css"
 const validateData = (data, name) => {
   let error = '';
 
-  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
+  if (data === null || (typeof data === 'string' && !data.trim())) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
     if (validInputs[name].regex) {
-      if (!validInputs[name].regex.test(data[name])) {
+      if (!validInputs[name].regex.test(data)) {
 
         if (name === 'recruiterName' || name === 'recruiterLastName' || name === 'recruiterPosition') {
           error = "El campo solo debe aceptar caracteres del alfabeto español y tener una longitud mínima de 3 y máxima de 50 caracteres.";

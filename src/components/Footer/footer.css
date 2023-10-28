@@ -9,3 +9,24 @@
     text-align: center;
     font-size: 1.2em;
 }
+
+.cqtZJB{
+    position: relative !important;
+    bottom: unset !important;
+    right: unset !important; 
+    width: 45px !important;
+    height: 45px  !important;
+}
+
+.eMlmxH{
+    background-color: var(--secondary-color) !important;
+}
+
+.chat{
+   width: 3.5em;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--primary-color) ;
+}

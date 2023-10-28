@@ -22,7 +22,7 @@ const CompanyJobOffer = () => {
     return (
         <div className='companyJobOffer-container'>
 
-            {option == '' ?
+            {option === '' ?
                 (
                     <div className='companyJobOffer-box'>
                         <h2>Ofertas Laborales</h2>
@@ -33,7 +33,7 @@ const CompanyJobOffer = () => {
                     </div>
                 )
                 :
-                (option == 'add' ?
+                (option === 'add' ?
                     (
                         <>
                             <AddJobOffer setOption={setOption} />

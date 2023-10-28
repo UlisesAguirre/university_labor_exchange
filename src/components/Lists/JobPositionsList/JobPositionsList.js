@@ -12,8 +12,6 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
     setTargetJob(jobPosition)
   }
 
-  console.log(jobPosition)
-
   return (
     <div className='generic-list-container'>
       <div className={`listCard-container ${theme}`} onClick={viewJobOnClick} >

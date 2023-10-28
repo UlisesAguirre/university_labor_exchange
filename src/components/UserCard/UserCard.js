@@ -42,9 +42,6 @@ const UserCard = () => {
     }
   }, [data]);
 
-  console.log(data);
-
-
   return (
     <>
       {error ? <p>{error.message}</p> :

@@ -11,8 +11,6 @@ const AuthSection = () => {
 
   const { user } = useContext(UserContext);
 
-  console.log(location.pathname.startsWith)
-
   return (
     <div className={!user ? 'authSection-container' : 'authSection-logged-container'}>
       {!user ?

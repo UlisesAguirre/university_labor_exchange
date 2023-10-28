@@ -101,9 +101,13 @@ const FormLogin = () => {
       })
       .catch(error => {
         console.error('Error al realizar la solicitud:', error);
-        // Manejar errores aca
         setLoading(false);
-        alert('Error al iniciar sesión');
+        setModal({
+          modalOpen: true,
+          modalTitle: "Error en la solicitud",
+          modalMessage: "El usuario ingresado no existe, compruebe sus datos",
+        });
+        
       });
   };
 

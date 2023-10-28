@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import DownloadCurriculum from '../../DownloadCurriculum/DownloadCurriculum'
 import { ThemeContext } from '../../Context/ThemeContext/ThemeContext';
 
-const ApplicantsList = ({ studentsJobPositions }) => {
+const ApplicantsList = ({ studentsJobPositions, setModal}) => {
 
     const { theme } = useContext(ThemeContext);
 
@@ -18,7 +18,7 @@ const ApplicantsList = ({ studentsJobPositions }) => {
                                 <p>Email: {student.email}</p>
                             </div>
                             <div className='data-student-list'>
-                                <DownloadCurriculum userid={student.idUser} name={student.name} lastName={student.lastName} />
+                                <DownloadCurriculum userid={student.idUser} name={student.name} lastName={student.lastName} setModal={setModal} />
                             </div>
                         </div>
                     </div>

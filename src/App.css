@@ -56,7 +56,6 @@
   cursor: pointer;
 }
 
-
 .App {
   display: flex;
   flex-direction: column;
@@ -66,4 +65,5 @@
 
 .page-content-container {
   height: 78vh;
+  overflow-y: auto;
 }

@@ -46,7 +46,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
                 </div>
             </div>
             <ApplicantsList
-                studentsJobPositions={jobPosition.studentsJobPositions}
+                studentsJobPositions={jobPosition.studentsJobPositions} setModal={setModal}
             />
         </>
 
