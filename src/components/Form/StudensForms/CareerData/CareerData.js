@@ -5,17 +5,19 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 import Spinner from "../../../Shared/Spinner/Spinner";
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import "./careerData.css"
+import { id } from "date-fns/locale";
 
-const validateData = (data, name) => {
+export function validateData(data, name) {
+   
   let error = '';
 
   if ((data !== null && data !== '') && regex[name]) {
     if (!regex[name].test(data)) {
       if ((name === 'average') || (name === 'averageWithFails')) {
-        error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00";
+        error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00 si es decimal";
       }
       if (name === 'approvedSubjects') {
-        error = "La cantidad de materias aprobadas debe ser superior a 0 y inferior a 60"
+        error = 'La cantidad de materias aprobadas debe estar en el rango de 0 a 60'
       }
       if (name === 'studyProgram') {
         error = 'El Plan solo acepta años entre 1900 y 2200'
@@ -30,7 +32,7 @@ const regex = {
   approvedSubjects: /^(?:[1-9]|[1-5][0-9]|60)$/,
   average: /^(?:[0-9]|10)(?:\.\d{1,2})?$/,
   averageWithFails: /^(?:[0-9]|10)(?:\.\d{1,2})?$/,
-  studyProgram: /^(199[0-9]|20[0-2][0-9]|2300)$/,
+  studyProgram: /^(199[0-9]|20[0-2][0-9]|2200)$/,
 }
 
 const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
