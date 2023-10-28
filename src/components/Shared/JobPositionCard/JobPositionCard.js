@@ -9,9 +9,19 @@ import ApplicantsList from "../../Lists/ApplicantsList/ApplicantsList"
 import Spinner from "../Spinner/Spinner"
 import usePutRequest from "../../../custom/usePutRequest"
 import usePostRequest from '../../../custom/usePostRequest';
+import Modal from '../Modal/Modal';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 
 const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdate }) => {
+
+    const [modal, setModal] = useState({
+        modalOpen: false,
+        modalTitle: "",
+        modalMessage: "",
+    });
+
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
     const { user } = useContext(UserContext);
     const { theme } = useContext(ThemeContext);
@@ -55,26 +65,49 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
 
         try {
             await sendPutRequest("https://localhost:7049/api/JobPosition/SetJobPositionState", JSON.stringify(data), "application/json");
-            alert(`Oferta ${description}`);
-            jobPosition.state = state;
-            forcedUpdate();
+            setModal({
+                modalOpen: true,
+                modalTitle: "Aviso",
+                modalMessage: `Oferta ${description}`,
+            });
+            setTimeout(() => {
+                jobPosition.state = state;
+                forcedUpdate();
+            }, 2000);
         } catch (putRequestError) {
-            console.log("Error: ", putRequestError)
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: {putRequestError},
+            });
         }
     }
 
+    const applicationConfirm = () => {
+        setConfirmModalOpen(true);
+    };
+
     const applicationOnClick = async () => {
+        setConfirmModalOpen(false);
         const idJobPosition = jobPosition.idJobPosition
         try {
             await postData('https://localhost:7049/api/JobPosition/AddStudentJobPosition', idJobPosition);
-            alert("Se ha postulado satisfactoriamente");
-            
+            setModal({
+                modalOpen: true,
+                modalTitle: "Aviso",
+                modalMessage: "Se ha postulado satisfactoriamente.",
+            });
+
             jobPosition.studentsJobPositions = {
                 legajo: "applied"
             }
             forcedUpdate();
         } catch (postError) {
-            console.log("Error:", postError)
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: { postError },
+            });
         }
     }
 
@@ -96,8 +129,8 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
                             <div className='jobPosition-buttons'>
                                 {user.userType === "student" && (
                                     jobPosition.studentsJobPositions.length === 0 ?
-                                    <button className='button' onClick={applicationOnClick}>Postularme</button> :
-                                    <button className='button' disabled>Postulado</button>)}
+                                        <button className='button' onClick={applicationConfirm}>Postularme</button> :
+                                        <button className='button' disabled>Postulado</button>)}
                                 {user.userType === "company" && jobPosition.state === 0 && <button className='button' onClick={seeApplicantsHandler}>Ver postulantes</button>}
                                 {user.userType === "admin" &&
                                     <>
@@ -187,7 +220,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
 
                             }
                             <div className='job-position-skills'>
-                                {jobPosition.jobPostionsSkills &&
+                                {jobPosition.jobPostionsSkills.lenght === 0 &&
                                     <table>
                                         <caption><strong>Habilidades esperadas</strong></caption>
                                         <thead>
@@ -212,6 +245,21 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
                         </div>
                     </>
                 )}
+            {confirmModalOpen && (
+                <ConfirmModal
+                    title="Aviso"
+                    message="¿Estás seguro de que deseas postularte?"
+                    onConfirm={() => applicationOnClick()}
+                    onCancel={() => setConfirmModalOpen(false)}
+                />
+            )}
+            {modal.modalOpen && (
+                <Modal
+                    title={modal.modalTitle}
+                    message={modal.modalMessage}
+                    onClose={() => setModal({ modalOpen: false })}
+                />
+            )}
         </div>
     );
 };

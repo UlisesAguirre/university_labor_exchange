@@ -7,8 +7,20 @@ import "./itemList.css"
 import BasicButton from '../../Shared/BasicButton/BasicButton'
 import useDeleteById from '../../../custom/useDeleteById'
 import AddItemForm from '../../Form/AddItemForm/AddItemForm'
+import Modal from '../../Shared/Modal/Modal'
+import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal'
 
 const ItemsList = ({ option, setOption, type, types }) => {
+
+  const [modal, setModal] = useState({
+    modalOpen: false,
+    modalTitle: "",
+    modalMessage: "",
+  });
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+  const [itemTarget, setItemTarget] = useState("");
 
   const { theme } = useContext(ThemeContext);
 
@@ -29,17 +41,27 @@ const ItemsList = ({ option, setOption, type, types }) => {
   const { getData, loading, error } = useGetRequest(url);
 
 
-  const deleteHandler = async (id) => {
+  const deleteHandler = async () => {
+    setConfirmModalOpen(false)
     try {
-      const deleteItem = await deleteData(deleteUrl, id);
-      console.log("respuesta", deleteItem);
-      alert(`${type} borrada correctamente`)
+      const deleteItem = await deleteData(deleteUrl, itemTarget);
+      setModal({
+        modalOpen: true,
+        modalTitle: "Aviso",
+        modalMessage: `${type} borrada correctamente`,
+      });
 
     } catch (DeleteRequestError) {
-      console.log("Error al actualizar datos", error);
+      setModal({
+        modalOpen: true,
+        modalTitle: "Error",
+        modalMessage: DeleteRequestError,
+      });
     }
 
-    setOption("");
+    setTimeout(() => {
+      setOption("");
+    }, 2000);
   }
 
   const optionHandler = () => {
@@ -49,6 +71,11 @@ const ItemsList = ({ option, setOption, type, types }) => {
   const modeHandler = async (item) => {
     await setDataUpdate(item)
     await setUpdateMode(!updateMode);
+  }
+
+  const deleteConfirm = (item) => {
+    setItemTarget(item)
+    setConfirmModalOpen(true)
   }
 
   return (
@@ -84,7 +111,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
                     </div>
                     <div>
                       <button className='button' onClick={() => modeHandler(item)}>Editar</button>
-                      <button className='button' onClick={() => deleteHandler(item.idCareer)}>Eliminar</button>
+                      <button className='button' onClick={() => deleteConfirm(item.idCareer)}>Eliminar</button>
                     </div>
                   </div>
                 ))
@@ -99,7 +126,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
                     </div>
                     <div>
                       <button className='button' onClick={() => modeHandler(item)}>Editar</button>
-                      <button className='button' onClick={() => deleteHandler(item.idSkill)}>Eliminar</button>
+                      <button className='button' onClick={() => deleteConfirm(item.idSkill)}>Eliminar</button>
                     </div>
                   </div>
                 ))
@@ -108,10 +135,27 @@ const ItemsList = ({ option, setOption, type, types }) => {
           <BasicButton buttonName="Volver" buttonHandler={optionHandler} />
         </div> :
         <>
-        {type === "carrera" ? 
-          <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> :
-          <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> }
+          {type === "carrera" ?
+            <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> :
+            <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} />}
         </>}
+
+      {confirmModalOpen && (
+        <ConfirmModal
+          title="Eliminar"
+          message="¿Estás seguro de que deseas eliminarlo de la lista?"
+          onConfirm={() => deleteHandler()}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
+      )}
+
+      {modal.modalOpen && (
+        <Modal
+          title={modal.modalTitle}
+          message={modal.modalMessage}
+          onClose={() => setModal({ modalOpen: false })}
+        />
+      )}
     </div>
   )
 }

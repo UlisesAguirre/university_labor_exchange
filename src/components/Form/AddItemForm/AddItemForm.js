@@ -5,16 +5,26 @@ import usePostRequest from "../../../custom/usePostRequest"
 import Spinner from "../../Shared/Spinner/Spinner"
 
 import "./addItemForm.css"
+import Modal from '../../Shared/Modal/Modal'
+import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal'
 
 const AddItemForm = ({ setOption, type, data }) => {
 
+  const [modal, setModal] = useState({
+    modalOpen: false,
+    modalTitle: "",
+    modalMessage: "",
+  });
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
   const { theme } = useContext(ThemeContext);
 
-  const {postData, isLoading, error} = usePostRequest();
+  const { postData, isLoading, error } = usePostRequest();
 
-  const url = type === "carrera" ? 
-  "https://localhost:7049/api/Career/CreateCareer" : 
-  "https://localhost:7049/api/Skill/CreateSkill"
+  const url = type === "carrera" ?
+    "https://localhost:7049/api/Career/CreateCareer" :
+    "https://localhost:7049/api/Skill/CreateSkill"
 
   const [dataItem, setDataItem] = useState(
     type === "carrera" ? {
@@ -77,22 +87,36 @@ const AddItemForm = ({ setOption, type, data }) => {
     setDataItem({ ...dataItem, [e.target.name]: e.target.value })
   };
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async () => {
+    setConfirmModalOpen(false)
 
     const validationInputs = Object.values(validInput).some((valid) => !valid);
 
     if (validationInputs) {
-      alert('Complete correctamente todos los campos');
+      setModal({
+        modalOpen: true,
+        modalTitle: "Error",
+        modalMessage: "Complete todos los campos correctamente.",
+      });
     } else {
       try {
         const sendData = await postData(url, dataItem)
-        console.log("Datos actualizados", sendData);
-        alert("Datos actualizados correctamente");
-        setOption("")
-    } catch (postRequestError) {
-        console.log("Error al actualizar datos", error);
-    }
+        setModal({
+          modalOpen: true,
+          modalTitle: "Aviso",
+          modalMessage: "Datos actualizados correctamente.",
+        });
+
+        setTimeout(() => {
+          setOption("")
+        }, 2000);
+      } catch (postRequestError) {
+        setModal({
+          modalOpen: true,
+          modalTitle: "Error",
+          modalMessage: postRequestError,
+        });
+      }
     }
   };
 
@@ -100,17 +124,21 @@ const AddItemForm = ({ setOption, type, data }) => {
     setOption("")
   }
 
+  const confirmSubmit = () => {
+    setConfirmModalOpen(true);
+  };
+
   useEffect(() => {
     if (data !== "addItem") {
       setDataItem(data);
     }
-    
+
   }, [setDataItem, data]);
 
 
   return (
     <div className='addItem-container'>
-      {isLoading && <Spinner/>}
+      {isLoading && <Spinner />}
       {type === "carrera" ?
         <>
           {data === "addItem" && <h2>Agregar carrera:</h2>}
@@ -122,7 +150,7 @@ const AddItemForm = ({ setOption, type, data }) => {
 
               <label >Abreviatura de la carrera:</label>
               <input type="text" name='abbreviation' value={dataItem.abbreviation} onChange={handlerChangeInput} onBlur={handlerBlurInput} />
-              {validInput.abbreviation === false ? <div className='itemForm-error-message'>{errorMessage.abbreviation}</div>: null}
+              {validInput.abbreviation === false ? <div className='itemForm-error-message'>{errorMessage.abbreviation}</div> : null}
 
               <label >Tipo de carrera:</label>
               <select name='careerType' value={dataItem.careerType} onChange={(e) => setDataItem({ ...dataItem, careerType: e.target.value })} onBlur={handlerBlurInput}>
@@ -137,13 +165,13 @@ const AddItemForm = ({ setOption, type, data }) => {
 
               <label>Cantidad de materias:</label>
               <input type="number" step="1" min="1" max="50" name="totalSubjets" id="" value={dataItem.totalSubjets} onChange={handlerChangeInput} onBlur={handlerBlurInput} />
-              {validInput.totalSubjets === false ? <div className='itemForm-error-message'>{errorMessage.totalSubjets}</div>  : null}
+              {validInput.totalSubjets === false ? <div className='itemForm-error-message'>{errorMessage.totalSubjets}</div> : null}
 
             </form>
           </div>
         </> :
         <>
-          <h2>Agregar habilidad:</h2>
+          {data === "addItem" && <h2>Agregar habilidad:</h2>}
           <div>
             <form action="" className={`addItem-form ${theme}`}>
               <label>Nombre de la habilidad: </label>
@@ -154,7 +182,30 @@ const AddItemForm = ({ setOption, type, data }) => {
           </div>
         </>}
       <BasicButton buttonName="Cancelar" buttonHandler={optionHandler} />
-      <BasicButton buttonName={data === "addItem" ? "Crear" : "Editar"} buttonHandler={submitHandler} />
+      <BasicButton buttonName={data === "addItem" ? "Crear" : "Editar"} buttonHandler={confirmSubmit} />
+
+      {confirmModalOpen && (data === "addItem" ?
+        <ConfirmModal
+          title={`Agregar ${type}`}
+          message={`¿Estás seguro de que deseas crear una nueva ${type}?`}
+          onConfirm={() => submitHandler()}
+          onCancel={() => setConfirmModalOpen(false)}
+        /> :
+        <ConfirmModal
+          title={`Modificar ${type}`}
+          message={`¿Estás seguro de que deseas modificar la ${type}?`}
+          onConfirm={() => submitHandler()}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
+      )}
+
+      {modal.modalOpen && (
+        <Modal
+          title={modal.modalTitle}
+          message={modal.modalMessage}
+          onClose={() => setModal({ modalOpen: false })}
+        />
+      )}
     </div>
   )
 }
