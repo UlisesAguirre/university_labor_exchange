@@ -13,7 +13,9 @@
 .cqtZJB{
     position: relative !important;
     bottom: unset !important;
-    right: unset !important;
+    right: unset !important; 
+    width: 45px !important;
+    height: 45px  !important;
 }
 
 .eMlmxH{
@@ -21,5 +23,10 @@
 }
 
 .chat{
-    width: 3.5em;
+   width: 3.5em;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--primary-color) ;
 }
