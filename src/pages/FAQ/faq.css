@@ -1,0 +1,11 @@
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    min-height: 78vh;
+    max-height: 78vh;
+    margin: 0.5em 0.5em;
+    padding: auto;
+}

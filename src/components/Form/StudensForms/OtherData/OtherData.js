@@ -59,7 +59,6 @@ const FormOtherData = ({ form, stepForwardHandler, stepBackHandler, userId }) =>
 
   return (
     <div className="otherData-container">
-      {console.log(curriculum, form.curriculum)}
       <h2 > Otros </h2>
       <div className={`otherData-form ${theme}`}>
         <label> Link de GitHub </label>

@@ -1,5 +1,5 @@
 import { addDays, format } from "date-fns";
-import { useContext, useRef, useState } from "react"
+import { useContext, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
 
 import './addJobOffer.css'
