@@ -1,6 +1,7 @@
 import { addDays, format } from "date-fns";
 import { useContext, useState } from "react"
 import useGetRequest from "../../../../custom/useGetRequest"
+import Spinner from "../../../Shared/Spinner/Spinner"
 
 import './addJobOffer.css'
 
@@ -8,6 +9,8 @@ import BasicButton from '../../../Shared/BasicButton/BasicButton'
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import usePostRequest from "../../../../custom/usePostRequest";
 import Skills from "../../../Shared/Skills/Skills";
+import Modal from "../../../Shared/Modal/Modal";
+import ConfirmModal from "../../../Shared/ConfirmModal/ConfirmModal";
 
 const validateForm = (form, name) => {
     let error = ''
@@ -69,6 +72,14 @@ const validInputs = {
 }
 
 const AddJobOffer = ({ setOption }) => {
+
+    const [modal, setModal] = useState({
+        modalOpen: false,
+        modalTitle: "",
+        modalMessage: "",
+    });
+
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
     const { theme } = useContext(ThemeContext);
 
@@ -136,8 +147,8 @@ const AddJobOffer = ({ setOption }) => {
         })
     }
 
-    const submitHandler = async (e) => {
-        e.preventDefault();
+    const submitHandler = async () => {
+        setConfirmModalOpen(false)
         let isValid = true;
 
         const fieldsToRemove = form.jobType === '0' ?
@@ -169,17 +180,29 @@ const AddJobOffer = ({ setOption }) => {
 
         if (!isValid) {
 
-            alert('Hay errores');
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: "Complete los campos correctamente.",
+            });
 
         } else {
 
             const response = await postData('https://localhost:7049/api/Company/AddJobPosition', filteredForm);
             console.log(response)
             if (response) {
-                alert('Oferta laboral registrada correctamente');
+                setModal({
+                    modalOpen: true,
+                    modalTitle: "Aviso",
+                    modalMessage: "Datos actualizados correctamente.",
+                });
                 setForm(inicialForm);
             } else {
-                alert('Error al registrar la Oferta laboral');
+                setModal({
+                    modalOpen: true,
+                    modalTitle: "Error",
+                    modalMessage: "Error al registrar la oferta.",
+                });
             }
         }
 
@@ -189,9 +212,14 @@ const AddJobOffer = ({ setOption }) => {
         setOption('')
     }
 
+    const confirmSubmit = () => {
+        setConfirmModalOpen(true);
+    };
+
 
     return (
         <div className="jobOffer-container">
+            {(loading || isLoading) && <Spinner />}
 
             <h2>Ofertas Laborales</h2>
 
@@ -297,9 +325,24 @@ const AddJobOffer = ({ setOption }) => {
             <div className="save-button">
                 {form.jobType && <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />}
                 <BasicButton buttonName={'Volver al menú'} buttonHandler={goBackToMenu} />
-                {form.jobType && <BasicButton buttonName={'Guardar'} buttonHandler={submitHandler} />}
+                {form.jobType && <BasicButton buttonName={'Guardar'} buttonHandler={confirmSubmit} />}
             </div>
 
+            {confirmModalOpen && (
+                <ConfirmModal
+                    title="Modificar datos"
+                    message="¿Estás seguro de que deseas modificar sus datos?"
+                    onConfirm={() => submitHandler(form)}
+                    onCancel={() => setConfirmModalOpen(false)}
+                />
+            )}
+            {modal.modalOpen && (
+                <Modal
+                    title={modal.modalTitle}
+                    message={modal.modalMessage}
+                    onClose={() => setModal({ modalOpen: false })}
+                />
+            )}
         </div>
 
     )

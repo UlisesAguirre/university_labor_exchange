@@ -19,7 +19,7 @@ const JobPositionsList = ({ jobPosition, setMenuVisible, menuVisible, setTargetJ
       <div className={`listCard-container ${theme}`} onClick={viewJobOnClick} >
         <div className='title-generic-list'>
           <p>Titulo: {jobPosition.jobTitle}</p>
-          <p>Creador: {jobPosition.companyName}</p>
+          {title !== "Ofertas laborales" && <p>Creador: {jobPosition.companyName}</p>}
         </div>
         <div className='data-generic-list'>
           <p>Puesto: {jobPosition.positionToCover}</p>

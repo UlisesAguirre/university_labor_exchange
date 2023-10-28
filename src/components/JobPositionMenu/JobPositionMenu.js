@@ -28,7 +28,7 @@ const JobPositionMenu = ({ title, url, setOption }) => {
     //Ofertas laborales = Empresa
     //Ofertas laborales disponibles = Alumnos
 
-    
+
     const [forceUpdate, setForceUpdate] = useState(false)
 
     const { getData, loading, error } = useGetRequest(url, forceUpdate)
@@ -48,39 +48,43 @@ const JobPositionMenu = ({ title, url, setOption }) => {
 
     return (
         <>
-            <div className='jobPositionMenu-container'>
-                {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") ?
-                    <ManagementList url={url} title={title} /> :
-                    <div className='jobPositionMenu-box'>
-                        {loading && <Spinner />}
-                        <h2>{title}</h2>
-                        <div className='jobPositionMenu-list'>
-                            {!menuVisible ? (
-                                data.map((jobPosition) => (
-                                    <JobPositionsList
-                                        jobPosition={jobPosition}
-                                        menuVisible={menuVisible}
-                                        setMenuVisible={setMenuVisible}
-                                        setTargetJob={setTargetJob}
-                                        title={title}
-                                        key={jobPosition.idJobPosition}
-                                    />
-                                ))
-                            ) : (
-                                <JobPositionCard jobPosition={targetJob}
-                                    menuVisible={menuVisible}
-                                    setMenuVisible={setMenuVisible}
-                                    forcedUpdate={forcedUpdate} />
-                            )
-                            }
-                        </div>
+            {error ? <p>{error.message}</p> :
+                <>
+
+                    <div className='jobPositionMenu-container'>
+                        {(title !== "Ofertas laborales disponibles" && title !== "Ofertas laborales") ?
+                            <ManagementList url={url} title={title} /> :
+                            <div className='jobPositionMenu-box'>
+                                {loading && <Spinner />}
+                                <h2>{title}</h2>
+                                <div className='jobPositionMenu-list'>
+                                    {!menuVisible ? (
+                                        data.map((jobPosition) => (
+                                            <JobPositionsList
+                                                jobPosition={jobPosition}
+                                                menuVisible={menuVisible}
+                                                setMenuVisible={setMenuVisible}
+                                                setTargetJob={setTargetJob}
+                                                title={title}
+                                                key={jobPosition.idJobPosition}
+                                            />
+                                        ))
+                                    ) : (
+                                        <JobPositionCard jobPosition={targetJob}
+                                            menuVisible={menuVisible}
+                                            setMenuVisible={setMenuVisible}
+                                            forcedUpdate={forcedUpdate} />
+                                    )
+                                    }
+                                </div>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-            {(title !== "Ofertas laborales disponibles") &&
-                <button onClick={optionHandler} className='button'>
-                    <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
-                </button>}
+                    {(title !== "Ofertas laborales disponibles") &&
+                        <button onClick={optionHandler} className='button'>
+                            <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
+                        </button>}
+                </>}
         </>
     )
 }

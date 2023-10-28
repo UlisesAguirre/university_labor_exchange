@@ -13,6 +13,10 @@ const useFrom = (props) => {
             setData({ ...data, [name]: value })
         }
 
+        if(name === "careerSubscription") {
+            setData({ ...data, [name]: e.target.checked });
+        }
+
     }
 
     const blurHandler = (e) => {

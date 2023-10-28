@@ -8,8 +8,16 @@ import usePutRequest from '../../../custom/usePutRequest'
 import { useState } from "react"
 import JobPositionsList from "../JobPositionsList/JobPositionsList"
 import JobPositionCard from "../../Shared/JobPositionCard/JobPositionCard"
+import Modal from "../../Shared/Modal/Modal"
 
 const ManagementList = ({ url, title }) => {
+
+    const [modal, setModal] = useState({
+        modalOpen: false,
+        modalTitle: "",
+        modalMessage: "",
+    });
+
 
     const [menuVisible, setMenuVisible] = useState(false);
     const [targetJob, setTargetJob] = useState();
@@ -30,15 +38,26 @@ const ManagementList = ({ url, title }) => {
 
         try {
             await sendPutRequest("https://localhost:7049/api/Student/SetUserState", JSON.stringify(data), 'application/json');
-            alert(type);
+            setModal({
+                modalOpen: true,
+                modalTitle: "Aviso",
+                modalMessage: type,
+            });
 
-            setForceUpdate(!forceUpdate);
+            setTimeout(() => {
+                setForceUpdate(!forceUpdate);
+            }, 2000);
+
         } catch (putRequestError) {
-            console.log("Error: ", putRequestError)
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: "Error al modificar usuario",
+            });
         }
 
     };
-    const forcedUpdate =()=> {
+    const forcedUpdate = () => {
         setForceUpdate(!forceUpdate);
     }
 
@@ -78,8 +97,16 @@ const ManagementList = ({ url, title }) => {
                     menuVisible={menuVisible}
                     setMenuVisible={setMenuVisible}
                     forcedUpdate={forcedUpdate} />
-                    }
+                }
             </div>
+
+            {modal.modalOpen && (
+                <Modal
+                    title={modal.modalTitle}
+                    message={modal.modalMessage}
+                    onClose={() => setModal({ modalOpen: false })}
+                />
+            )}
         </div>
     )
 }
