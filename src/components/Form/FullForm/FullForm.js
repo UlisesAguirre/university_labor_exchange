@@ -7,8 +7,15 @@ import BasicInput from '../../Shared/BasicInput/BasicInput';
 import BasicButton from '../../Shared/BasicButton/BasicButton';
 import usePostRequest from '../../../custom/usePostRequest';
 import Spinner from '../../Shared/Spinner/Spinner';
+import Modal from '../../Shared/Modal/Modal';
 
 const FullForm = ({ title, nameButton, typeForm }) => {
+
+    const [modal, setModal] = useState({
+        modalOpen: false,
+        modalTitle: "",
+        modalMessage: "",
+    });
 
     const navigate = useNavigate();
 
@@ -135,7 +142,11 @@ const FullForm = ({ title, nameButton, typeForm }) => {
         const validationInputs = Object.values(validInput).some((valid) => !valid);
 
         if (validationInputs) {
-            alert('Complete correctamente todos los campos');
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: "Complete los datos correctamente.",
+            });
         } else {
 
             const { confirmPassword, ...data } = input;
@@ -144,12 +155,16 @@ const FullForm = ({ title, nameButton, typeForm }) => {
             const url = (typeForm === 'Soy alumno') ?
                 "https://localhost:7049/api/Register/RegisterStudent" :
                 "https://localhost:7049/api/Register/RegisterCompany";
-            
 
-            const response = await postData(url,dataUser);
+
+            const response = await postData(url, dataUser);
 
             if (response) {
-                alert('Usuario registrado correctamente');
+                setModal({
+                    modalOpen: true,
+                    modalTitle: "Aviso",
+                    modalMessage: "Usuario registrado correctamente.",
+                });
                 // Agregar lógica para enviar input
                 setInput({
                     email: '',
@@ -167,10 +182,15 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                         }),
                 });
 
-                navigate('/login');
-
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
             } else {
-                alert("Error al crear el usuario.");
+                setModal({
+                    modalOpen: true,
+                    modalTitle: "Error",
+                    modalMessage: "Error al crear usuario.",
+                });
             }
 
         }
@@ -343,6 +363,13 @@ const FullForm = ({ title, nameButton, typeForm }) => {
                 </div>
             </form>
             <BasicButton buttonName={nameButton} buttonHandler={submitHandler} />
+            {modal.modalOpen && (
+                <Modal
+                    title={modal.modalTitle}
+                    message={modal.modalMessage}
+                    onClose={() => setModal({ modalOpen: false })}
+                />
+            )}
         </div>
     );
 };

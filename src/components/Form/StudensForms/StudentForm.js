@@ -11,10 +11,20 @@ import Spinner from '../../Shared/Spinner/Spinner';
 
 import "./studentForm.css"
 import { useNavigate } from 'react-router-dom';
+import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal';
+import Modal from '../../Shared/Modal/Modal';
 
 //FIXME: cuando agregemos el envio del token por header tengo que eliminar enviar el id al curriculum
 
 const StudentForm = () => {
+
+    const [modal, setModal] = useState({
+        modalOpen: false,
+        modalTitle: "",
+        modalMessage: "",
+    });
+
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -38,11 +48,10 @@ const StudentForm = () => {
     const [step, setStep] = useState(1);
 
     const stepForwardHandler = (data) => {
-    
+
         if (step === 4) {
             setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
-            alert('Datos cargados con exito! Seleccione enviar')
-            submitHandler({ ...form, 'studentsSkills': data });
+            setConfirmModalOpen(true)
         } else {
             setForm((prevForm) => ({ ...prevForm, ...data }));
             setStep(step => step + 1);
@@ -55,13 +64,25 @@ const StudentForm = () => {
     };
 
     const submitHandler = async (formToUpdate) => {
+        setConfirmModalOpen(false);
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(formToUpdate),'application/json')
-            console.log("Datos actualizados", updatedData);
-            console.log(formToUpdate)
-            alert("Datos actualizados correctamente");
-            navigate("/profile");
+            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(formToUpdate), 'application/json')
+
+            setModal({
+                modalOpen: true,
+                modalTitle: "Aviso",
+                modalMessage: "Datos actualizados correctamente.",
+            });
+
+            setTimeout(() => {
+                navigate('/profile');
+            }, 2000);
         } catch (putRequestError) {
+            setModal({
+                modalOpen: true,
+                modalTitle: "Error",
+                modalMessage: { putRequestError },
+            });
             console.log("Error al actualizar datos", putRequestError);
         }
     }
@@ -72,22 +93,41 @@ const StudentForm = () => {
 
 
     return (
+        <>
 
-        <div className='studentForm-container'>
-            {(loading || loadingPutRequest) && <Spinner />}
-            <form>
+            {error ? <p>{error.message}</p> :
+                <>
+                    <div className='studentForm-container'>
+                        {(loading || loadingPutRequest) && <Spinner />}
+                        <form>
 
-                {step === 1 && PersonalDataComponent}
-                {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
-                {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} userId = {user.id} />}
-                {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
+                            {step === 1 && PersonalDataComponent}
+                            {step === 2 && <FormCareerData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
+                            {step === 3 && <FormOtherData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} userId={user.id} />}
+                            {step === 4 && <FormSkillsData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} />}
 
-            </form>
+                        </form>
 
-            {putRequestError && <span>{putRequestError.message}</span>}
-            {error && <span>{error.message}</span>}
+                        {confirmModalOpen && (
+                            <ConfirmModal
+                                title="Modificar datos"
+                                message="¿Estás seguro de que deseas modificar sus datos?"
+                                onConfirm={() => submitHandler(form)}
+                                onCancel={() => setConfirmModalOpen(false)}
+                            />
+                        )}
 
-        </div>
+                    </div>
+                    {modal.modalOpen && (
+                        <Modal
+                            title={modal.modalTitle}
+                            message={modal.modalMessage}
+                            onClose={() => setModal({ modalOpen: false })}
+                        />
+                    )}
+                </>}
+
+        </>
     )
 }
 

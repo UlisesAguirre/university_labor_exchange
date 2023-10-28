@@ -8,19 +8,23 @@ import BasicButton from '../../Shared/BasicButton/BasicButton';
 import TokenContext from '../../Context/TokenContext/TokenContext';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';
-
-
-// FIXME: sacar validaciones del password 
+import Modal from '../../Shared/Modal/Modal';
 
 const FormLogin = () => {
 
+  const [modal, setModal] = useState({
+    modalOpen: false,
+    modalTitle: "",
+    modalMessage: "",
+  });
+
   const navigate = useNavigate();
 
-  const {updateToken} = useContext(TokenContext);
+  const { updateToken } = useContext(TokenContext);
 
-  const {login} = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
-  const [ loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [validInput, setValidInput] = useState({
     email: null,
@@ -30,7 +34,7 @@ const FormLogin = () => {
   const [input, setInput] = useState({
     email: '',
     password: '',
-    userType:''
+    userType: ''
   });
 
   const handlerChangeInput = (e) => {
@@ -53,7 +57,7 @@ const FormLogin = () => {
 
   const submit = () => {
     const url = 'https://localhost:7049/api/authentication/authenticate';
-  
+
     // Configurar la solicitud Fetch
     const requestOptions = {
       method: 'POST',
@@ -62,7 +66,7 @@ const FormLogin = () => {
       },
       body: JSON.stringify(input),
     };
-  
+
     setLoading(true);
 
     // solicitud Fetch a Authenticate
@@ -79,16 +83,21 @@ const FormLogin = () => {
 
         updateToken(jwtToken);
         login();
-  
+
         // Redirigimos 
         setLoading(false);
-        alert('Inicio de sesión exitoso');
+        setModal({
+          modalOpen: true,
+          modalTitle: "¡Bienvenido!",
+          modalMessage: "Inicio de sesión existoso.",
+        });
         setInput({
           email: '',
           password: '',
         });
-  
-        navigate('/profile');
+        setTimeout(() => {
+          navigate('/profile');
+        }, 2000);
       })
       .catch(error => {
         console.error('Error al realizar la solicitud:', error);
@@ -103,7 +112,11 @@ const FormLogin = () => {
     const validationInputs = Object.values(validInput).some((valid) => !valid);
 
     if (validationInputs) {
-      alert('Complete correctamente todos los campos');
+      setModal({
+        modalOpen: true,
+        modalTitle: "Error",
+        modalMessage: "Complete correctamente los datos.",
+      });
     } else {
       submit();
     }
@@ -137,7 +150,14 @@ const FormLogin = () => {
           position="left"
         />
       </form>
-      <BasicButton buttonName={"Iniciar sesión"} buttonHandler={submitHandler}/>
+      <BasicButton buttonName={"Iniciar sesión"} buttonHandler={submitHandler} />
+      {modal.modalOpen && (
+        <Modal
+          title={modal.modalTitle}
+          message={modal.modalMessage}
+          onClose={() => setModal({ modalOpen: false })}
+        />
+      )}
     </div>
   )
 }

@@ -1,0 +1,43 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+  
+  .custom-modal {
+    padding: 20px;
+    border-radius: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 40%;
+  }
+  
+  .custom-modal h3 {
+    font-size: 1.5em;
+    margin-top: 0;
+    border-bottom: 1px solid var(--secondary-color);
+    margin-bottom: 1em;
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--secondary-color);
+  }
+  
+  .custom-modal p {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .button-modal-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .custom-modal button {
+    margin-top: 2em;
+  }
