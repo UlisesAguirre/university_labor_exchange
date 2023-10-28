@@ -14,13 +14,13 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
+  if (data === null || (typeof data === 'string' && !data.trim())) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
     if (validInputs[name].regex) {
-      if (!validInputs[name].regex.test(data[name])) {
+      if (!validInputs[name].regex.test(data)) {
         if (name === 'username' || name === 'name' || name === 'lastName' || name === 'address' || name === 'city' || name === 'province' || name === 'country') {
           error = "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
         }
@@ -48,7 +48,7 @@ const validateData = (data, name) => {
       }
     }
     if (name === 'birthDate') {
-      const date = differenceInYears(new Date(), new Date(data[name]));
+      const date = differenceInYears(new Date(), new Date(data));
       if (date < 17) {
         error = 'Debe ser mayor a 17 años'
       }

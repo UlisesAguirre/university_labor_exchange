@@ -6,15 +6,11 @@ import Spinner from "../../../Shared/Spinner/Spinner";
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import "./careerData.css"
 
-// TODO: 
-// Agregar estilos
-
-
 const validateData = (data, name) => {
   let error = '';
 
-  if ((data[name] !== null && data[name] !== '') && regex[name]) {
-    if (!regex[name].test(data[name])) {
+  if ((data !== null && data !== '') && regex[name]) {
+    if (!regex[name].test(data)) {
       if ((name === 'average') || (name === 'averageWithFails')) {
         error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00";
       }
