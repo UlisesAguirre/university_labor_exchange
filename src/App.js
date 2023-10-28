@@ -14,7 +14,7 @@ import FAQ from './pages/FAQ/FAQ';
 
 function App() {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className="App">
@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/*" element={<UserPage /> } />
+          <Route path="/profile/*" element={<UserPage />} />
           <Route path='/FAQ' element={<FAQ/>}/>
         </Routes>
       </div>

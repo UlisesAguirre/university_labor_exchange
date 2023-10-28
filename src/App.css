@@ -66,4 +66,5 @@
 
 .page-content-container {
   height: 78vh;
+  overflow-y: auto;
 }

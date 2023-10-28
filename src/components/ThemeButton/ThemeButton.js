@@ -5,7 +5,9 @@ import { ThemeContext } from "../Context/ThemeContext/ThemeContext";
 import "./themeButton.css";
 
 const ThemeButton = () => {
+
   const { theme, toggleTheme } = useContext(ThemeContext);
+  
   return (
     <div className="themeButton-container">
       <button

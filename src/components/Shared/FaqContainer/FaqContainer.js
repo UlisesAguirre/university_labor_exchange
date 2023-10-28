@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react'
 import './faqContainer.css'
 
-const FaqContainer = ({title, description}) => {
+const FaqContainer = ({ title, description }) => {
 
     const [visible, setVisible] = useState(false)
 
     const [icon, setIcon] = useState(faChevronDown);
+
 
     const clickHandler = () => {
         setVisible(!visible);
@@ -15,12 +16,17 @@ const FaqContainer = ({title, description}) => {
     }
 
     return (
+
         <div className='faqContainer-container'>
-            <button className={'faqContainer-bttn button'} onClick={clickHandler}><h3>{title}</h3><FontAwesomeIcon icon={icon} /></button>
+            <button className={'faqContainer-bttn button'} onClick={clickHandler}>
+                <h3>{title}</h3>
+                <FontAwesomeIcon icon={icon} />
+            </button>
             {visible &&
                 description
             }
         </div>
+
     )
 }
 
