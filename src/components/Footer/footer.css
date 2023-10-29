@@ -30,3 +30,20 @@
     text-decoration: none;
     color: var(--primary-color) ;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .footer-container {
+        padding: 0 1em;
+        height: 10vh;
+        font-size: .9em;
+    }
+    .cqtZJB{
+        position: relative !important;
+        bottom: unset !important;
+        right: unset !important; 
+        width: 35px !important;
+        height: 35px  !important;
+    }
+    
+}

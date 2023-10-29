@@ -163,3 +163,53 @@
 .profile-message-card a {
     text-decoration: none;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .userCard-container {
+        width: 100%;
+        height: 100%;
+    }
+    .profile-name-card {
+        width: 80%;
+        margin-bottom: .5em;
+    }
+    .profile-name-card h2 {
+        font-size: .9em;
+    }
+    .profile-name-card img {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    .profile-name-card button {
+        font-size: .6em;
+    }
+    .profile-data-card {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+    .profile-data-box {
+        width: 70%;
+        margin: .5em 0;
+    }
+    .profile-data-box h2 {
+        font-size: .9em;
+    }
+    .profile-data-box span:first-child, .profile-company-card span:first-child {
+        font-size: .8em;
+    }
+    .profile-data-box span:last-child, .profile-company-card span:last-child {
+        font-size: .6em;
+    }
+    .profile-company-card {
+        height: auto;
+    }
+    .profile-message-card {
+        justify-content: flex-start;
+        height: auto;
+    }
+    .profile-title-card p {
+        font-size: .9em;
+    }
+}

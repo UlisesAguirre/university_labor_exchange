@@ -124,7 +124,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
                       <p className='itemsList-skill-title'>Habilidad: </p>
                       <p className='itemsList-skill-name'>{item.skillName}</p>
                     </div>
-                    <div>
+                    <div className='itemList-skill-button'>
                       <button className='button' onClick={() => modeHandler(item)}>Editar</button>
                       <button className='button' onClick={() => deleteConfirm(item.idSkill)}>Eliminar</button>
                     </div>

@@ -12,3 +12,10 @@
 .managementMenu-box h2 {
     filter: var(--drop-shadow);
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .managementMenu-button {
+        flex-direction: column;
+    }
+}

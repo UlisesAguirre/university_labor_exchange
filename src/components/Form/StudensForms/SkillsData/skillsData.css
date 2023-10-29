@@ -43,3 +43,44 @@
 .skillsData-form label {
     font-size: 1.2em;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .skillsData-container h2 {
+        font-size: 1.4em;
+    }
+    .skillsData-form {
+        flex-direction: column;
+        align-items: center;
+        overflow-y: hidden;
+        min-height: none;
+        max-height: none;
+        padding: .5em 1em;
+    }
+    .skillsData-form input {
+        font-size: .6em;
+    }
+    
+    .skillsData-form select {
+        font-size: .6em;
+    }
+    
+    .skillsData-form label {
+        font-size: .8em;
+    }
+    .skillsData-container button {
+        font-size: .8em;
+        width: 30%;
+    }
+    .skillsData-form button {
+        font-size: .8em;
+        width: 100%;
+    }
+    .skillsData-form-column {
+        width: 80%;
+        padding: 0;
+    }
+    .skillsData-form-column th, .skillsData-form-column td {
+        font-size: .8em;
+    }
+}

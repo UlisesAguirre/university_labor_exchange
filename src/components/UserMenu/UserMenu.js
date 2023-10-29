@@ -34,20 +34,24 @@ const UserMenu = () => {
               </Link>
             </> :
             <>
-              <p>Habilitar:</p>
-              <Link to="/profile/users-management">
-                <FontAwesomeIcon icon={faUsers} /> Usuarios
-              </Link>
-              <Link to="/profile/jobpositions-management">
-                <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales
-              </Link>
-              <p>Administrar:</p>
-              <Link to="/profile/careers-management">
-                <FontAwesomeIcon icon={faGraduationCap} /> Carreras
-              </Link>
-              <Link to="/profile/skills-management">
-                <FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades
-              </Link>
+              <div className='admin-options-column'>
+                <p>Habilitar:</p>
+                <Link to="/profile/users-management">
+                  <FontAwesomeIcon icon={faUsers} /> Usuarios
+                </Link>
+                <Link to="/profile/jobpositions-management">
+                  <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales
+                </Link>
+              </div>
+              <div className='admin-options-column'>
+                <p>Administrar:</p>
+                <Link to="/profile/careers-management">
+                  <FontAwesomeIcon icon={faGraduationCap} /> Carreras
+                </Link>
+                <Link to="/profile/skills-management">
+                  <FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades
+                </Link>
+              </div>
             </>}
           {user.viewOffer && <>
             {user.userType === "student" &&

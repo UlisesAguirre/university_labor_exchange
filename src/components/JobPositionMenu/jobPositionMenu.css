@@ -26,3 +26,14 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .jobPositionMenu-box {
+        margin-bottom: .5em;
+    }
+    .jobPositionMenu-box h2 {
+        font-size: 1.4em;
+        width: 80%;
+    }
+}

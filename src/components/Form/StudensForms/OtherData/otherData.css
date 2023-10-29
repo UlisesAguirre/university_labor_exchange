@@ -65,3 +65,37 @@
 input[type="file"]{
     display: none;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .otherData-container h2 {
+        font-size: 1.4em;
+        margin: .5em 0;
+    }
+    .otherData-form {
+        overflow-y: hidden;
+        min-height: none;
+        max-height: none;
+        padding: .5em 1em;
+    }
+    .otherData-form input {
+        font-size: .6em;
+    }
+    .otherData-form label {
+        font-size: .8em;
+    }
+    .otherData-form div span {
+        font-size: .8em;
+    }
+    .add-curriculum {
+        white-space: nowrap;
+        padding: .5em;
+    }
+    .otherData-form .delete-button {
+        width: 10%;
+    }
+    .otherData-container button {
+        width: 30%;
+        font-size: .8em;
+    }
+}

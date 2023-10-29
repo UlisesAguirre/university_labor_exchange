@@ -33,3 +33,24 @@
 .list-title {
     text-align: center;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .list-container {
+        width: 80%;
+        padding: 1em;
+    }
+    .list-content {
+        margin: 0;
+    }
+    .list-content li {
+        margin-bottom: .3em;
+    }
+    .list-content li span {
+        font-size: .7em;
+    }
+    .list-title {
+        font-size: 1em;
+        margin: 0;
+    }
+}
