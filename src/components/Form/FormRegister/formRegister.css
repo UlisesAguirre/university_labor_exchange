@@ -22,7 +22,7 @@
     background-color: rgba(0, 128, 0, 0.3); 
 }
 /* Diseño responsive */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1000px) {
     .formRegister-container {
         flex-direction: column;
     }
@@ -35,8 +35,4 @@
         height: 100%;
     
     }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Estilos para pantallas medianas (tabletas) */
 }

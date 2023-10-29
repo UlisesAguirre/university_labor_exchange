@@ -67,7 +67,7 @@ input[type="file"]{
 }
 
 /* Diseño responsive */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1000px) {
     .otherData-container h2 {
         font-size: 1.4em;
         margin: .5em 0;
@@ -98,8 +98,4 @@ input[type="file"]{
         width: 30%;
         font-size: .8em;
     }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Estilos para pantallas medianas (tabletas) */
 }

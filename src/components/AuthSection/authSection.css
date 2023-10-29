@@ -15,7 +15,7 @@
 }
 
 /* Diseño responsive */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 100px) {
     .authSection-container {
         display: flex;
         flex-direction: column;
@@ -24,8 +24,4 @@
         padding: 0 .3em 0 0;
         width: 100%;
     }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Estilos para pantallas medianas (tabletas) */
 }

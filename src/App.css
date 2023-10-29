@@ -70,7 +70,7 @@
 
 /*Diseño responsive*/
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 100px) {
   .page-content-container {
     height: 100%;
     overflow-y: none;
@@ -89,8 +89,4 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25); 
     width: 10em;
   }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  
 }

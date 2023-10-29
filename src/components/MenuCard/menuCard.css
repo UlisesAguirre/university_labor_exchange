@@ -6,13 +6,9 @@
 }
 
 /* Diseño responsive */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1000px) {
     .menuCard-container {
         width: 100%;
         margin: 1em 0;
     }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Estilos para pantallas medianas (tabletas) */
 }
