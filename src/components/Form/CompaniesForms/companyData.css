@@ -38,3 +38,46 @@
 .companyData-form label {
     font-size: 1.2em;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .companyData-container h2 {
+        font-size: 1.4em;
+        margin: .5em 0;
+    }
+    .companyData-form {
+        height: 100%;
+        max-height: none;
+        overflow-y: hidden;
+        height: auto;
+        padding: 1em;
+        width: 90%;
+    }
+    .companyData-form input {
+        font-size: .6em;
+    }
+    .companyData-form label {
+        font-size: .8em;
+    }
+    .companyData-requerid-message {
+        display: flex;
+        justify-content: space-between;
+    }
+    .companyData-requerid-message button {
+        display: flex;
+        justify-content: space-between;
+        font-size: .8em;
+        width: 30%;
+        text-align: center;
+    }.requerid-camps-message {
+        font-size: .7em;
+    }
+    .company-forms {
+        height: 100%;
+    }
+    
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

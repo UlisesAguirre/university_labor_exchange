@@ -111,10 +111,13 @@
 /* Diseño responsive */
 @media screen and (max-width: 767px) {
   .title-generic-list,
-.data-generic-list {
-  flex-direction: column;
-  width: 100%;
-}
+  .data-generic-list {
+    flex-direction: column;
+    width: 100%;
+  }
+  .student-listCard-container {
+    flex-direction: column;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {

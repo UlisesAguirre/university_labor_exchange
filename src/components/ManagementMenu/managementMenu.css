@@ -12,3 +12,13 @@
 .managementMenu-box h2 {
     filter: var(--drop-shadow);
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .managementMenu-button {
+        flex-direction: column;
+    }}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

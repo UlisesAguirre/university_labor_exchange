@@ -65,3 +65,43 @@
 .itemsList-skill-name {
     font-style: italic;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .itemsList-item {
+        flex-direction: column;
+        padding: 1em;
+        border-bottom: 1px solid;
+    }
+    .itemsList-skill-item {
+        width: 100%;
+        padding-bottom: 1em;
+    }
+    .itemList-skill-button {
+        border: 1px solid;
+        border-radius: 5px;
+    }
+    .itemsList-skill-item p{
+        margin: 0;
+        font-size: .9em;
+    }
+    .itemsList-row {
+        width: 100%;
+    }
+    .itemsList-row div {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .itemsList-career-title {
+        font-size: .8em;
+    }
+    
+    .itemsList-career-name {
+        font-size: .6em;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

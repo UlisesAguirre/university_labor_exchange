@@ -91,7 +91,7 @@ const CompanyForm = () => {
 
     return (
 
-        <div>
+        <div className='company-forms'>
             {(loading || loadingPutRequest) && <Spinner />}
 
             <form>

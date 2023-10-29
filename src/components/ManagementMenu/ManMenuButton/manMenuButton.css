@@ -41,3 +41,24 @@
     font-size: 2em;
     filter: var(--drop-shadow);
 }
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .ManMenuButton-container {
+        padding: 0 0 1em 0;
+    }
+    .ManMenuButton-box{
+        height: auto;
+        margin: .5em;
+        padding: 0;
+    }
+    .ManMenuButton-box h2 {
+        font-size: 1.4em;
+    }
+    .ManMenuButton-icon {
+        font-size: 6em;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

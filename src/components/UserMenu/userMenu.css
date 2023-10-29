@@ -79,9 +79,17 @@
         padding: .2em;
         color: var(--primary-color);
     }
+    .userMenu-options p {
+        display: none;
+    }
     .userMenu-logout a {
         font-size: .7em;
         margin-top: 111em;
+    }
+    .admin-options-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
