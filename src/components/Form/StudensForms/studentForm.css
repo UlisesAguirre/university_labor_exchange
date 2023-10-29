@@ -1,3 +1,10 @@
 .studentForm-container {
     height: 40%;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .studentForm-container {
+        height: 100%;
+    }
+}

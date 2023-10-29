@@ -135,9 +135,9 @@ const CompanyData = ({ stepForwardHandler, form }) => {
         {errors.location && <div className="form-user-error-message">{errors?.location}</div>}
 
       </div>
-      <div className='personalData-requerid-message'>
+      <div className='companyData-requerid-message'>
         <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
-        <p>(*) Estos campos son obligatorios </p>
+        <p className="requerid-camps-message">(*) Estos campos son obligatorios </p>
       </div>
     </div>
 

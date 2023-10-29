@@ -21,3 +21,21 @@
     display: flex;
     justify-content: center;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .companyJobOffer-container {
+        height: 100%;
+    }
+    .companyJobOffer-box {
+        padding-bottom: .5em;
+    }
+    .companyJobOffer-box h2 {
+        height: auto;
+        margin: .5em;
+    }
+    .companyJobOffer-button {
+        flex-direction: column;
+        height: auto;
+    }
+}

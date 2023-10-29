@@ -37,3 +37,29 @@
     transform-origin: center;
     transition: .2s;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .themeButton-container {
+        display: flex;
+        align-items: center;
+        width: 9%;
+    }
+    .themeButton-container button {
+        border: 2px double var(--secondary-color);
+        border-radius: 1em;
+        height: 2em;
+        width: 3em;
+        box-shadow: var(--box-shadow);
+    }
+    .themeButton-container p {
+        margin: 0 0 0 .5em;
+        opacity: 0;
+        white-space: wrap;
+        font-size: .9em;
+        transform: scale(1);
+        transform-origin: center;
+        transition: .2s;
+        filter: var(--drop-shadow);
+    }
+}

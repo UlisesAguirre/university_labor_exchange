@@ -20,3 +20,11 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .managementList-container {
+        margin: .5em;
+        width: 80%;
+    }
+}

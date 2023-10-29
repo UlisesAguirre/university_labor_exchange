@@ -142,3 +142,42 @@ input[type="checkbox" i] {
     justify-content: space-between;
     margin-right: 2rem;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .showjobOffer-container {
+        max-height: none;
+    }
+    
+    .jobOffer-container {
+        max-height: none;
+    }
+    .jobOffer-form {
+        display: flex;
+        flex-direction: column;
+        border-radius: 1em;
+        padding: .5em;
+        margin-bottom: 0.5em;
+        overflow-y: none;
+        height: auto;
+        box-shadow: var(--box-shadow);
+    }
+    .jobOffer-form input {
+        font-size: .6em;
+    }
+    
+    .jobOffer-form .select {
+        font-size: .6em;
+    }
+    .jobOffer-form input[type="date"] {
+        padding: 0;
+        font-size: .6em;
+    }
+    .jobOffer-form label {
+        font-size: .8em;
+    }
+    .jobOffer-form p {
+        font-size: .6em;
+        padding: .5em;
+    }
+}

@@ -21,3 +21,18 @@
 .form-div-student {
     background-color: rgba(0, 128, 0, 0.3); 
 }
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .formRegister-container {
+        flex-direction: column;
+    }
+    .form-div, .form-div-company, .form-div-student {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    
+    }
+}

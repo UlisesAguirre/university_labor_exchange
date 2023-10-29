@@ -13,3 +13,15 @@
     padding: 1em;
     width: 20%;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 100px) {
+    .authSection-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 0 .3em 0 0;
+        width: 100%;
+    }
+}

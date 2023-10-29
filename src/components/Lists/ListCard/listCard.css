@@ -107,3 +107,15 @@
   background-color: lightgreen;
   border-radius: .5em;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+  .title-generic-list,
+  .data-generic-list {
+    flex-direction: column;
+    width: 100%;
+  }
+  .student-listCard-container {
+    flex-direction: column;
+  }
+}

@@ -39,3 +39,16 @@
 .formLogin-box label {
     filter: var(--drop-shadow);
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 1000px) {
+    .formLogin-container {
+        align-items: center;
+    }
+    .formLogin-container button {
+        font-size: 1em;
+        width: 90%;
+    }
+}
+
+
