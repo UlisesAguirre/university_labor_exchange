@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
@@ -100,7 +100,7 @@ const FormLogin = () => {
         }, 2000);
       })
       .catch(error => {
-        console.error('Error al realizar la solicitud:', error);
+        console.log('Error al realizar la solicitud:', error);
         setLoading(false);
         setModal({
           modalOpen: true,

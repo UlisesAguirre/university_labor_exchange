@@ -165,7 +165,6 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
                             </div>
                             <div className='job-position-info'>
                                 <h4>Carreras Destino:</h4>
-                                {console.log(jobPosition.jobPositionsCareers)}
                                 {jobPosition.jobPositionsCareers &&
                                     <ul>
                                         {jobPosition.jobPositionsCareers.map((career) =>

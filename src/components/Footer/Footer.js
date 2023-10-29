@@ -13,7 +13,7 @@ const Footer = () => {
     <div className='footer-container'>
       <ThemeButton/>
       <p>Derechos reservados &copy; PPS</p>
-      <div className='chat'><Chat/></div>
+      {/* <div className='chat'><Chat/></div> */}
     </div>
   )
 }

@@ -23,7 +23,7 @@ const useFrom = (props) => {
         const { name } = e.target
         setErrors({
             ...errors,
-            [name]: props.validateData(data[name], name),
+            [name]: props.validateData(data, name),
         })
     };
 
@@ -35,7 +35,7 @@ const useFrom = (props) => {
 
         Object.keys(data).forEach((name) => {
             
-            const error = props.validateData(data[name], name)
+            const error = props.validateData(data, name)
 
             setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -64,7 +64,7 @@ const useFrom = (props) => {
     }
 
     const moveBackHandler = (e) => {
-        props.stepBackHandler()
+        props.stepBackHandler(data)
     }
 
     return {

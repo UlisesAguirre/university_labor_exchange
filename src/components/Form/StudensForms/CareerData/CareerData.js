@@ -11,8 +11,8 @@ export function validateData(data, name) {
    
   let error = '';
 
-  if ((data !== null && data !== '') && regex[name]) {
-    if (!regex[name].test(data)) {
+  if ((data[name] !== null && data[name] !== '') && regex[name]) {
+    if (!regex[name].test(data[name])) {
       if ((name === 'average') || (name === 'averageWithFails')) {
         error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00 si es decimal";
       }

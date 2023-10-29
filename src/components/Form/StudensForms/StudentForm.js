@@ -59,7 +59,13 @@ const StudentForm = () => {
 
     };
 
-    const stepBackHandler = () => {
+    const stepBackHandler = (data) => {
+        
+        if (step === 4) {
+            setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
+        } else {
+            setForm((prevForm) => ({ ...prevForm, ...data }));
+        }
         setStep(step => step - 1);
     };
 

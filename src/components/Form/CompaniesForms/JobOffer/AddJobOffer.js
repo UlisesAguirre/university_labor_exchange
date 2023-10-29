@@ -189,7 +189,6 @@ const AddJobOffer = ({ setOption }) => {
         } else {
 
             const response = await postData('https://localhost:7049/api/Company/AddJobPosition', filteredForm);
-            console.log(response)
             if (response) {
                 setModal({
                     modalOpen: true,

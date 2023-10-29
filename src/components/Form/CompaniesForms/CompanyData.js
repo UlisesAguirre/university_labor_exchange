@@ -9,13 +9,13 @@ import { ThemeContext } from "../../Context/ThemeContext/ThemeContext";
 const validateData = (data, name) => {
   let error = '';
 
-  if (data === null || (typeof data === 'string' && !data.trim())) {
+  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
     if (validInputs[name].regex) {
-      if (!validInputs[name].regex.test(data)) {
+      if (!validInputs[name].regex.test(data[name])) {
         if (name === 'legalAddress') {
           error = "El campo solo debe aceptar caracteres alfanuméricos y tener una longitud máxima de 50 caracteres.";
         }

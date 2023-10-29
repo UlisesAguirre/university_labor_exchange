@@ -5,7 +5,6 @@ import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';
-import BasicButton from '../../Shared/BasicButton/BasicButton';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../Shared/Modal/Modal';
 import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal';
@@ -44,7 +43,6 @@ const CompanyForm = () => {
 
 
     const stepForwardHandler = (data) => {
-        //FIXME: tarda en cargar el form entonces hay q apretar 2 veces para guardar la información y no se actualizar el data
         setForm({ ...form, ...data });
 
         if (step === 2) {
@@ -52,13 +50,10 @@ const CompanyForm = () => {
         } else {
             setStep(step => step + 1);
         }
-
-        // if (step !== 2) {         
-        //     setStep(step => step + 1);    
-        // }
     };
 
-    const stepBackHandler = () => {
+    const stepBackHandler = (data) => {
+        setForm({ ...form, ...data });
         setStep(step => step - 1);
     };
 

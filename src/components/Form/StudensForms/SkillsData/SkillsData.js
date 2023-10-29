@@ -40,7 +40,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
         setStudentsSkills([...studentsSkills, data]);
         setMessageError('')
       }
-    }else{
+    } else {
       setMessageError("Debe completar ambos campos antes de agregar la habilidad");
     }
   }
@@ -52,7 +52,6 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
   const deleteSkill = (idSkill, e) => {
     e.preventDefault()
-    // var updatedSkills = studentsSkills.splice(index, 1);
     setStudentsSkills(studentsSkills.filter(s =>
       s.idSkill !== idSkill
     ));
@@ -63,20 +62,24 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
     stepForwardHandler(studentsSkills);
   }
 
+  const moveBackHandler = (e) => {
+    e.preventDefault()
+    stepBackHandler(studentsSkills)
+  }
+
   const {
     data,
-    errors,
     changeHandler,
     blurHandler,
-    moveBackHandler,
-  } = useFrom({ inicialData, validateData, stepBackHandler })
+  } = useFrom({ inicialData, validateData })
 
   return (
     <div className="skillsData-container">
       {(loading) && <Spinner />}
-      <h2>Habilidades</h2>
-      <div className={`skillsData-form ${theme}`}>
 
+      <h2>Habilidades</h2>
+
+      <div className={`skillsData-form ${theme}`}>
 
         <div className="skillsData-form-column">
           <label>Habilidades disponibles</label>
@@ -84,7 +87,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
             <option value={''} >Skills</option>
             {skills.map((s) => <option key={s.idSkill} value={s.idSkill}>{s.skillName}</option>)}
           </select>
-          {errors.idSkill && <div className="form-user-error-message">{errors?.idSkill}</div>}
+         
 
           <label>Nivel de habilidad</label>
           <select name="skillLevel" onChange={changeHandler} onBlur={blurHandler} value={data.skillLevel}>
@@ -93,7 +96,6 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
             <option value={"Intermedio"}>Intermedio</option>
             <option value={"Alto"}>Alto</option>
           </select>
-          {errors.skillLevel && <div className="form-user-error-message">{errors?.skillLevel}</div>}
 
           <BasicButton buttonName={'Agregar Habilidad'} buttonHandler={addSkill} />
           {messageError && <div className="form-user-error-message">{messageError}</div>}

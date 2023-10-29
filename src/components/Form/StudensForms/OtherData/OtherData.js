@@ -10,9 +10,9 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (data !== 'curriculum' && (data!== null && data !== '')) {
+  if (data[name] !== 'curriculum' && (data[name]!== null && data[name] !== '')) {
     if (regex[name]) {
-      if (!regex[name].test(data)) {
+      if (!regex[name].test(data[name])) {
         if (name === 'observations') {
           error = "Las observaciones deben consistir únicamente en caracteres alfanuméricos y tener un límite máximo de 400 caracteres."
         }
