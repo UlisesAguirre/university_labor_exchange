@@ -23,7 +23,7 @@ const Curriculum = ({ userId, name, lastName, setcurriculum, errors, setErrors, 
       setCurriculumName(`${name}${lastName}.pdf`)
       setcurriculum(true)
     }
-  }, [fileData])
+  }, [fileData, name, lastName, setcurriculum])
 
   const handleDownloadFile = (e) => {
     e.preventDefault()

@@ -29,7 +29,7 @@ const CompanyForm = () => {
 
     const { data, loading, error } = useGetBySomething(url, user.id);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
 
     const [form, setForm] = useState('');
 
@@ -72,7 +72,6 @@ const CompanyForm = () => {
                 navigate('/profile');
             }, 2000);
         } catch (putRequestError) {
-            console.log("Error al actualizar datos", putRequestError);
             setModal({
                 modalOpen: true,
                 modalTitle: "Error",

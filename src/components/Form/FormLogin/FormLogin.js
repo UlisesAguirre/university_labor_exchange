@@ -98,7 +98,6 @@ const FormLogin = () => {
         }, 2000);
       })
       .catch(error => {
-        console.log('Error al realizar la solicitud:', error);
         setLoading(false);
         setModal({
           modalOpen: true,

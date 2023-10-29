@@ -26,8 +26,8 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
     const { user } = useContext(UserContext);
     const { theme } = useContext(ThemeContext);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
-    const { postData, isLoading, postError } = usePostRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
+    const { postData, isLoading } = usePostRequest();
 
     const [goBackToJobPosition, setGoBacktoJobPosition] = useState(false)
 

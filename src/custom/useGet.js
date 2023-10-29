@@ -9,8 +9,6 @@ const useGetRequest = (url) => {
     const fetchData = async () => {
       try {
 
-        const headers = {};
-
         const response = await fetch(url);
 
         if (!response.ok) {

@@ -37,7 +37,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
     "https://localhost:7049/api/Career/DeleteCareer" :
     "https://localhost:7049/api/Skill/DeleteSkill"
 
-  const { deleteData, loadingDelete, errorDelete } = useDeleteById();
+  const { deleteData, loadingDelete} = useDeleteById();
 
   const { getData, loading, error } = useGetRequest(url);
 

@@ -3,7 +3,6 @@ import FormPersonalData from './PersonalData/PersonalData';
 import FormCareerData from './CareerData/CareerData';
 import FormOtherData from './OtherData/OtherData';
 import FormSkillsData from './SkillsData/SkillsData';
-import BasicButton from '../../Shared/BasicButton/BasicButton';
 import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
@@ -35,7 +34,7 @@ const StudentForm = () => {
 
     const { data, loading, error } = useGetBySomething(url, user.id);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
 
     useEffect(() => {
         if (data) {
@@ -90,7 +89,6 @@ const StudentForm = () => {
                 modalTitle: "Error",
                 modalMessage: { putRequestError },
             });
-            console.log("Error al actualizar datos", putRequestError);
         }
     }
 
