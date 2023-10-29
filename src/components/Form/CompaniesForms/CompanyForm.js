@@ -8,6 +8,7 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../Shared/Modal/Modal';
 import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal';
+import Error from '../../Shared/Error/Error';
 
 
 const CompanyForm = () => {
@@ -66,7 +67,7 @@ const CompanyForm = () => {
                 modalTitle: "Aviso",
                 modalMessage: "Datos actualizados correctamente.",
             });
-            
+
             setTimeout(() => {
                 navigate('/profile');
             }, 2000);
@@ -85,35 +86,41 @@ const CompanyForm = () => {
     ) : null;
 
     return (
+        <>
+            { error ?
+                <Error error={error} />
+                :
+                <div>
+                    {(loading || loadingPutRequest) && <Spinner />}
+                    
+                    <form>
 
-        <div>
-            {(loading || loadingPutRequest) && <Spinner />}
+                        {step === 1 && companyDataComponent}
+                        {step === 2 && <ContactData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} setForm={setForm} />}
 
-            <form>
+                    </form>
 
-                {step === 1 && companyDataComponent}
-                {step === 2 && <ContactData stepForwardHandler={stepForwardHandler} stepBackHandler={stepBackHandler} form={form} setForm={setForm} />}
+                    {confirmModalOpen && (
+                        <ConfirmModal
+                            title="Modificar datos"
+                            message="¿Estás seguro de que deseas modificar sus datos?"
+                            onConfirm={() => submitHandler(form)}
+                            onCancel={() => setConfirmModalOpen(false)}
+                        />
+                    )}
 
-            </form>
+                    {modal.modalOpen && (
+                        <Modal
+                            title={modal.modalTitle}
+                            message={modal.modalMessage}
+                            onClose={() => setModal({ modalOpen: false })}
+                        />
+                    )}
 
-            {error && <span>{error.message}</span>}
+                </div>
+            }
 
-            {confirmModalOpen && (
-                <ConfirmModal
-                    title="Modificar datos"
-                    message="¿Estás seguro de que deseas modificar sus datos?"
-                    onConfirm={() => submitHandler(form)}
-                    onCancel={() => setConfirmModalOpen(false)}
-                />
-            )}
-            {modal.modalOpen && (
-                <Modal
-                    title={modal.modalTitle}
-                    message={modal.modalMessage}
-                    onClose={() => setModal({ modalOpen: false })}
-                />
-            )}
-        </div>
+        </>
     )
 }
 

@@ -3,6 +3,7 @@ import ManagementList from '../Lists/ManagementList/ManagementList'
 import JobPositionsList from '../Lists/JobPositionsList/JobPositionsList';
 import useGetRequest from '../../custom/useGetRequest';
 import Spinner from '../Shared/Spinner/Spinner';
+import Error from '../Shared/Error/Error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
@@ -30,7 +31,9 @@ const JobPositionMenu = ({ title, url, setOption }) => {
 
     return (
         <>
-            {error ? <p>{error.message}</p> :
+            {error ?
+                <Error error={error} />
+                :
                 <>
 
                     <div className='jobPositionMenu-container'>
@@ -66,7 +69,8 @@ const JobPositionMenu = ({ title, url, setOption }) => {
                         <button onClick={optionHandler} className='button'>
                             <FontAwesomeIcon icon={faRightFromBracket} className="job-position-icon" /> Menu
                         </button>}
-                </>}
+                </>
+            }
         </>
     )
 }

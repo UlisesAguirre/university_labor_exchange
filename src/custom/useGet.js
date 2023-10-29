@@ -14,14 +14,16 @@ const useGetRequest = (url) => {
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(`HTTP getError! Status: ${response.status}`);
+          throw new Error(response.status);
         }
 
         const responseData = await response.json();
         setInfo(responseData);
         setGetLoading(false);
-      } catch (getError) {
-        setGetError(getError);
+      
+      } catch (error) {
+
+        setGetError(error.message);
         setGetLoading(false);
       }
     };

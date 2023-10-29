@@ -1,5 +1,6 @@
 import useGetRequest from "../../../custom/useGetRequest"
 import Spinner from "../../Shared/Spinner/Spinner"
+import Error from "../../Shared/Error/Error"
 
 import "./managementList.css"
 import StudentsList from '../StudentsList/StudentsList'
@@ -26,7 +27,7 @@ const ManagementList = ({ url, title }) => {
 
     const { getData, loading, error } = useGetRequest(url, forceUpdate);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
 
     const data = getData;
 
@@ -62,52 +63,59 @@ const ManagementList = ({ url, title }) => {
     }
 
     return (
-        <div className='managementList-container'>
-            {(loading || loadingPutRequest) && <Spinner />}
+        <>
+            {error ?
+                <Error error={error} />
+                :
+                <div className='managementList-container'>
+                    {(loading || loadingPutRequest) && <Spinner />}
 
-            <p className='managementList-title'>{title}</p>
+                    <p className='managementList-title'>{title}</p>
 
-            <div className='managementList-box'>
-                {title === "Alumnos" && (data.map((student) => {
-                    return <StudentsList
-                        student={student}
-                        stateOnClick={stateOnClick}
-                        key={student.idUser} />
-                }))}
-                {title === "Empresas" && (data.map((company) => {
-                    return <CompaniesList
-                        company={company}
-                        stateOnClick={stateOnClick}
-                        key={company.idUser} />
-                }))}
-                {!menuVisible ? (
-                    (title === "Relacion de dependencia" || title === "Pasantias") && (
-                        data.map((jobPosition) => (
-                            <JobPositionsList
-                                jobPosition={jobPosition}
-                                menuVisible={menuVisible}
-                                setMenuVisible={setMenuVisible}
-                                setTargetJob={setTargetJob}
-                                title={title}
-                                key={jobPosition.idJobPosition}
-                            />
-                        ))
-                    )
-                ) : <JobPositionCard jobPosition={targetJob}
-                    menuVisible={menuVisible}
-                    setMenuVisible={setMenuVisible}
-                    forcedUpdate={forcedUpdate} />
-                }
-            </div>
+                    <div className='managementList-box'>
+                        {title === "Alumnos" && (data.map((student) => {
+                            return <StudentsList
+                                student={student}
+                                stateOnClick={stateOnClick}
+                                key={student.idUser} />
+                        }))}
+                        {title === "Empresas" && (data.map((company) => {
+                            return <CompaniesList
+                                company={company}
+                                stateOnClick={stateOnClick}
+                                key={company.idUser} />
+                        }))}
+                        {!menuVisible ? (
+                            (title === "Relacion de dependencia" || title === "Pasantias") && (
+                                data.map((jobPosition) => (
+                                    <JobPositionsList
+                                        jobPosition={jobPosition}
+                                        menuVisible={menuVisible}
+                                        setMenuVisible={setMenuVisible}
+                                        setTargetJob={setTargetJob}
+                                        title={title}
+                                        key={jobPosition.idJobPosition}
+                                    />
+                                ))
+                            )
+                        ) : <JobPositionCard jobPosition={targetJob}
+                            menuVisible={menuVisible}
+                            setMenuVisible={setMenuVisible}
+                            forcedUpdate={forcedUpdate} />
+                        }
+                    </div>
 
-            {modal.modalOpen && (
-                <Modal
-                    title={modal.modalTitle}
-                    message={modal.modalMessage}
-                    onClose={() => setModal({ modalOpen: false })}
-                />
-            )}
-        </div>
+                    {modal.modalOpen && (
+                        <Modal
+                            title={modal.modalTitle}
+                            message={modal.modalMessage}
+                            onClose={() => setModal({ modalOpen: false })}
+                        />
+                    )}
+                </div>
+            }
+
+        </>
     )
 }
 

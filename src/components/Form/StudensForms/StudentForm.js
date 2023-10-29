@@ -13,6 +13,7 @@ import "./studentForm.css"
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal';
 import Modal from '../../Shared/Modal/Modal';
+import Error from '../../Shared/Error/Error';
 
 //FIXME: cuando agregemos el envio del token por header tengo que eliminar enviar el id al curriculum
 
@@ -60,7 +61,7 @@ const StudentForm = () => {
     };
 
     const stepBackHandler = (data) => {
-        
+
         if (step === 4) {
             setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
         } else {
@@ -100,8 +101,9 @@ const StudentForm = () => {
 
     return (
         <>
-
-            {error ? <p>{error.message}</p> :
+            { error ?
+                <Error error={error} />
+                :
                 <>
                     <div className='studentForm-container'>
                         {(loading || loadingPutRequest) && <Spinner />}
@@ -131,7 +133,8 @@ const StudentForm = () => {
                             onClose={() => setModal({ modalOpen: false })}
                         />
                     )}
-                </>}
+                </>
+            }
 
         </>
     )

@@ -5,6 +5,7 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../../Shared/Spinner/Spinner";
+import Error from '../../../Shared/Error/Error'
 
 import "./skillsData.css"
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
@@ -22,7 +23,7 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
   const [studentsSkills, setStudentsSkills] = useState(form.studentsSkills);
   const [messageError, setMessageError] = useState('');
 
-  const skills = getData;
+  const skills = getData ? getData : [];
 
   const inicialData = {
     idSkill: '',
@@ -75,62 +76,69 @@ const FormSkillsData = ({ form, stepBackHandler, stepForwardHandler }) => {
 
   return (
     <div className="skillsData-container">
-      {(loading) && <Spinner />}
+      {error ?
+        <Error error={error} />
+        :
+        <>
+          {(loading) && <Spinner />}
 
-      <h2>Habilidades</h2>
+          <h2>Habilidades</h2>
 
-      <div className={`skillsData-form ${theme}`}>
+          <div className={`skillsData-form ${theme}`}>
 
-        <div className="skillsData-form-column">
-          <label>Habilidades disponibles</label>
-          <select name="idSkill" onChange={changeHandler} onBlur={blurHandler} value={data.idSkill}>
-            <option value={''} >Skills</option>
-            {skills.map((s) => <option key={s.idSkill} value={s.idSkill}>{s.skillName}</option>)}
-          </select>
-         
-
-          <label>Nivel de habilidad</label>
-          <select name="skillLevel" onChange={changeHandler} onBlur={blurHandler} value={data.skillLevel}>
-            <option value='' >Nivel</option>
-            <option value={"Bajo"}>Bajo</option>
-            <option value={"Intermedio"}>Intermedio</option>
-            <option value={"Alto"}>Alto</option>
-          </select>
-
-          <BasicButton buttonName={'Agregar Habilidad'} buttonHandler={addSkill} />
-          {messageError && <div className="form-user-error-message">{messageError}</div>}
-        </div>
-
-        <div className="skillsData-form-column">
-          <table>
-            <caption>Mis Habilidades</caption>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Nivel</th>
-              </tr>
-            </thead>
-            <tbody>
-              {studentsSkills.map((ns, index) => (
-                <tr key={index}>
-                  <td>{getSkillNameById(ns.idSkill)}</td>
-                  <td>{ns.skillLevel}</td>
-                  <td><button className="button" onClick={(e) => deleteSkill(ns.idSkill, e)}>
-                    <FontAwesomeIcon icon={faTrash} /> Borrar
-                  </button></td>
-                </tr>
-              ))}
-            </tbody>
-          </table >
-        </div>
+            <div className="skillsData-form-column">
+              <label>Habilidades disponibles</label>
+              <select name="idSkill" onChange={changeHandler} onBlur={blurHandler} value={data.idSkill}>
+                <option value={''} >Skills</option>
+                {skills.map((s) => <option key={s.idSkill} value={s.idSkill}>{s.skillName}</option>)}
+              </select>
 
 
-      </div>
+              <label>Nivel de habilidad</label>
+              <select name="skillLevel" onChange={changeHandler} onBlur={blurHandler} value={data.skillLevel}>
+                <option value='' >Nivel</option>
+                <option value={"Bajo"}>Bajo</option>
+                <option value={"Intermedio"}>Intermedio</option>
+                <option value={"Alto"}>Alto</option>
+              </select>
+
+              <BasicButton buttonName={'Agregar Habilidad'} buttonHandler={addSkill} />
+              {messageError && <div className="form-user-error-message">{messageError}</div>}
+            </div>
+
+            <div className="skillsData-form-column">
+              <table>
+                <caption>Mis Habilidades</caption>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Nivel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studentsSkills.map((ns, index) => (
+                    <tr key={index}>
+                      <td>{getSkillNameById(ns.idSkill)}</td>
+                      <td>{ns.skillLevel}</td>
+                      <td><button className="button" onClick={(e) => deleteSkill(ns.idSkill, e)}>
+                        <FontAwesomeIcon icon={faTrash} /> Borrar
+                      </button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table >
+            </div>
+
+          </div>
+        </>
+      }
 
       <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
-      <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />
-
+      {error === null && <BasicButton buttonName={'Guardar'} buttonHandler={moveForwardHandler} />}
+      
     </div>
+
+
   )
 }
 
