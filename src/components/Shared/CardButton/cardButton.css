@@ -63,3 +63,22 @@
     font-size: 2em;
     filter: var(--drop-shadow);
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .card-icon {
+        font-size: 4em;
+    }
+    .card-box-student, .card-box-company {
+        margin: 0;
+        height: 80%;
+    }
+    .card-box-student h2, .card-box-company h2 {
+        font-size: 1.3em;
+        filter: var(--drop-shadow);
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

@@ -13,3 +13,19 @@
     padding: 1em;
     width: 20%;
 }
+
+/* Diseño responsive */
+@media screen and (max-width: 767px) {
+    .authSection-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 0 1em;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Estilos para pantallas medianas (tabletas) */
+}

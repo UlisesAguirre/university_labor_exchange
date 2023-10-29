@@ -1,8 +1,27 @@
-.home-description{
-    text-align: center;
+.home-description {
+  text-align: center;
 }
 
-.home-users-section{
+.home-users-section {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/*Diseño responsive*/
+
+@media screen and (max-width: 767px) {
+  .home-description {
+    font-size: .8em;
+  }
+  .home-users-section {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Estilos para pantallas medianas */
 }
