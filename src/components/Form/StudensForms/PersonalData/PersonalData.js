@@ -93,7 +93,9 @@ const validInputs = {
 
 const FormPersonalData = ({ form, stepForwardHandler }) => {
 
-  const { provinces, getLoading, getError } = useGet('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=id, nombre')
+  const provinces  = useGet('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=id, nombre')
+
+  
 
   const { theme } = useContext(ThemeContext);
 
@@ -129,10 +131,10 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
 
   return (
     <div className="personalData-form-container">
-      {getLoading && <Spinner/>}
+      {provinces.getLoading && <Spinner/>}
       {
-        getError ?
-          <Error error={error} />
+        provinces.getError ?
+          <Error error={provinces.getError} />
           :
           <>
             <h2>Datos Personales</h2>
@@ -269,7 +271,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
                   <label> Provincia </label>
 
                   <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
-                    {provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
+                    {provinces && provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
                       <option key={p.id} value={p.nombre}>{p.nombre}</option>
                     )
                     }
@@ -287,7 +289,7 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
 
       <div className='personalData-requerid-message'>
         <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
-        {getError !== null && <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>}
+        {provinces.getError !== null && <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>}
       </div>
 
     </div>

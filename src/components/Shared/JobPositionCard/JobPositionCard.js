@@ -219,7 +219,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
 
                             }
                             <div className='job-position-skills'>
-                                {jobPosition.jobPostionsSkills.lenght === 0 &&
+                                {jobPosition.jobPostionsSkills &&
                                     <table>
                                         <caption><strong>Habilidades esperadas</strong></caption>
                                         <thead>

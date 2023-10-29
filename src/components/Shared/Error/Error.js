@@ -26,6 +26,9 @@ const Error = ({ error }) => {
         case '500':
             message = 'Interno del servidor'
             break;
+        case 'Failed to fetch':
+            message = 'Al recuperar datos'
+            break;
         default:
             message = 'No especificado'
             break;
@@ -35,7 +38,7 @@ const Error = ({ error }) => {
     return (
         <div className={`error-container ${theme}`}>
             <FontAwesomeIcon icon={faTriangleExclamation} beat size="2xl" />
-            <div className='error-description'>Error {error} - {message}</div>
+            <div className='error-description'>Error {error === 'Failed to fetch' ? '' : error} - {message}</div>
         </div>
     )
 }
