@@ -43,8 +43,8 @@ La aplicación se ejecutará en http://localhost:3000.
 - Es completamente responsive.
 - Ofrece modos claro/oscuro para mejorar la experiencia de usuario.
 
-### Users data:
-to test the different screens the users are the following
+### Datos de usuarios:
+Para probar las distintas funcionalidades del proyecto, se brindan los siguientes usuarios
 
 Admin: `admin@gmail.com`
 password: `Admin123`
