@@ -29,7 +29,7 @@ El proyecto está desarrollado en React utilizando componentes funcionales.
     npm start
 ```
 
-    La aplicación se ejecutará en http://localhost:3000.
+La aplicación se ejecutará en http://localhost:3000.
 
 ### Detalles adicionales:
 - El sistema cuenta con test unitarios.
