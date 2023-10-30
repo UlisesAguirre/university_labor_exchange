@@ -3,7 +3,7 @@ import FormPersonalData from './PersonalData/PersonalData';
 import FormCareerData from './CareerData/CareerData';
 import FormOtherData from './OtherData/OtherData';
 import FormSkillsData from './SkillsData/SkillsData';
-import useGetBySomething from '../../../custom/useGetBySomething';
+import useGetBySomething from '../../../custom/UseGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
 import Spinner from '../../Shared/Spinner/Spinner';

@@ -5,7 +5,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 import "./userCard.css"
 import { ThemeContext } from '../Context/ThemeContext/ThemeContext'
-import useGetBySomething from '../../custom/useGetBySomething';
+import useGetBySomething from '../../custom/UseGetBySomething';
 import UserContext from '../Context/UserContext/UserContext';
 import { Link } from 'react-router-dom';
 import DownloadCurriculum from '../DownloadCurriculum/DownloadCurriculum';
