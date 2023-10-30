@@ -86,7 +86,7 @@ const AddJobOffer = ({ setOption }) => {
 
     const { theme } = useContext(ThemeContext);
 
-    const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetCareersForForms');
+    const { getData, loading, error } = useGetRequest('https://university-labor-exchange.azurewebsites.net/api/Career/GetCareersForForms');
     const { postData, isLoading } = usePostRequest()
 
     const careersList = getData;
@@ -191,7 +191,7 @@ const AddJobOffer = ({ setOption }) => {
 
         } else {
 
-            const response = await postData('https://localhost:7049/api/Company/AddJobPosition', filteredForm);
+            const response = await postData('https://university-labor-exchange.azurewebsites.net/api/Company/AddJobPosition', filteredForm);
             if (response) {
                 setModal({
                     modalOpen: true,

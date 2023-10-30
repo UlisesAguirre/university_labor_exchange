@@ -27,8 +27,8 @@ const UserCard = () => {
   const { user, viewOffer } = useContext(UserContext);
 
   const url = user && user.userType === "student" ?
-    'https://localhost:7049/api/Student/GetStudentProfile' :
-    'https://localhost:7049/api/Company/GetCompanyProfile';
+    'https://university-labor-exchange.azurewebsites.net/api/Student/GetStudentProfile' :
+    'https://university-labor-exchange.azurewebsites.net/api/Company/GetCompanyProfile';
 
   const [dataUser, setDataUser] = useState("");
 

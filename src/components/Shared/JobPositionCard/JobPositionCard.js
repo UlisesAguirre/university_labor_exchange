@@ -64,7 +64,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
         }
 
         try {
-            await sendPutRequest("https://localhost:7049/api/JobPosition/SetJobPositionState", JSON.stringify(data), "application/json");
+            await sendPutRequest("https://university-labor-exchange.azurewebsites.net/api/JobPosition/SetJobPositionState", JSON.stringify(data), "application/json");
             setModal({
                 modalOpen: true,
                 modalTitle: "Aviso",
@@ -91,7 +91,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
         setConfirmModalOpen(false);
         const idJobPosition = jobPosition.idJobPosition
         try {
-            await postData('https://localhost:7049/api/JobPosition/AddStudentJobPosition', idJobPosition);
+            await postData('https://university-labor-exchange.azurewebsites.net/api/JobPosition/AddStudentJobPosition', idJobPosition);
             setModal({
                 modalOpen: true,
                 modalTitle: "Aviso",

@@ -56,7 +56,7 @@ const Curriculum = ({ userId, name, lastName, setcurriculum, errors, setErrors, 
         formData.append('Id', userId);
         formData.append('Curriculum', files[0]);
 
-        const response = await sendPutRequest("https://localhost:7049/api/Student/AddCurriculum", formData);
+        const response = await sendPutRequest("https://university-labor-exchange.azurewebsites.net/api/Student/AddCurriculum", formData);
 
         if (response) {
           setRefetch(!refetch);
@@ -70,7 +70,7 @@ const Curriculum = ({ userId, name, lastName, setcurriculum, errors, setErrors, 
 
   const deteleCurriculum = async (e) => {
     e.preventDefault()
-    const response = await sendPutRequest("https://localhost:7049/api/Student/DeleteCurriculum", userId, 'application/json');
+    const response = await sendPutRequest("https://university-labor-exchange.azurewebsites.net/api/Student/DeleteCurriculum", userId, 'application/json');
     setRefetch(!refetch);
     setfile('')
     setCurriculumName('Ningun archivo seleccionado')

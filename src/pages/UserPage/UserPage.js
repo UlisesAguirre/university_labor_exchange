@@ -42,7 +42,7 @@ const UserPage = () => {
                       <>
                         <Route path='/' element={<UserCard />} />
                         <Route path='/editprofile' element={<StudentForm />} />
-                        <Route path='/view-offers' element={<JobPositionMenu title="Ofertas laborales disponibles" url="https://localhost:7049/api/JobPosition/GetJobPositions" />} />
+                        <Route path='/view-offers' element={<JobPositionMenu title="Ofertas laborales disponibles" url="https://university-labor-exchange.azurewebsites.net/api/JobPosition/GetJobPositions" />} />
                       </>
                     }
                     {user.userType === "company" &&

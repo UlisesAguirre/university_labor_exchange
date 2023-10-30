@@ -30,7 +30,7 @@ const StudentForm = () => {
 
     const { user } = useContext(UserContext);
 
-    const url = 'https://localhost:7049/api/Student/GetStudent';
+    const url = 'https://university-labor-exchange.azurewebsites.net/api/Student/GetStudent';
 
     const { data, loading, error } = useGetBySomething(url, user.id);
 
@@ -72,7 +72,7 @@ const StudentForm = () => {
     const submitHandler = async (formToUpdate) => {
         setConfirmModalOpen(false);
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Student/UpdateStudent', JSON.stringify(formToUpdate), 'application/json')
+            const updatedData = await sendPutRequest('https://university-labor-exchange.azurewebsites.net/api/Student/UpdateStudent', JSON.stringify(formToUpdate), 'application/json')
 
             setModal({
                 modalOpen: true,

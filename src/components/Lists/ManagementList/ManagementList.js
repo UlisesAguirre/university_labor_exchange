@@ -38,7 +38,7 @@ const ManagementList = ({ url, title }) => {
         }
 
         try {
-            await sendPutRequest("https://localhost:7049/api/Student/SetUserState", JSON.stringify(data), 'application/json');
+            await sendPutRequest("https://university-labor-exchange.azurewebsites.net/api/Student/SetUserState", JSON.stringify(data), 'application/json');
             setModal({
                 modalOpen: true,
                 modalTitle: "Aviso",

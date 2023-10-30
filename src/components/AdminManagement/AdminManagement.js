@@ -18,8 +18,8 @@ const AdminManagement = ({ type }) => {
             <div>
                 {type === "users" &&
                     <div className='admin-list-container'>
-                        <ManagementList url="https://localhost:7049/api/Student/GetStudentsToAdmin" title="Alumnos" />
-                        <ManagementList url="https://localhost:7049/api/Company/GetCompaniesToAdmin" title="Empresas" />
+                        <ManagementList url="https://university-labor-exchange.azurewebsites.net/api/Student/GetStudentsToAdmin" title="Alumnos" />
+                        <ManagementList url="https://university-labor-exchange.azurewebsites.net/api/Company/GetCompaniesToAdmin" title="Empresas" />
                     </div>
                 }
                 {type === "jobPositions" &&

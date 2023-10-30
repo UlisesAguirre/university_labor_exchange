@@ -56,7 +56,7 @@ const FormLogin = () => {
   }
 
   const submit = () => {
-    const url = 'https://localhost:7049/api/authentication/authenticate';
+    const url = 'https://university-labor-exchange.azurewebsites.net/api/Authentication/Authenticate';
 
     const requestOptions = {
       method: 'POST',

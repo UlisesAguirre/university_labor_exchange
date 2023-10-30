@@ -153,8 +153,8 @@ const FullForm = ({ title, nameButton, typeForm }) => {
             const dataUser = { ...data };
 
             const url = (typeForm === 'Soy alumno') ?
-                "https://localhost:7049/api/Register/RegisterStudent" :
-                "https://localhost:7049/api/Register/RegisterCompany";
+                "https://university-labor-exchange.azurewebsites.net/api/Register/RegisterStudent" :
+                "https://university-labor-exchange.azurewebsites.net/api/Register/RegisterCompany";
 
 
             const response = await postData(url, dataUser);

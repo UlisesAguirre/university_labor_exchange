@@ -25,7 +25,7 @@ const CompanyForm = () => {
 
     const { user } = useContext(UserContext);
 
-    const url = 'https://localhost:7049/api/Company/GetCompany';
+    const url = 'https://university-labor-exchange.azurewebsites.net/api/Company/GetCompany';
 
     const { data, loading, error } = useGetBySomething(url, user.id);
 
@@ -61,7 +61,7 @@ const CompanyForm = () => {
     const submitHandler = async (formToUpdate) => {
         setConfirmModalOpen(false);
         try {
-            const updatedData = await sendPutRequest('https://localhost:7049/api/Company/UpdateCompany', JSON.stringify(formToUpdate), 'application/json')
+            const updatedData = await sendPutRequest('https://university-labor-exchange.azurewebsites.net/api/Company/UpdateCompany', JSON.stringify(formToUpdate), 'application/json')
             setModal({
                 modalOpen: true,
                 modalTitle: "Aviso",

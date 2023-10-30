@@ -23,8 +23,8 @@ const AddItemForm = ({ setOption, type, data }) => {
   const { postData, isLoading } = usePostRequest();
 
   const url = type === "carrera" ?
-    "https://localhost:7049/api/Career/CreateCareer" :
-    "https://localhost:7049/api/Skill/CreateSkill"
+    "https://university-labor-exchange.azurewebsites.net/api/Career/CreateCareer" :
+    "https://university-labor-exchange.azurewebsites.net/api/Skill/CreateSkill"
 
   const [dataItem, setDataItem] = useState(
     type === "carrera" ? {

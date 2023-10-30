@@ -31,7 +31,7 @@ const CompanyJobOffer = () => {
                     :
                     (
                         <div className='companyJobOffer-box'>
-                            <JobPositionMenu title={"Ofertas laborales"} url={'https://localhost:7049/api/Company/GetCompanyJobPositionsInfo'} setOption={setOption}/>
+                            <JobPositionMenu title={"Ofertas laborales"} url={'https://university-labor-exchange.azurewebsites.net/api/Company/GetCompanyJobPositionsInfo'} setOption={setOption}/>
                         </div>
                     )
                 )

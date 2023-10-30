@@ -20,8 +20,8 @@ const JobsManMenu = () => {
           </div>
         </div>
       ) : option === "interships" ?
-        <JobPositionMenu url="https://localhost:7049/api/JobPosition/GetAllInterships" title="Pasantias" setOption={setOption} /> :
-        <JobPositionMenu url="https://localhost:7049/api/JobPosition/GetAllJobs" title="Relacion de dependencia" setOption={setOption} />}
+        <JobPositionMenu url="https://university-labor-exchange.azurewebsites.net/api/JobPosition/GetAllInterships" title="Pasantias" setOption={setOption} /> :
+        <JobPositionMenu url="https://university-labor-exchange.azurewebsites.net/api/JobPosition/GetAllJobs" title="Relacion de dependencia" setOption={setOption} />}
     </div>
   )
 }

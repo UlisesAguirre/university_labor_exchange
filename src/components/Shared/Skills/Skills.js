@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const Skills = ({ form, setForm, setSkillsError }) => {
 
-    const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetSkillsForForm');
+    const { getData, loading, error } = useGetRequest('https://university-labor-exchange.azurewebsites.net/api/Skill/GetSkillsForForm');
 
     const skillsList = getData;
 

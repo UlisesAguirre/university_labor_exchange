@@ -30,12 +30,12 @@ const ItemsList = ({ option, setOption, type, types }) => {
   const [dataUpdate, setDataUpdate] = useState(null);
 
   const url = type === "carrera" ?
-    "https://localhost:7049/api/Career/GetCareersForForms" :
-    "https://localhost:7049/api/Skill/GetSkillsForForm"
+    "https://university-labor-exchange.azurewebsites.net/api/Career/GetCareersForForms" :
+    "https://university-labor-exchange.azurewebsites.net/api/Skill/GetSkillsForForm"
 
   const deleteUrl = type === "carrera" ?
-    "https://localhost:7049/api/Career/DeleteCareer" :
-    "https://localhost:7049/api/Skill/DeleteSkill"
+    "https://university-labor-exchange.azurewebsites.net/api/Career/DeleteCareer" :
+    "https://university-labor-exchange.azurewebsites.net/api/Skill/DeleteSkill"
 
   const { deleteData, loadingDelete} = useDeleteById();
 

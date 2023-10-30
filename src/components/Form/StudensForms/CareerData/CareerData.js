@@ -39,7 +39,7 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetCareersForForms');
+  const { getData, loading, error } = useGetRequest('https://university-labor-exchange.azurewebsites.net/api/Career/GetCareersForForms');
 
   const careers = getData;
 
