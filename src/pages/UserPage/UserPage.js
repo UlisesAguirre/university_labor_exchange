@@ -14,6 +14,7 @@ import JobPositionMenu from '../../components/JobPositionMenu/JobPositionMenu';
 import DisabledMessage from '../../components/MessageComponents/DisabledMessage/DisabledMessage';
 import UnasignedMessage from "../../components/MessageComponents/UnasignedMessage/UnasignedMessage";
 import Error from '../../components/Shared/Error/Error';
+import AdminMessage from '../../components/MessageComponents/AdminMessage/AdminMessage';
 
 const UserPage = () => {
 
@@ -30,6 +31,7 @@ const UserPage = () => {
               {user.userType === "admin" ?
                 (
                   <>
+                    <Route path='/' element={<AdminMessage /> } />
                     <Route path='/admin/*' element={<AdminCard />} />
                   </>
                 )
