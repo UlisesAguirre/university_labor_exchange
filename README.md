@@ -3,6 +3,12 @@
 El proyecto consiste en un sistema en el que los estudiantes de la universidad tecnológica nacional puedan presentar sus solicitudes para pasantías y empleos que estén relacionados directamente con sus áreas de estudio y habilidades. 
 A su vez, ofrece a las empresas la posibilidad de ingresar sus ofertas laborales y seleccionar de entre los aspirantes quienes se han postulado para el cargo. 
 
+### Link deploy:
+
+https://amazing-axolotl-5d86cd.netlify.app/
+
+![QR-Deploy](src/assets-img/deploy-qr.png)
+
 ### Tecnologías utilizadas:
 El proyecto está desarrollado en React utilizando componentes funcionales.
 .
@@ -36,3 +42,15 @@ La aplicación se ejecutará en http://localhost:3000.
 - Implementa un chatbot para consultas.
 - Es completamente responsive.
 - Ofrece modos claro/oscuro para mejorar la experiencia de usuario.
+
+### Users data:
+to test the different screens the users are the following
+
+Admin: `admin@gmail.com`
+password: `Admin123`
+
+Student: `student1@gmail.com`
+password: `Student123`
+
+Company: `company1@gmail.com`
+password: `Company123`
