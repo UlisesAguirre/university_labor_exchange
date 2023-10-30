@@ -15,7 +15,7 @@
 }
 
 /* Diseño responsive */
-@media screen and (max-width: 100px) {
+@media screen and (max-width: 1000px) {
     .authSection-container {
         display: flex;
         flex-direction: column;
