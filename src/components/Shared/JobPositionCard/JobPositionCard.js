@@ -26,8 +26,8 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
     const { user } = useContext(UserContext);
     const { theme } = useContext(ThemeContext);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
-    const { postData, isLoading, postError } = usePostRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
+    const { postData, isLoading } = usePostRequest();
 
     const [goBackToJobPosition, setGoBacktoJobPosition] = useState(false)
 
@@ -165,7 +165,6 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
                             </div>
                             <div className='job-position-info'>
                                 <h4>Carreras Destino:</h4>
-                                {console.log(jobPosition.jobPositionsCareers)}
                                 {jobPosition.jobPositionsCareers &&
                                     <ul>
                                         {jobPosition.jobPositionsCareers.map((career) =>
@@ -220,7 +219,7 @@ const JobPositionCard = ({ jobPosition, menuVisible, setMenuVisible, forcedUpdat
 
                             }
                             <div className='job-position-skills'>
-                                {jobPosition.jobPostionsSkills.lenght === 0 &&
+                                {jobPosition.jobPostionsSkills &&
                                     <table>
                                         <caption><strong>Habilidades esperadas</strong></caption>
                                         <thead>

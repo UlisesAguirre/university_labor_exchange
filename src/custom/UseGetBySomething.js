@@ -6,8 +6,6 @@ function useGetBySomething(apiEndpoint, identifier) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //Hay que implementar logica para cuando agreguemos la etiqueta [Authorize] en los endpoints
-
   useEffect(() => {
     
     async function fetchData() {
@@ -24,7 +22,7 @@ function useGetBySomething(apiEndpoint, identifier) {
         });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(response.status);
         }
 
         const responseData = await response.json();
@@ -33,8 +31,7 @@ function useGetBySomething(apiEndpoint, identifier) {
         setLoading(false);
 
       } catch (error) {
-
-        setError(error);
+        setError(error.message);
         setLoading(false);
       }
     }

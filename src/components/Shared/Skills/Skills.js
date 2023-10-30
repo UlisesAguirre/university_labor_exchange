@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react'
-import { ThemeContext } from '../../Context/ThemeContext/ThemeContext';
+import {useState } from 'react'
 import useGetRequest from '../../../custom/useGetRequest';
 import './skills.css';
 import Spinner from '../Spinner/Spinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
 
-const Skills = ({ form, setForm }) => {
+const Skills = ({ form, setForm, setSkillsError }) => {
 
     const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Skill/GetSkillsForForm');
 
     const skillsList = getData;
+
+    useEffect(() => {
+        setSkillsError(error)
+    })
 
     const [messageError, setMessageError] = useState('');
 

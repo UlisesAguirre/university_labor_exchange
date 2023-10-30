@@ -3,7 +3,6 @@ import FormPersonalData from './PersonalData/PersonalData';
 import FormCareerData from './CareerData/CareerData';
 import FormOtherData from './OtherData/OtherData';
 import FormSkillsData from './SkillsData/SkillsData';
-import BasicButton from '../../Shared/BasicButton/BasicButton';
 import useGetBySomething from '../../../custom/useGetBySomething';
 import usePutRequest from '../../../custom/usePutRequest';
 import UserContext from '../../Context/UserContext/UserContext';
@@ -13,6 +12,7 @@ import "./studentForm.css"
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal';
 import Modal from '../../Shared/Modal/Modal';
+import Error from '../../Shared/Error/Error';
 
 //FIXME: cuando agregemos el envio del token por header tengo que eliminar enviar el id al curriculum
 
@@ -34,7 +34,7 @@ const StudentForm = () => {
 
     const { data, loading, error } = useGetBySomething(url, user.id);
 
-    const { sendPutRequest, loadingPutRequest, putRequestError } = usePutRequest();
+    const { sendPutRequest, loadingPutRequest } = usePutRequest();
 
     useEffect(() => {
         if (data) {
@@ -59,7 +59,13 @@ const StudentForm = () => {
 
     };
 
-    const stepBackHandler = () => {
+    const stepBackHandler = (data) => {
+
+        if (step === 4) {
+            setForm((prevform) => ({ ...prevform, 'studentsSkills': data }));
+        } else {
+            setForm((prevForm) => ({ ...prevForm, ...data }));
+        }
         setStep(step => step - 1);
     };
 
@@ -83,7 +89,6 @@ const StudentForm = () => {
                 modalTitle: "Error",
                 modalMessage: { putRequestError },
             });
-            console.log("Error al actualizar datos", putRequestError);
         }
     }
 
@@ -94,8 +99,9 @@ const StudentForm = () => {
 
     return (
         <>
-
-            {error ? <p>{error.message}</p> :
+            { error ?
+                <Error error={error} />
+                :
                 <>
                     <div className='studentForm-container'>
                         {(loading || loadingPutRequest) && <Spinner />}
@@ -125,7 +131,8 @@ const StudentForm = () => {
                             onClose={() => setModal({ modalOpen: false })}
                         />
                     )}
-                </>}
+                </>
+            }
 
         </>
     )

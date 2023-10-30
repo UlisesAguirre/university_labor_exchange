@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import "./formLogin.css"
@@ -58,7 +58,6 @@ const FormLogin = () => {
   const submit = () => {
     const url = 'https://localhost:7049/api/authentication/authenticate';
 
-    // Configurar la solicitud Fetch
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -69,7 +68,7 @@ const FormLogin = () => {
 
     setLoading(true);
 
-    // solicitud Fetch a Authenticate
+
     fetch(url, requestOptions)
       .then(response => {
         if (!response.ok) {
@@ -78,36 +77,30 @@ const FormLogin = () => {
         return response.text();
       })
       .then(data => {
-        //Esta variable tiene el token, ver de guardar en localstorage
+
         const jwtToken = data;
 
         updateToken(jwtToken);
-        login();
 
-        // Redirigimos 
         setLoading(false);
-        setModal({
-          modalOpen: true,
-          modalTitle: "¡Bienvenido!",
-          modalMessage: "Inicio de sesión existoso.",
-        });
+
         setInput({
           email: '',
           password: '',
         });
-        setTimeout(() => {
-          navigate('/profile');
-        }, 2000);
+
+        navigate('/profile');
+        login();
+
       })
       .catch(error => {
-        console.error('Error al realizar la solicitud:', error);
         setLoading(false);
         setModal({
           modalOpen: true,
           modalTitle: "Error en la solicitud",
           modalMessage: "El usuario ingresado no existe, compruebe sus datos",
         });
-        
+
       });
   };
 

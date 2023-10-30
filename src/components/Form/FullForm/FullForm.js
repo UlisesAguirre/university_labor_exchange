@@ -19,7 +19,7 @@ const FullForm = ({ title, nameButton, typeForm }) => {
 
     const navigate = useNavigate();
 
-    const { postData, isLoading, postError } = usePostRequest();
+    const { postData, isLoading } = usePostRequest();
 
     const regex = {
         name: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,

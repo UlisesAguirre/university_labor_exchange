@@ -11,6 +11,7 @@ import usePostRequest from "../../../../custom/usePostRequest";
 import Skills from "../../../Shared/Skills/Skills";
 import Modal from "../../../Shared/Modal/Modal";
 import ConfirmModal from "../../../Shared/ConfirmModal/ConfirmModal";
+import Error from "../../../Shared/Error/Error";
 
 const validateForm = (form, name) => {
     let error = ''
@@ -73,6 +74,8 @@ const validInputs = {
 
 const AddJobOffer = ({ setOption }) => {
 
+    const[skillsError, setSkillsError] = useState(null)
+
     const [modal, setModal] = useState({
         modalOpen: false,
         modalTitle: "",
@@ -84,7 +87,7 @@ const AddJobOffer = ({ setOption }) => {
     const { theme } = useContext(ThemeContext);
 
     const { getData, loading, error } = useGetRequest('https://localhost:7049/api/Career/GetCareersForForms');
-    const { postData, isLoading, postError } = usePostRequest()
+    const { postData, isLoading } = usePostRequest()
 
     const careersList = getData;
 
@@ -189,7 +192,6 @@ const AddJobOffer = ({ setOption }) => {
         } else {
 
             const response = await postData('https://localhost:7049/api/Company/AddJobPosition', filteredForm);
-            console.log(response)
             if (response) {
                 setModal({
                     modalOpen: true,
@@ -218,132 +220,138 @@ const AddJobOffer = ({ setOption }) => {
 
 
     return (
-        <div className="jobOffer-container">
-            {(loading || isLoading) && <Spinner />}
-
-            <h2>Ofertas Laborales</h2>
-
-            {form.jobType ?
-                <>
-                    <form className={`jobOffer-form ${theme}`}>
-
-                        <label>Titulo de la Oferta Laboral</label>
-                        <input type="text" value={form.jobTitle} name='jobTitle' onChange={changeHandler} onBlur={blurHandler} />
-                        {errors.jobTitle && <div className="form-user-error-message">{errors.jobTitle}</div>}
-
-                        <label>Posición a Cubrir</label>
-                        <p>El nombre debe ser descriptivo de las tareas</p>
-                        <input type="text" value={form.positionToCover} name='positionToCover' onChange={changeHandler} onBlur={blurHandler} />
-                        {errors.positionToCover && <div className="form-user-error-message">{errors.positionToCover}</div>}
-
-                        <label>Cantidad de Puestos a Cubrir</label>
-                        <input type="number" value={form.numberOfPositionsToCover}
-                            name='numberOfPositionsToCover' onChange={changeHandler} onBlur={blurHandler} />
-                        {errors.numberOfPositionsToCover && <div className="form-user-error-message">{errors.numberOfPositionsToCover}</div>}
-
-
-                        <label>Carreras Destino</label>
-                        <p>Seleccione las carreras para las cuales esta destinada la busqueda laboral</p>
-                        <div className="checkbox-container" onBlur={checkboxBlurHandler}>
-                            {careersList && careersList.map((c, index) =>
-                                <label className="btn-text">
-                                    <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCareer} onChange={changeCheckboxHandler} /> {c.name}
-                                </label>
-                            )}
-                        </div>
-
-                        {errors.jobPositionCareer && <div className="form-user-error-message">{errors.jobPositionCareer}</div>}
-
-                        <label>Descripción</label>
-                        <p>Se sugiere que se detalle lo siguiente: Descripción del puesto, requerímientos, días y horarios y toda la información que se estime conveniente</p>
-                        <textarea value={form.jobDescription} name='jobDescription' onChange={changeHandler} onBlur={blurHandler} ></textarea>
-                        {errors.jobDescription && <div className="form-user-error-message">{errors.jobDescription}</div>}
-
-                        <label>Detalle de Beneficios Ofrecidos</label>
-                        <p>Se sugiere que se detalle lo siguiente: remuneración, capacitación a recibir, obra social y toda la información que se estime conveniente </p>
-                        <textarea value={form.benefitsOfferedDetail} name="benefitsOfferedDetail" onChange={changeHandler} onBlur={blurHandler}></textarea>
-                        {errors.benefitsOfferedDetail && <div className="form-user-error-message">{errors.benefitsOfferedDetail}</div>}
-
-                        <label>Lugar de Trabajo</label>
-                        <p>Dirección y/o zona</p>
-                        <input type="text" value={form.location} name='location' onChange={changeHandler} onBlur={blurHandler} />
-                        {errors.location && <div className="form-user-error-message">{errors.location}</div>}
-
-                        {form.jobType === '0' ?
-                            (<>
-
-                                <label>Duración de la Pasantía</label>
-                                <p>En meses - Por Ley Mínimo 2 meses - Maximo 12 meses</p>
-                                <input type="number" min='2' max='12' value={form.internshipDuration} name='internshipDuration' onChange={changeHandler} onBlur={blurHandler} />
-                                {errors.internshipDuration && <div className="form-user-error-message">{errors.internshipDuration}</div>}
-
-
-                                <label>Fecha Tentativa de Inicio de la Pasantía</label>
-                                <input type="date" value={form.tentativeStartDate} name='tentativeStartDate' onChange={changeHandler} onBlur={blurHandler} />
-                                {errors.tentativeStartDate && <div className="form-user-error-message">{errors.tentativeStartDate}</div>}
-
-                            </>)
-                            :
-                            (<>
-                                <label>Jornada Laboral</label>
-                                <select className='select' value={form.workDay} name="workDay" onChange={changeHandler} onBlur={blurHandler}>
-                                    <option value=''>Seleccione tipo de jornada laboral</option>
-                                    <option value={0}>Full time</option>
-                                    <option value={1}>Part Time</option>
-                                    <option value={2}>Freelance</option>
-                                </select>
-                                {errors.workDay && <div className="form-user-error-message">{errors.workDay}</div>}
-                            </>)
-
-                        }
-
-                        <label>Fecha Finalización de la Oferta</label>
-                        <input type="date" value={form.endDate} name='endDate' onChange={changeHandler} onBlur={blurHandler} />
-                        {errors.endDate && <div className="form-user-error-message">{errors.endDate}</div>}
-
-                        <label>Habilidades esperadas</label>
-                        <Skills form={form} setForm={setForm} />
-
-                    </form>
-
-                </>
+        <>
+            {error || skillsError ?
+                <Error error={error ? error : skillsError} />
                 :
-                <>
-                    <form className={`jobOffer-form ${theme}`}>
-                        <label>Tipo de búsqueda</label>
-                        <select className='select' value={form.jobType} name='jobType' onChange={changeHandler} onBlur={blurHandler}>
-                            <option value=''>Seleccione pasantía o en relación de dependencia</option>
-                            <option value={0}>Pasantía</option>
-                            <option value={1}>En relación de dependencia</option>
-                        </select>
-                        {errors.jobType && <div className="form-user-error-message">{errors.jobType}</div>}
-                    </form>
+                <div className="jobOffer-container">
+                    {(loading || isLoading) && <Spinner />}
 
-                </>
+                    <h2>Ofertas Laborales</h2>
 
+                    {form.jobType ?
+                        <>
+                            <form className={`jobOffer-form ${theme}`}>
+
+                                <label>Titulo de la Oferta Laboral</label>
+                                <input type="text" value={form.jobTitle} name='jobTitle' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.jobTitle && <div className="form-user-error-message">{errors.jobTitle}</div>}
+
+                                <label>Posición a Cubrir</label>
+                                <p>El nombre debe ser descriptivo de las tareas</p>
+                                <input type="text" value={form.positionToCover} name='positionToCover' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.positionToCover && <div className="form-user-error-message">{errors.positionToCover}</div>}
+
+                                <label>Cantidad de Puestos a Cubrir</label>
+                                <input type="number" value={form.numberOfPositionsToCover}
+                                    name='numberOfPositionsToCover' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.numberOfPositionsToCover && <div className="form-user-error-message">{errors.numberOfPositionsToCover}</div>}
+
+
+                                <label>Carreras Destino</label>
+                                <p>Seleccione las carreras para las cuales esta destinada la busqueda laboral</p>
+                                <div className="checkbox-container" onBlur={checkboxBlurHandler}>
+                                    {careersList && careersList.map((c, index) =>
+                                        <label className="btn-text">
+                                            <input type="checkbox" name='jobPositionCareer' key={index} value={c.idCareer} onChange={changeCheckboxHandler} /> {c.name}
+                                        </label>
+                                    )}
+                                </div>
+
+                                {errors.jobPositionCareer && <div className="form-user-error-message">{errors.jobPositionCareer}</div>}
+
+                                <label>Descripción</label>
+                                <p>Se sugiere que se detalle lo siguiente: Descripción del puesto, requerímientos, días y horarios y toda la información que se estime conveniente</p>
+                                <textarea value={form.jobDescription} name='jobDescription' onChange={changeHandler} onBlur={blurHandler} ></textarea>
+                                {errors.jobDescription && <div className="form-user-error-message">{errors.jobDescription}</div>}
+
+                                <label>Detalle de Beneficios Ofrecidos</label>
+                                <p>Se sugiere que se detalle lo siguiente: remuneración, capacitación a recibir, obra social y toda la información que se estime conveniente </p>
+                                <textarea value={form.benefitsOfferedDetail} name="benefitsOfferedDetail" onChange={changeHandler} onBlur={blurHandler}></textarea>
+                                {errors.benefitsOfferedDetail && <div className="form-user-error-message">{errors.benefitsOfferedDetail}</div>}
+
+                                <label>Lugar de Trabajo</label>
+                                <p>Dirección y/o zona</p>
+                                <input type="text" value={form.location} name='location' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.location && <div className="form-user-error-message">{errors.location}</div>}
+
+                                {form.jobType === '0' ?
+                                    (<>
+
+                                        <label>Duración de la Pasantía</label>
+                                        <p>En meses - Por Ley Mínimo 2 meses - Maximo 12 meses</p>
+                                        <input type="number" min='2' max='12' value={form.internshipDuration} name='internshipDuration' onChange={changeHandler} onBlur={blurHandler} />
+                                        {errors.internshipDuration && <div className="form-user-error-message">{errors.internshipDuration}</div>}
+
+
+                                        <label>Fecha Tentativa de Inicio de la Pasantía</label>
+                                        <input type="date" value={form.tentativeStartDate} name='tentativeStartDate' onChange={changeHandler} onBlur={blurHandler} />
+                                        {errors.tentativeStartDate && <div className="form-user-error-message">{errors.tentativeStartDate}</div>}
+
+                                    </>)
+                                    :
+                                    (<>
+                                        <label>Jornada Laboral</label>
+                                        <select className='select' value={form.workDay} name="workDay" onChange={changeHandler} onBlur={blurHandler}>
+                                            <option value=''>Seleccione tipo de jornada laboral</option>
+                                            <option value={0}>Full time</option>
+                                            <option value={1}>Part Time</option>
+                                            <option value={2}>Freelance</option>
+                                        </select>
+                                        {errors.workDay && <div className="form-user-error-message">{errors.workDay}</div>}
+                                    </>)
+
+                                }
+
+                                <label>Fecha Finalización de la Oferta</label>
+                                <input type="date" value={form.endDate} name='endDate' onChange={changeHandler} onBlur={blurHandler} />
+                                {errors.endDate && <div className="form-user-error-message">{errors.endDate}</div>}
+
+                                <label>Habilidades esperadas</label>
+                                <Skills form={form} setForm={setForm} setSkillsError={setSkillsError} />
+
+                            </form>
+
+                        </>
+                        :
+                        <>
+                            <form className={`jobOffer-form ${theme}`}>
+                                <label>Tipo de búsqueda</label>
+                                <select className='select' value={form.jobType} name='jobType' onChange={changeHandler} onBlur={blurHandler}>
+                                    <option value=''>Seleccione pasantía o en relación de dependencia</option>
+                                    <option value={0}>Pasantía</option>
+                                    <option value={1}>En relación de dependencia</option>
+                                </select>
+                                {errors.jobType && <div className="form-user-error-message">{errors.jobType}</div>}
+                            </form>
+
+                        </>
+
+                    }
+                    <div className="save-button">
+                        {form.jobType && <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />}
+                        <BasicButton buttonName={'Volver al menú'} buttonHandler={goBackToMenu} />
+                        {form.jobType && <BasicButton buttonName={'Guardar'} buttonHandler={confirmSubmit} />}
+                    </div>
+
+                    {confirmModalOpen && (
+                        <ConfirmModal
+                            title="Modificar datos"
+                            message="¿Estás seguro de que deseas modificar sus datos?"
+                            onConfirm={() => submitHandler(form)}
+                            onCancel={() => setConfirmModalOpen(false)}
+                        />
+                    )}
+                    {modal.modalOpen && (
+                        <Modal
+                            title={modal.modalTitle}
+                            message={modal.modalMessage}
+                            onClose={() => setModal({ modalOpen: false })}
+                        />
+                    )}
+                </div>
             }
-            <div className="save-button">
-                {form.jobType && <BasicButton buttonName={'Atras'} buttonHandler={goBackHandler} />}
-                <BasicButton buttonName={'Volver al menú'} buttonHandler={goBackToMenu} />
-                {form.jobType && <BasicButton buttonName={'Guardar'} buttonHandler={confirmSubmit} />}
-            </div>
-
-            {confirmModalOpen && (
-                <ConfirmModal
-                    title="Modificar datos"
-                    message="¿Estás seguro de que deseas modificar sus datos?"
-                    onConfirm={() => submitHandler(form)}
-                    onCancel={() => setConfirmModalOpen(false)}
-                />
-            )}
-            {modal.modalOpen && (
-                <Modal
-                    title={modal.modalTitle}
-                    message={modal.modalMessage}
-                    onClose={() => setModal({ modalOpen: false })}
-                />
-            )}
-        </div>
+        </>
 
     )
 }

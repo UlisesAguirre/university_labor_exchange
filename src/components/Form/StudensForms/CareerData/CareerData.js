@@ -5,14 +5,14 @@ import BasicButton from "../../../Shared/BasicButton/BasicButton";
 import Spinner from "../../../Shared/Spinner/Spinner";
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import "./careerData.css"
-import { id } from "date-fns/locale";
+import Error from "../../../Shared/Error/Error";
 
 export function validateData(data, name) {
-   
+
   let error = '';
 
-  if ((data !== null && data !== '') && regex[name]) {
-    if (!regex[name].test(data)) {
+  if ((data[name] !== null && data[name] !== '') && regex[name]) {
+    if (!regex[name].test(data[name])) {
       if ((name === 'average') || (name === 'averageWithFails')) {
         error = "El promedio debe estar en el rango de 0 a 10 y debe tener el formato 00.00 si es decimal";
       }
@@ -66,64 +66,72 @@ const FormCareerData = ({ form, stepForwardHandler, stepBackHandler }) => {
 
   return (
     <div className="careerData-container">
-      {(loading) && <Spinner />}
-      {error && <span>error.message</span>}
-      <h2> Datos Universitarios </h2>
+      {
+        error ?
+          <Error error={error} />
+          :
+          <>
+            {(loading) && <Spinner />}
 
-      <div className={`careerData-form ${theme}`}>
+            <h2> Datos Universitarios </h2>
 
-        <label>Carrera</label>
-        <select name="idCareer" onChange={changeHandler} onBlur={blurHandler} value={data.idCareer}>
-          <option value=''>Carrera</option>
-          {careers.map((c) =>
-            <option key={c.idCareer} value={c.idCareer}>{c.name}</option>
-          )}
-        </select>
-        {errors.idCareer && <div className="form-user-error-message">{errors?.idCareer}</div>}
+            <div className={`careerData-form ${theme}`}>
 
-        <label>Cantidad materias aprobadas</label>
-        <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects} />
-        {errors.approvedSubjects && <div className="form-user-error-message">{errors?.approvedSubjects}</div>}
+              <label>Carrera</label>
+              <select name="idCareer" onChange={changeHandler} onBlur={blurHandler} value={data.idCareer}>
+                <option value=''>Carrera</option>
+                {careers.map((c) =>
+                  <option key={c.idCareer} value={c.idCareer}>{c.name}</option>
+                )}
+              </select>
+              {errors.idCareer && <div className="form-user-error-message">{errors?.idCareer}</div>}
 
-        <label>Plan especialidad</label>
-        <input type='number' min="1990" max="2300" name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
-        {errors.studyProgram && <div className="form-user-error-message">{errors?.studyProgram}</div>}
+              <label>Cantidad materias aprobadas</label>
+              <input type="number" name="approvedSubjects" placeholder="5" onChange={changeHandler} onBlur={blurHandler} value={data.approvedSubjects} />
+              {errors.approvedSubjects && <div className="form-user-error-message">{errors?.approvedSubjects}</div>}
 
-        <label>Año que cursa</label>
-        <select name='currentCareerYear' onChange={changeHandler} onBlur={blurHandler} value={data.currentCareerYear}>
-          <option value={''}>Año que cursa</option>
-          <option value={"1"}>1° año</option>
-          <option value={"2"}>2° año</option>
-          <option value={"3"}>3° año</option>
-          <option value={"4"}>4° año</option>
-          <option value={"5"}>5° año</option>
-          <option value={"6"}>6° año</option>
-        </select>
-        {errors.currentCareerYear && <div className="form-user-error-message">{errors?.currentCareerYear}</div>}
+              <label>Plan especialidad</label>
+              <input type='number' min="1990" max="2300" name='studyProgram' placeholder="2008" onChange={changeHandler} onBlur={blurHandler} value={data.studyProgram} />
+              {errors.studyProgram && <div className="form-user-error-message">{errors?.studyProgram}</div>}
 
-        <label>Turno que cursa</label>
-        <select name='turn' onChange={changeHandler} onBlur={blurHandler} value={data.turn}>
-          <option value=''>Turno que cursa</option>
-          <option value='Mañana'>Mañana</option>
-          <option value='Tarde'>Tarde</option>
-          <option value='Noche'>Noche</option>
-        </select>
-        {errors.turn && <div className="form-user-error-message">{errors?.turn}</div>}
+              <label>Año que cursa</label>
+              <select name='currentCareerYear' onChange={changeHandler} onBlur={blurHandler} value={data.currentCareerYear}>
+                <option value={''}>Año que cursa</option>
+                <option value={"1"}>1° año</option>
+                <option value={"2"}>2° año</option>
+                <option value={"3"}>3° año</option>
+                <option value={"4"}>4° año</option>
+                <option value={"5"}>5° año</option>
+                <option value={"6"}>6° año</option>
+              </select>
+              {errors.currentCareerYear && <div className="form-user-error-message">{errors?.currentCareerYear}</div>}
 
-        <label>Promedio sin aplazos</label>
-        <input name='average' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.average} />
-        {errors.average && <div className="form-user-error-message">{errors?.average}</div>}
+              <label>Turno que cursa</label>
+              <select name='turn' onChange={changeHandler} onBlur={blurHandler} value={data.turn}>
+                <option value=''>Turno que cursa</option>
+                <option value='Mañana'>Mañana</option>
+                <option value='Tarde'>Tarde</option>
+                <option value='Noche'>Noche</option>
+              </select>
+              {errors.turn && <div className="form-user-error-message">{errors?.turn}</div>}
 
-        <label>Promedio con aplazos</label>
-        <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
-        {errors.averageWithFails && <div className="form-user-error-message">{errors?.averageWithFails}</div>}
+              <label>Promedio sin aplazos</label>
+              <input name='average' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.average} />
+              {errors.average && <div className="form-user-error-message">{errors?.average}</div>}
 
-        <div className="careerData-checkbox">
-          <input type="checkbox" onChange={changeHandler} name="careerSubscription" />
-          <label> Deseo recibir notificaciones de ofertas laborales relacionadas a mi carrera.</label>
-        </div>
+              <label>Promedio con aplazos</label>
+              <input name='averageWithFails' type="number" min="0" max="10" step="0.01" placeholder="0.00" onChange={changeHandler} onBlur={blurHandler} value={data.averageWithFails} />
+              {errors.averageWithFails && <div className="form-user-error-message">{errors?.averageWithFails}</div>}
 
-      </div>
+              <div className="careerData-checkbox">
+                <input type="checkbox" onChange={changeHandler} name="careerSubscription" />
+                <label> Deseo recibir notificaciones de ofertas laborales relacionadas a mi carrera.</label>
+              </div>
+
+            </div>
+          </>
+      }
+
       <BasicButton buttonName={'Atras'} buttonHandler={moveBackHandler} />
       <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
 

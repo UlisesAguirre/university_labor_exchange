@@ -10,8 +10,11 @@ import UserContext from '../Context/UserContext/UserContext';
 import { Link } from 'react-router-dom';
 import DownloadCurriculum from '../DownloadCurriculum/DownloadCurriculum';
 import Modal from '../Shared/Modal/Modal'
+import Error from '../Shared/Error/Error'
 
 const UserCard = () => {
+
+  const [curriculumError, setCurriculumError ] = useState(null);
 
   const [modal, setModal] = useState({
     modalOpen: false,
@@ -23,12 +26,11 @@ const UserCard = () => {
 
   const { user, viewOffer } = useContext(UserContext);
 
-  const url = user.userType === "student" ?
+  const url = user && user.userType === "student" ?
     'https://localhost:7049/api/Student/GetStudentProfile' :
     'https://localhost:7049/api/Company/GetCompanyProfile';
 
-  const [dataUser, setDataUser] = useState(" ");
-
+  const [dataUser, setDataUser] = useState("");
 
   const { data, loading, error } = useGetBySomething(url, user.id);
 
@@ -44,7 +46,7 @@ const UserCard = () => {
 
   return (
     <>
-      {error ? <p>{error.message}</p> :
+      {error || curriculumError ? <Error error= { error ? error : curriculumError}/> :
         <>
           <div className='userCard-container'>
             {loading && <Spinner />}
@@ -73,7 +75,7 @@ const UserCard = () => {
                   )
                 }
 
-                {user.userType === "student" ? <DownloadCurriculum userid={user.id} name={dataUser.name} lastName={dataUser.lastName} setModal={setModal} /> : <></>}
+                {user.userType === "student" ? <DownloadCurriculum userid={user.id} name={dataUser.name} lastName={dataUser.lastName} setModal={setModal} setCurriculumError={setCurriculumError}/> : <></>}
 
               </div>}
 

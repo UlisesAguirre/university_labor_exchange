@@ -20,7 +20,7 @@ const AddItemForm = ({ setOption, type, data }) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { postData, isLoading, error } = usePostRequest();
+  const { postData, isLoading } = usePostRequest();
 
   const url = type === "carrera" ?
     "https://localhost:7049/api/Career/CreateCareer" :

@@ -3,21 +3,10 @@ import React, { useState } from 'react'
 import AddJobOffer from '../Form/CompaniesForms/JobOffer/AddJobOffer';
 import ManMenuButton from '../ManagementMenu/ManMenuButton/ManMenuButton';
 import "./companyJobOffer.css"
-import BasicButton from '../Shared/BasicButton/BasicButton';
 import JobPositionMenu from '../JobPositionMenu/JobPositionMenu';
 
 const CompanyJobOffer = () => {
     const [option, setOption] = useState('');
-
-    const goBackToMenu = (e) => {
-        setOption('')
-    }
-
-    const button = (
-        <div>
-            <BasicButton buttonName={'Volver al menú'} buttonHandler={goBackToMenu} />
-        </div>
-    )
     
     return (
         <div className='companyJobOffer-container'>

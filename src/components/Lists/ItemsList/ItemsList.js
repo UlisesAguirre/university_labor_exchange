@@ -9,6 +9,7 @@ import useDeleteById from '../../../custom/useDeleteById'
 import AddItemForm from '../../Form/AddItemForm/AddItemForm'
 import Modal from '../../Shared/Modal/Modal'
 import ConfirmModal from '../../Shared/ConfirmModal/ConfirmModal'
+import Error from '../../Shared/Error/Error'
 
 const ItemsList = ({ option, setOption, type, types }) => {
 
@@ -36,7 +37,7 @@ const ItemsList = ({ option, setOption, type, types }) => {
     "https://localhost:7049/api/Career/DeleteCareer" :
     "https://localhost:7049/api/Skill/DeleteSkill"
 
-  const { deleteData, loadingDelete, errorDelete } = useDeleteById();
+  const { deleteData, loadingDelete} = useDeleteById();
 
   const { getData, loading, error } = useGetRequest(url);
 
@@ -80,82 +81,89 @@ const ItemsList = ({ option, setOption, type, types }) => {
 
   return (
     <div className='itemsList-container'>
-      <h2 className='itemsList-title'>Editar {types}:</h2>
-      {(loading || loadingDelete) && <Spinner />}
-      {!updateMode ?
-        <div className='itemList-container'>
-          <div className={`itemList-box ${theme}`}>
-            {type === "carrera" &&
-              (
-                getData.map((item) => (
-                  <div key={item.idCareer} className='itemsList-item'>
-                    <div className='itemsList-row'>
-                      <div>
-                        <p className='itemsList-career-title'>Nombre: </p>
-                        <p className='itemsList-career-name'>{item.name}</p>
-                      </div>
-                      <div>
-                        <p className='itemsList-career-title'>Abreviatura: </p>
-                        <p className='itemsList-career-name'>{item.abbreviation}</p>
-                      </div>
-                    </div>
-                    <div className='itemsList-row'>
-                      <div>
-                        <p className='itemsList-career-title'>Tipo de carrera: </p>
-                        <p className='itemsList-career-name'>{item.careerType}</p>
-                      </div>
-                      <div>
-                        <p className='itemsList-career-title'>Cantidad de materias: </p>
-                        <p className='itemsList-career-name'>{item.totalSubjets}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <button className='button' onClick={() => modeHandler(item)}>Editar</button>
-                      <button className='button' onClick={() => deleteConfirm(item.idCareer)}>Eliminar</button>
-                    </div>
-                  </div>
-                ))
-              )}
-            {type === "habilidad" &&
-              (
-                getData.map((item) => (
-                  <div key={item.idSkill} className='itemsList-item'>
-                    <div className='itemsList-skill-item'>
-                      <p className='itemsList-skill-title'>Habilidad: </p>
-                      <p className='itemsList-skill-name'>{item.skillName}</p>
-                    </div>
-                    <div className='itemList-skill-button'>
-                      <button className='button' onClick={() => modeHandler(item)}>Editar</button>
-                      <button className='button' onClick={() => deleteConfirm(item.idSkill)}>Eliminar</button>
-                    </div>
-                  </div>
-                ))
-              )}
-          </div>
-          <BasicButton buttonName="Volver" buttonHandler={optionHandler} />
-        </div> :
+      {error ?
+        <Error error={error} />
+        :
         <>
-          {type === "carrera" ?
-            <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> :
-            <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} />}
-        </>}
+          <h2 className='itemsList-title'>Editar {types}:</h2>
+          {(loading || loadingDelete) && <Spinner />}
+          {!updateMode ?
+            <div className='itemList-container'>
+              <div className={`itemList-box ${theme}`}>
+                {type === "carrera" &&
+                  (
+                    getData.map((item) => (
+                      <div key={item.idCareer} className='itemsList-item'>
+                        <div className='itemsList-row'>
+                          <div>
+                            <p className='itemsList-career-title'>Nombre: </p>
+                            <p className='itemsList-career-name'>{item.name}</p>
+                          </div>
+                          <div>
+                            <p className='itemsList-career-title'>Abreviatura: </p>
+                            <p className='itemsList-career-name'>{item.abbreviation}</p>
+                          </div>
+                        </div>
+                        <div className='itemsList-row'>
+                          <div>
+                            <p className='itemsList-career-title'>Tipo de carrera: </p>
+                            <p className='itemsList-career-name'>{item.careerType}</p>
+                          </div>
+                          <div>
+                            <p className='itemsList-career-title'>Cantidad de materias: </p>
+                            <p className='itemsList-career-name'>{item.totalSubjets}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <button className='button' onClick={() => modeHandler(item)}>Editar</button>
+                          <button className='button' onClick={() => deleteConfirm(item.idCareer)}>Eliminar</button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                {type === "habilidad" &&
+                  (
+                    getData.map((item) => (
+                      <div key={item.idSkill} className='itemsList-item'>
+                        <div className='itemsList-skill-item'>
+                          <p className='itemsList-skill-title'>Habilidad: </p>
+                          <p className='itemsList-skill-name'>{item.skillName}</p>
+                        </div>
+                        <div>
+                          <button className='button' onClick={() => modeHandler(item)}>Editar</button>
+                          <button className='button' onClick={() => deleteConfirm(item.idSkill)}>Eliminar</button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+              </div>
+              <BasicButton buttonName="Volver" buttonHandler={optionHandler} />
+            </div> :
+            <>
+              {type === "carrera" ?
+                <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} /> :
+                <AddItemForm option={option} setOption={setOption} type={type} data={dataUpdate} />}
+            </>}
 
-      {confirmModalOpen && (
-        <ConfirmModal
-          title="Eliminar"
-          message="¿Estás seguro de que deseas eliminarlo de la lista?"
-          onConfirm={() => deleteHandler()}
-          onCancel={() => setConfirmModalOpen(false)}
-        />
-      )}
+          {confirmModalOpen && (
+            <ConfirmModal
+              title="Eliminar"
+              message="¿Estás seguro de que deseas eliminarlo de la lista?"
+              onConfirm={() => deleteHandler()}
+              onCancel={() => setConfirmModalOpen(false)}
+            />
+          )}
 
-      {modal.modalOpen && (
-        <Modal
-          title={modal.modalTitle}
-          message={modal.modalMessage}
-          onClose={() => setModal({ modalOpen: false })}
-        />
-      )}
+          {modal.modalOpen && (
+            <Modal
+              title={modal.modalTitle}
+              message={modal.modalMessage}
+              onClose={() => setModal({ modalOpen: false })}
+            />
+          )}
+        </>
+      }
+
     </div>
   )
 }

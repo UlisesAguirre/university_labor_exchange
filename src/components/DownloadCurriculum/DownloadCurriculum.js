@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import UseGetCurriculum from '../../custom/useGetCurriculum';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import Spinner from '../Shared/Spinner/Spinner';
 
-const DownloadCurriculum = ({ userid, name, lastName, setModal }) => {
-    const { fileData } = UseGetCurriculum(userid);
+const DownloadCurriculum = ({ userid, name, lastName, setModal, setCurriculumError }) => {
+
+    const { fileData, loading, error } = UseGetCurriculum(userid);
+
+    useEffect(() => {
+        setCurriculumError(error !== 'Aún no tiene un curriculum' ? error : null)
+    })
 
     const handleDownloadFile = (e) => {
         e.preventDefault()
@@ -14,7 +19,7 @@ const DownloadCurriculum = ({ userid, name, lastName, setModal }) => {
             modalOpen: true,
             modalTitle: "Descargando CV...",
             modalMessage: "Aguarde unos segundos.",
-          });
+        });
 
         if (fileData) {
             const url = window.URL.createObjectURL(fileData);
@@ -27,9 +32,23 @@ const DownloadCurriculum = ({ userid, name, lastName, setModal }) => {
     }
 
     return (
-        <button className='button' onClick={handleDownloadFile}>
-            <FontAwesomeIcon icon={faDownload} /> Descargar cv
-        </button>
+        <>
+            {loading && <Spinner />}
+            {error === 'Aún no tiene un curriculum' ?
+                <button className='button' onClick={handleDownloadFile} disabled>
+                    {error}
+                </button>
+                :
+                error === null ?
+                    <button className='button' onClick={handleDownloadFile}>
+                        <FontAwesomeIcon icon={faDownload} /> Descargar cv
+                    </button>
+                    :
+                    <></>
+
+            }
+
+        </>
     )
 }
 

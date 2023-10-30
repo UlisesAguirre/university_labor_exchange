@@ -1,11 +1,6 @@
-import React from 'react'
-
 import "./footer.css"
 import ThemeButton from '../ThemeButton/ThemeButton'
 import Chat from '../Chat/Chat'
-import { Link } from 'react-router-dom'
-
-
 
 const Footer = () => {
 

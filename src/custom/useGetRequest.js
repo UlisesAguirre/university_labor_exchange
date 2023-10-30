@@ -17,14 +17,15 @@ const useGetRequest = (url, forceUpdate      ) => {
         const response = await fetch(url, {headers});
 
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(response.status);
         }
 
         const responseData = await response.json();
         setGetData(responseData);
         setLoading(false);
       } catch (error) {
-        setError(error);
+        
+        setError(error.message);
         setLoading(false);
       }
     };

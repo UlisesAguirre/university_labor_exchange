@@ -2,6 +2,8 @@ import { differenceInYears, format } from 'date-fns';
 
 import useFrom from "../../../../custom/useForm"
 import BasicButton from "../../../Shared/BasicButton/BasicButton";
+import Spinner from "../../../Shared/Spinner/Spinner"
+import Error from "../../../Shared/Error/Error"
 
 import "./personalData.css"
 import { useContext } from 'react';
@@ -11,16 +13,15 @@ import useGet from '../../../../custom/useGet';
 
 const validateData = (data, name) => {
 
-
   let error = '';
 
-  if (data === null || (typeof data === 'string' && !data.trim())) {
+  if (data === null || (typeof data[name] === 'string' && !data[name].trim())) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
   } else {
     if (validInputs[name].regex) {
-      if (!validInputs[name].regex.test(data)) {
+      if (!validInputs[name].regex.test(data[name])) {
         if (name === 'username' || name === 'name' || name === 'lastName' || name === 'address' || name === 'city' || name === 'province' || name === 'country') {
           error = "El campo solo debe aceptar caracteres del alfabeto español o ingles y tener una longitud máxima de 50 caracteres.";
         }
@@ -48,7 +49,7 @@ const validateData = (data, name) => {
       }
     }
     if (name === 'birthDate') {
-      const date = differenceInYears(new Date(), new Date(data));
+      const date = differenceInYears(new Date(), new Date(data[name]));
       if (date < 17) {
         error = 'Debe ser mayor a 17 años'
       }
@@ -92,7 +93,9 @@ const validInputs = {
 
 const FormPersonalData = ({ form, stepForwardHandler }) => {
 
-  const provinces = useGet('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=id, nombre')
+  const provinces  = useGet('https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=id, nombre')
+
+  
 
   const { theme } = useContext(ThemeContext);
 
@@ -128,169 +131,168 @@ const FormPersonalData = ({ form, stepForwardHandler }) => {
 
   return (
     <div className="personalData-form-container">
-      <h2>Datos Personales</h2>
+      {provinces.getLoading && <Spinner/>}
+      {
+        provinces.getError ?
+          <Error error={provinces.getError} />
+          :
+          <>
+            <h2>Datos Personales</h2>
+            <div className={`personalData-form ${theme}`}>
+              <div className='personalData-form-column'>
+                <div>
+                  <div className="input-content">
+                    <label> Nombre de usuario * </label>
+                    <input type='text' name='username' placeholder="MaríaPerez" value={data.username} onChange={changeHandler} onBlur={blurHandler} />
+                  </div>
+                  {errors.username && <div className="form-user-error-message">{errors?.username}</div>}
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Email * </label>
+                    <input className='input-form-disabled' readOnly disabled type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
+                    {errors.email && <div className="form-user-error-message">{errors?.email}</div>}
+                    <span> El email no puede modificarse </span>
+                  </div>
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Nombres * </label>
+                    <input type='text' name='name' placeholder="María" value={data.name} onChange={changeHandler} onBlur={blurHandler} />
+                  </div>
+                  {errors.name && <div className="form-user-error-message">{errors?.name}</div>}
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Apellido * </label>
+                    <input type='text' name='lastName' placeholder="Perez" value={data.lastName} onChange={changeHandler} onBlur={blurHandler} />
+                  </div>
+                  {errors.lastName && <div className="form-user-error-message">{errors?.lastName}</div>}
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Legajo </label>
 
-      <div className={`personalData-form ${theme}`}>
-        <div className='personalData-form-column'>
-          <div>
-            <div className="input-content">
-              <label> Nombre de usuario * </label>
-              <input type='text' name='username' placeholder="MaríaPerez" value={data.username} onChange={changeHandler} onBlur={blurHandler} />
+                    <input className='input-form-disabled' type='text' name='legajo' defaultValue={data.legajo} onChange={changeHandler} onBlur={blurHandler} readOnly disabled />
+                    <span> El legajo no puede modificarse </span>
+                  </div>
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Cuil * </label>
+                    <input type='text' name='cuil' placeholder="23-39580415-4" value={data.cuil} onChange={changeHandler} onBlur={blurHandler} />
+                  </div>
+                  {errors.cuil && <div className="form-user-error-message">{errors?.cuil}</div>}
+                </div>
+
+
+                <div className='personalData-document-container'>
+                  <div className='input-content'>
+                    <label>Tipo de documento * </label>
+                    <select name='documentType' value={data.documentType} onChange={changeHandler} onBlur={blurHandler}>
+                      <option value=''>Tipo de documento</option>
+                      <option value='DocumentoUnico'>DNI</option>
+                      <option value='LibretaCivica'>Libreta Civica</option>
+                      <option value='LibretadeEnrolamiento'>Libreta de Enrolamiento</option>
+                      <option value='Pasaporte'>Pasaporte</option>
+                    </select>
+                    {errors.documentType && <div className="form-user-error-message">{errors?.documentType}</div>}
+                  </div>
+                  <div className='input-content'>
+                    <label>Número de documento * </label>
+                    <input type='text' name='documentNumber' placeholder="39580415" value={data.documentNumber} onChange={changeHandler} onBlur={blurHandler} />
+                    {errors.documentNumber && <div className="form-user-error-message">{errors?.documentNumber}</div>}
+                  </div>
+                </div>
+
+              </div>
+
+              <div className='personalData-form-column'>
+                <div>
+                  <div className="input-content">
+                    <label> Fecha de Nacimiento * </label>
+                    <input type="date" name="birthDate" value={data.birthDate} onChange={changeHandler} onBlur={blurHandler} />
+                    {errors.birthDate && <div className="form-user-error-message">{errors?.birthDate}</div>}
+                  </div>
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label>Sexo * </label>
+                    <select name='sex' value={data.sex} onChange={changeHandler} onBlur={blurHandler}>
+                      <option value=''> Sexo </option>
+                      <option value='F'>F</option>
+                      <option value='M'>M</option>
+                      <option value='X'>X</option>
+                    </select>
+                  </div>
+                  {errors.sex && <div className="form-user-error-message">{errors?.sex}</div>}
+                </div>
+                <div>
+                  <div className="input-content">
+                    <label> Estado Civil * </label>
+                    <select name='civilStatus' value={data.civilStatus} onChange={changeHandler} onBlur={blurHandler}>
+                      <option value='' >Estado Civil </option>
+                      <option value='Soltero'>Soltero</option>
+                      <option value='Casado'>Casado</option>
+                      <option value='Divorciado'>Divorciado</option>
+                      <option value='Viudo'>Viudo</option>
+                    </select>
+                  </div>
+                  {errors.civilStatus && <div className="form-user-error-message">{errors?.civilStatus}</div>}
+                </div>
+
+                <div>
+                  <div className="input-content">
+                    <label> Telefono *</label>
+                    <input type="text" name="telephoneNumber" placeholder="341000000000" value={data.telephoneNumber} onChange={changeHandler} onBlur={blurHandler} />
+                  </div>
+                  {errors.telephoneNumber && <div className="form-user-error-message">{errors?.telephoneNumber}</div>}
+                </div>
+
+                <div className='personalData-adress-container'>
+                  <p className='personalData-adress-title'>Datos de domicilio:</p>
+
+                  <label> Calle </label>
+                  <input type="text" name="address" placeholder="Callao" value={data.address} onChange={changeHandler} onBlur={blurHandler} />
+                  {errors.address && <div className="form-user-error-message">{errors?.address}</div>}
+
+                  <label> Numero de calle </label>
+                  <input type="text" name="addressNumber" placeholder="1110" value={data.addressNumber} onChange={changeHandler} onBlur={blurHandler} />
+                  {errors.addressNumber && <div className="form-user-error-message">{errors?.addressNumber}</div>}
+
+                  <label>Piso </label>
+                  <input type="text" name='floor' placeholder="2" value={data.floor} onChange={changeHandler} onBlur={blurHandler} />
+                  {errors.floor && <div className="form-user-error-message">{errors?.floor}</div>}
+
+                  <label> País </label>
+                  <input type='text' name='country' placeholder='Argentina' value={data.country} onChange={changeHandler} onBlur={blurHandler} />
+                  {errors.country && <div className="form-user-error-message">{errors?.country}</div>}
+
+                  <label> Provincia </label>
+
+                  <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
+                    {provinces && provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
+                      <option key={p.id} value={p.nombre}>{p.nombre}</option>
+                    )
+                    }
+                  </select>
+                  {errors.province && <div className="form-user-error-message">{errors?.province}</div>}
+
+                  <label> Localidad </label>
+                  <input type='text' name='city' placeholder='Rosario' value={data.city} onChange={changeHandler} onBlur={blurHandler} />
+                  {errors.city && <div className="form-user-error-message">{errors?.city}</div>}
+                </div>
+              </div>
             </div>
-            {errors.username && <div className="form-user-error-message">{errors?.username}</div>}
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Email * </label>
-              <input className='input-form-disabled' readOnly disabled type="email" name="email" placeholder="example@gmail.com" value={data.email} onChange={changeHandler} onBlur={blurHandler} />
-              {errors.email && <div className="form-user-error-message">{errors?.email}</div>}
-              <span> El email no puede modificarse </span>
-            </div>
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Nombres * </label>
-              <input type='text' name='name' placeholder="María" value={data.name} onChange={changeHandler} onBlur={blurHandler} />
-            </div>
-            {errors.name && <div className="form-user-error-message">{errors?.name}</div>}
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Apellido * </label>
-              <input type='text' name='lastName' placeholder="Perez" value={data.lastName} onChange={changeHandler} onBlur={blurHandler} />
-            </div>
-            {errors.lastName && <div className="form-user-error-message">{errors?.lastName}</div>}
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Legajo </label>
+          </>
+      }
 
-              <input className='input-form-disabled' type='text' name='legajo' defaultValue={data.legajo} onChange={changeHandler} onBlur={blurHandler} readOnly disabled />
-              <span> El legajo no puede modificarse </span>
-            </div>
-            {/* {errors.legajo && <div>{errors?.legajo}</div>} */}
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Cuil * </label>
-              <input type='text' name='cuil' placeholder="23-39580415-4" value={data.cuil} onChange={changeHandler} onBlur={blurHandler} />
-            </div>
-            {errors.cuil && <div className="form-user-error-message">{errors?.cuil}</div>}
-          </div>
-
-
-          <div className='personalData-document-container'>
-            <div className='input-content'>
-              <label>Tipo de documento * </label>
-              <select name='documentType' value={data.documentType} onChange={changeHandler} onBlur={blurHandler}>
-                <option value=''>Tipo de documento</option>
-                <option value='DocumentoUnico'>DNI</option>
-                <option value='LibretaCivica'>Libreta Civica</option>
-                <option value='LibretadeEnrolamiento'>Libreta de Enrolamiento</option>
-                <option value='Pasaporte'>Pasaporte</option>
-              </select>
-              {errors.documentType && <div className="form-user-error-message">{errors?.documentType}</div>}
-            </div>
-            <div className='input-content'>
-              <label>Número de documento * </label>
-              <input type='text' name='documentNumber' placeholder="39580415" value={data.documentNumber} onChange={changeHandler} onBlur={blurHandler} />
-              {errors.documentNumber && <div className="form-user-error-message">{errors?.documentNumber}</div>}
-            </div>
-          </div>
-
-        </div>
-
-        <div className='personalData-form-column'>
-          <div>
-            <div className="input-content">
-              <label> Fecha de Nacimiento * </label>
-              <input type="date" name="birthDate" value={data.birthDate} onChange={changeHandler} onBlur={blurHandler} />
-              {errors.birthDate && <div className="form-user-error-message">{errors?.birthDate}</div>}
-            </div>
-          </div>
-          <div>
-            <div className="input-content">
-              <label>Sexo * </label>
-              <select name='sex' value={data.sex} onChange={changeHandler} onBlur={blurHandler}>
-                <option value=''> Sexo </option>
-                <option value='F'>F</option>
-                <option value='M'>M</option>
-                <option value='X'>X</option>
-              </select>
-            </div>
-            {errors.sex && <div className="form-user-error-message">{errors?.sex}</div>}
-          </div>
-          <div>
-            <div className="input-content">
-              <label> Estado Civil * </label>
-              <select name='civilStatus' value={data.civilStatus} onChange={changeHandler} onBlur={blurHandler}>
-                <option value='' >Estado Civil </option>
-                <option value='Soltero'>Soltero</option>
-                <option value='Casado'>Casado</option>
-                <option value='Divorciado'>Divorciado</option>
-                <option value='Viudo'>Viudo</option>
-              </select>
-            </div>
-            {errors.civilStatus && <div className="form-user-error-message">{errors?.civilStatus}</div>}
-          </div>
-
-          <div>
-            <div className="input-content">
-              <label> Telefono *</label>
-              <input type="text" name="telephoneNumber" placeholder="341000000000" value={data.telephoneNumber} onChange={changeHandler} onBlur={blurHandler} />
-            </div>
-            {errors.telephoneNumber && <div className="form-user-error-message">{errors?.telephoneNumber}</div>}
-          </div>
-
-          <div className='personalData-adress-container'>
-            <p className='personalData-adress-title'>Datos de domicilio:</p>
-
-            <label> Calle </label>
-            <input type="text" name="address" placeholder="Callao" value={data.address} onChange={changeHandler} onBlur={blurHandler} />
-            {errors.address && <div className="form-user-error-message">{errors?.address}</div>}
-
-            <label> Numero de calle </label>
-            <input type="text" name="addressNumber" placeholder="1110" value={data.addressNumber} onChange={changeHandler} onBlur={blurHandler} />
-            {errors.addressNumber && <div className="form-user-error-message">{errors?.addressNumber}</div>}
-
-            <label>Piso </label>
-            <input type="text" name='floor' placeholder="2" value={data.floor} onChange={changeHandler} onBlur={blurHandler} />
-            {errors.floor && <div className="form-user-error-message">{errors?.floor}</div>}
-
-            <label> País </label>
-            <input type='text' name='country' placeholder='Argentina' value={data.country} onChange={changeHandler} onBlur={blurHandler} />
-            {/* <select name='country' value={data.country} onChange={changeHandler} onBlur={blurHandler}>
-          <option value="1">Argentina</option>
-        </select> */}
-            {errors.country && <div className="form-user-error-message">{errors?.country}</div>}
-
-            <label> Provincia </label>
-            {/* <input type='text' name='province' placeholder='Santa Fe' value={data.province} onChange={changeHandler} onBlur={blurHandler} /> */}
-            <select name='province' value={data.province} onChange={changeHandler} onBlur={blurHandler}>
-              {provinces.info.length !== 0 && provinces.info.provincias.map((p) =>
-                <option key={p.id} value={p.nombre}>{p.nombre}</option>
-              )
-              }
-            </select>
-            {errors.province && <div className="form-user-error-message">{errors?.province}</div>}
-
-            <label> Localidad </label>
-            <input type='text' name='city' placeholder='Rosario' value={data.city} onChange={changeHandler} onBlur={blurHandler} />
-            {/* <select name='city' value={data.city} onChange={changeHandler} onBlur={blurHandler}>
-          <option value="1">Rosario</option>
-        </select> */}
-            {errors.city && <div className="form-user-error-message">{errors?.city}</div>}
-
-          </div>
-        </div>
-
-      </div>
       <div className='personalData-requerid-message'>
         <BasicButton buttonName={'Siguiente'} buttonHandler={moveForwardHandler} />
-        <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>
+        {provinces.getError !== null && <p className='requerid-camps-message'>(*) Estos campos son obligatorios. </p>}
       </div>
 
-    </div >
+    </div>
   )
 }
 
