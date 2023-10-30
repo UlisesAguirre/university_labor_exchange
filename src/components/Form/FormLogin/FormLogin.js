@@ -81,21 +81,17 @@ const FormLogin = () => {
         const jwtToken = data;
 
         updateToken(jwtToken);
-        login();
 
         setLoading(false);
-        setModal({
-          modalOpen: true,
-          modalTitle: "¡Bienvenido!",
-          modalMessage: "Inicio de sesión existoso.",
-        });
+
         setInput({
           email: '',
           password: '',
         });
-        setTimeout(() => {
-          navigate('/profile');
-        }, 2000);
+
+        navigate('/profile');
+        login();
+
       })
       .catch(error => {
         setLoading(false);

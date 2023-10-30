@@ -36,19 +36,19 @@ const UserMenu = () => {
             <>
               <div className='admin-options-column'>
                 <p>Habilitar:</p>
-                <Link to="/profile/users-management">
+                <Link to="/profile/admin/users-management">
                   <FontAwesomeIcon icon={faUsers} /> Usuarios
                 </Link>
-                <Link to="/profile/jobpositions-management">
+                <Link to="/profile/admin/jobpositions-management">
                   <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales
                 </Link>
               </div>
               <div className='admin-options-column'>
                 <p>Administrar:</p>
-                <Link to="/profile/careers-management">
+                <Link to="/profile/admin/careers-management">
                   <FontAwesomeIcon icon={faGraduationCap} /> Carreras
                 </Link>
-                <Link to="/profile/skills-management">
+                <Link to="/profile/admin/skills-management">
                   <FontAwesomeIcon icon={faScrewdriverWrench} /> Habilidades
                 </Link>
               </div>
@@ -60,7 +60,7 @@ const UserMenu = () => {
 
             {user.userType === "company" &&
               <Link to='/profile/add-offer'>
-                <FontAwesomeIcon icon={faBriefcase} /> Ofertas realizadas
+                <FontAwesomeIcon icon={faBriefcase} /> Ofertas laborales
               </Link>}
           </>
           }

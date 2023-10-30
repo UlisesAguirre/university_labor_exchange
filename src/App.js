@@ -11,8 +11,12 @@ import Signup from './pages/Signup/Signup';
 import './App.css';
 import UserPage from './pages/UserPage/UserPage';
 import FAQ from './pages/FAQ/FAQ';
+import Error from './components/Shared/Error/Error';
+import UserContext from './components/Context/UserContext/UserContext';
 
 function App() {
+
+  const { user } = useContext(UserContext);
 
   const { theme } = useContext(ThemeContext);
 
@@ -22,11 +26,16 @@ function App() {
       <div className={`page-content-container ${theme}`}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/*" element={<UserPage />} />
-          <Route path="/*" element="" />
-          <Route path='/FAQ' element={<FAQ/>}/>
+          <Route path="/*" element={<Error error={'404'} />} />
+          <Route path='/FAQ' element={<FAQ />} />
+          {user?.userType ?
+            <Route path="/profile/*" element={<UserPage />} />
+            :
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          }
         </Routes>
       </div>
       <Footer />

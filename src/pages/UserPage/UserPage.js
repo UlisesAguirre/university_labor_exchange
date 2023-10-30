@@ -13,6 +13,7 @@ import CompanyJobOffer from '../../components/CompanyJobOffer/CompanyJobOffer';
 import JobPositionMenu from '../../components/JobPositionMenu/JobPositionMenu';
 import DisabledMessage from '../../components/MessageComponents/DisabledMessage/DisabledMessage';
 import UnasignedMessage from "../../components/MessageComponents/UnasignedMessage/UnasignedMessage";
+import Error from '../../components/Shared/Error/Error';
 
 const UserPage = () => {
 
@@ -25,10 +26,11 @@ const UserPage = () => {
         {user.state === "SinAsignar" ? <UnasignedMessage /> : user.state === "Deshabilitado" ? <DisabledMessage /> :
           <>
             <Routes>
+              <Route path='/*' element={<Error error={'404'}/>}/>
               {user.userType === "admin" ?
                 (
                   <>
-                    <Route path='/*' element={<AdminCard />} />
+                    <Route path='/admin/*' element={<AdminCard />} />
                   </>
                 )
                 :
