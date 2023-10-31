@@ -15,7 +15,7 @@ const validateData = (data, name) => {
 
   let error = '';
 
-  if (data === null || (typeof data[name] === 'string' && !data[name].trim())) {
+  if (data[name] === null || (typeof data[name] === 'string' && !data[name].trim())) {
     if (validInputs[name].require) {
       error = "Este campo es obligatorio";
     }
@@ -35,7 +35,7 @@ const validateData = (data, name) => {
           error = 'El cuit debe contener guiones';
         }
         if (name === 'addressNumber') {
-          error = "El valor de la calle debe estar dentro del rango de 0 a 10,000 y puede incluir opcionalmente la palabra 'bis'";
+          error = "El valor de la calle debe estar dentro del rango de 0 a 10.000 y puede incluir opcionalmente la palabra 'bis'";
         }
         if (name === 'floor') {
           error = "El piso solo puede contener una letra o número del 1 al 20";
@@ -72,8 +72,8 @@ const validInputs = {
   cuil: { regex: /^(20|23|24|27)-\d{8}-\d$/, require: true, },
   sex: { require: true },
   address: { regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/, require: false, },
-  addressNumber: { regex: /^(?:[1-9]\d{0,3}|10000)(?: bis)?$/, require: false },
-  floor: { regex: /^(0|1?\d|20)$/, require: false },
+  addressNumber: { regex: /^(?:[1-9]\d{0,3}|10000)?(?: bis)?$/, require: false },
+  floor: { regex: /^(0|1?\d|20|)$/, require: false },
   city: {
     regex: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]{3,50}$/,
     require: false
